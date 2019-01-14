@@ -1,0 +1,81 @@
+{
+  "Object Creation": {
+    "prefix": "object",
+    "body": [
+      "${1:Typename} {",
+      "\tid: ${2:idName}",
+      "$0",
+      "}"
+    ],
+    "description": "Create Object"
+  },
+  "Text Creation": {
+    "prefix": "Text",
+    "body": [
+      "Text {",
+      "\ttext: ${1:string}",
+      "$0",
+      "}"
+    ],
+    "description": "Create Text Object"
+  },
+  "Region Start": {
+		"prefix": "#region",
+		"body": [
+			"//#region $0"
+		],
+		"description": "Folding Region Start"
+	},
+	"Region End": {
+		"prefix": "#endregion",
+		"body": [
+			"//#endregion"
+		],
+		"description": "Folding Region End"
+  },
+  "Property Attribute with Initialization": {
+    "prefix": "property",
+    "body": [
+      "property ${1|bool,double,enum,int,real,string,url,variant,var,date,point,rect,size|} ${2:name}: ${3:value}",
+      "$0"
+    ],
+    "description": "Property Attribute with Initialization"
+  },
+  "List Attribute with Initialization": {
+    "prefix": "list",
+    "body": [
+      "property list<${1:Type}> ${2:name}: [",
+      "\t$0",
+      "]"
+    ],
+    "description": "List Attribute with Initialization"
+  },
+  "Method Attribute": {
+		"prefix": "function",
+		"body": [
+			"function ${1:name}(${2:params}) {",
+			"\t$0",
+			"}"
+		],
+		"description": "Method Attribute"
+  },
+  "Enumeration Attributes": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2:Value1},",
+      "\t${3:Value2},",
+      "\t$0",
+      "}"
+    ],
+    "description": "Enumeration Attributes"
+  },
+  "Property Alias": {
+    "prefix": "alias",
+    "body": [
+      "property alias ${1:name}: ${2:ref}",
+      "$0"
+    ],
+    "description": "Property Alias"
+  }
+}

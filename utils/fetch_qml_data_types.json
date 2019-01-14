@@ -1,0 +1,19 @@
+{
+    "QML Language": [
+        "bool",
+        "double",
+        "enumeration",
+        "int",
+        "list",
+        "real",
+        "string",
+        "url",
+        "var"
+    ],
+    "QML Modules": [
+        "date",
+        "point",
+        "rect",
+        "size"
+    ]
+}
