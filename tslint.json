@@ -7,7 +7,7 @@
 		"class-name": true,
 		"semicolon": [
 			true,
-			"always"
+			"never"
 		],
 		"triple-equals": true
 	},

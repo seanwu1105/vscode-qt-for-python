@@ -1,0 +1,384 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "QML",
+  "scopeName": "source.qml",
+  "patterns": [
+    {
+      "name": "constant.language.qml",
+      "match": "\\bpragma\\s+Singleton\\b"
+    },
+    {
+      "include": "#import-statements"
+    },
+    {
+      "include": "#object"
+    },
+    {
+      "include": "#comment"
+    }
+  ],
+  "repository": {
+    "import-statements": {
+      "patterns": [
+        {
+          "begin": "\\b(import)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.control.import.qml"
+            }
+          },
+          "patterns": [
+            {
+              "name": "keyword.control.as.qml",
+              "match": "\\bas\\b"
+            },
+            {
+              "include": "#string"
+            },
+            {
+              "description": "<Version.Number>",
+              "name": "constant.numeric.qml",
+              "match": "\\b\\d+\\.\\d+\\b"
+            },
+            {
+              "description": "as <Namespace>",
+              "name": "entity.name.type.qml",
+              "match": "(?<=as)\\s+[A-Z]\\w*\\b"
+            },
+            {
+              "include": "#identifier"
+            }
+          ],
+          "end": "$"
+        }
+      ]
+    },
+    "object": {
+      "patterns": [
+        {
+          "begin": "\\b([A-Z]\\w*)\\s*\\{",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.type.qml"
+            }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "$self"
+            },
+            {
+              "include": "#group-attributes"
+            },
+            {
+              "include": "#method-attributes"
+            },
+            {
+              "include": "#signal-attributes"
+            },
+            {
+              "include": "#comment"
+            },
+            {
+              "include": "#attributes-dictionary"
+            }
+          ]
+        }
+      ]
+    },
+    "group-attributes": {
+      "patterns": [
+        {
+          "begin": "\\b([_a-zA-Z]\\w*)\\s*\\{",
+          "beginCaptures": {
+            "1": {
+              "name": "variable.parameter.qml"
+            }
+          },
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "$self"
+            },
+            {
+              "include": "#comment"
+            },
+            {
+              "include": "#attributes-dictionary"
+            }
+          ]
+        }
+      ]
+    },
+    "method-attributes": {
+      "patterns": [
+        {
+          "begin": "\\b(function)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.qml"
+            }
+          },
+          "end": "(?<=\\})",
+          "patterns": [
+            {
+              "begin": "([_a-zA-Z]\\w*)\\s*\\(",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.name.function.qml"
+                }
+              },
+              "end": "\\)",
+              "patterns": [
+                {
+                  "include": "#identifier"
+                }
+              ]
+            },
+            {
+              "begin": "\\{",
+              "end": "\\}",
+              "contentName": "meta.embedded.block.js",
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "signal-attributes": {
+      "patterns": [
+        {
+          "begin": "\\b(signal)\\b",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.qml"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "begin": "([_a-zA-Z]\\w*)\\s*\\(",
+              "beginCaptures": {
+                "1": {
+                  "name": "entity.name.function.qml"
+                }
+              },
+              "end": "\\)",
+              "patterns": [
+                {
+                  "include": "#keywords"
+                },
+                {
+                  "include": "#identifier"
+                }
+              ]
+            },
+            {
+              "include": "#identifier"
+            }
+          ]
+        }
+      ]
+    },
+    "attributes-dictionary": {
+      "patterns": [
+        {
+          "include": "#typename"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#identifier"
+        },
+        {
+          "include": "#attributes-value"
+        },
+        {
+          "include": "#comment"
+        }
+      ]
+    },
+    "attributes-value": {
+      "patterns": [
+        {
+          "description": "A QML object as value.",
+          "begin": "(?<=\\w)\\s*\\:\\s*(?=[A-Z]\\w*\\s*\\{)",
+          "end": "(?<=\\})",
+          "patterns": [
+            {
+              "include": "#object"
+            }
+          ]
+        },
+        {
+          "description": "A list as value.",
+          "begin": "(?<=\\w)\\s*\\:\\s*\\[",
+          "end": "\\]",
+          "patterns": [
+            {
+              "include": "#object"
+            },
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "description": "A block of JavaScript code as value.",
+          "begin": "(?<=\\w)\\s*\\:\\s*\\{",
+          "end": "\\}",
+          "contentName": "meta.embedded.block.js",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        },
+        {
+          "description": "A JavaScript expression as value.",
+          "begin": "(?<=\\w)\\s*\\:",
+          "end": ";|$|(?=\\})",
+          "contentName": "meta.embedded.line.js",
+          "patterns": [
+            {
+              "include": "source.js"
+            }
+          ]
+        }
+      ]
+    },
+    "comment": {
+      "patterns": [
+        {
+          "begin": "(\\/\\/)",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.line.double-slash.qml"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#comment-contents"
+            }
+          ]
+        },
+        {
+          "begin": "(\\/\\*)",
+          "beginCaptures": {
+            "1": {
+              "name": "comment.line.double-slash.qml"
+            }
+          },
+          "end": "(\\*\\/)",
+          "endCaptures": {
+            "1": {
+              "name": "comment.line.double-slash.qml"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comment-contents"
+            }
+          ]
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "include": "#data-types"
+        },
+        {
+          "include": "#reserved-words"
+        }
+      ]
+    },
+    "data-types": {
+      "patterns": [
+        {
+          "description": "QML basic data types.",
+          "name": "storage.type.qml",
+          "match": "\\b(bool|double|enum|int|list|real|string|url|variant|var)\\b"
+        },
+        {
+          "description": "QML modules basic data types.",
+          "name": "support.type.qml",
+          "match": "\\b(date|point|rect|size)\\b"
+        }
+      ]
+    },
+    "reserved-words": {
+      "patterns": [
+        {
+          "description": "Attribute modifier.",
+          "name": "storage.modifier.qml",
+          "match": "\\b(default|alias|readonly)\\b"
+        },
+        {
+          "name": "keyword.other.qml",
+          "match": "\\b(property|id|on)\\b"
+        },
+        {
+          "description": "Special words for signal handlers including property change.",
+          "name": "keyword.control.qml",
+          "match": "\\b(on[A-Z]\\w*(Changed)?)\\b"
+        }
+      ]
+    },
+    "identifier": {
+      "description": "The name of variable, key, signal and etc.",
+      "patterns": [
+        {
+          "name": "variable.parameter.qml",
+          "match": "\\b[_a-zA-Z]\\w*\\b"
+        }
+      ]
+    },
+    "typename": {
+      "description": "The name of type. First letter must be uppercase.",
+      "patterns": [
+        {
+          "name": "entity.name.type.qml",
+          "match": "\\b[A-Z]\\w*\\b"
+        }
+      ]
+    },
+    "string": {
+      "description": "String literal with double or signle quote.",
+      "patterns": [
+        {
+          "name": "string.quoted.single.qml",
+          "begin": "'",
+          "end": "'"
+        },
+        {
+          "name": "string.quoted.double.qml",
+          "begin": "\"",
+          "end": "\""
+        }
+      ]
+    },
+    "comment-contents": {
+      "patterns": [
+        {
+          "name": "constant.language.qml",
+          "match": "\\b(TODO|DEBUG|XXX)\\b"
+        },
+        {
+          "name": "invalid",
+          "match": "\\b(BUG|FIXME)\\b"
+        },
+        {
+          "name": "comment.line.double-slash.qml",
+          "match": "."
+        }
+      ]
+    }
+  }
+}
