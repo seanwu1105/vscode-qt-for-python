@@ -1,7 +1,7 @@
 {
     "name": "vscode-qt-for-python",
-    "version": "0.0.1",
-    "publisher": "Sean Wu",
+    "version": "0.0.2",
+    "publisher": "seanwu",
     "engines": {
         "vscode": "^1.30.0"
     },
@@ -222,7 +222,28 @@
         "onCommand:extension.editTranslation",
         "onCommand:extension.previewQml"
     ],
-    "badges": [],
+    "badges": [
+        {
+            "url": "https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+            "description": "version"
+        },
+        {
+            "url": "https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+            "description": "version"
+        },
+        {
+            "url": "https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+            "description": "version"
+        },
+        {
+            "url": "https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg",
+            "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+            "description": "version"
+        }
+    ],
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",

@@ -1,5 +1,10 @@
 # Visual Studio Code Extension Qt for Python
 
+[![version](https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+[![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+[![downloads](https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+[![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+
 A Visual Studio Code extension provides some common functionalities for PyQt5 and PySide2 with Qt Creator.
 
 |        Qt Markup Language (`qml`)       |         Qt Style Sheets (`qss`)         |    Resource Collection Files (`qrc`)    |
