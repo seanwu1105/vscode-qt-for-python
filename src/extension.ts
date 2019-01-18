@@ -27,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
     context.subscriptions.push(vscode.commands.registerCommand(
-        'extension.newForm', (fileUri: vscode.Uri) => {
+        'qtForPython.newForm', (fileUri: vscode.Uri) => {
             const toolPath = vscode.workspace.getConfiguration('qtForPython.path').get<string>('designer')
             if (toolPath) {
                 if (fileUri) { // from explorer/context menus
@@ -38,20 +38,64 @@ export function activate(context: vscode.ExtensionContext) {
             } else { showPathNotExist('Qt Designer') }
         }))
     context.subscriptions.push(vscode.commands.registerCommand(
-        'extension.editForm', (fileUri: vscode.Uri) => {
+        'qtForPython.editForm', (fileUri: vscode.Uri) => {
             useTool('designer', 'Qt Design', fileUri)
         }))
     context.subscriptions.push(vscode.commands.registerCommand(
-        'extension.editTranslation', (fileUri: vscode.Uri) => {
+        'qtForPython.compileForm', (fileUri: vscode.Uri) => {
+            useTool('pyuic', 'Python UI Compiler', fileUri)
+        }))
+    context.subscriptions.push(vscode.commands.registerCommand(
+        'qtForPython.updateTranslation', async (fileUri: vscode.Uri) => {
+            vscode.window.showInformationMessage(`Trying to open Python lupdate Tool`)
+            let toolPath = vscode.workspace.getConfiguration('qtForPython.path').get<string>('pylupdate')
+            if (toolPath) {
+                // Get -ts ts-files from toolPath.
+                const tsFileArgRegex = /\s+\-ts\s+\S+\b/g
+                const tsFileArg = toolPath.match(tsFileArgRegex)
+                if (tsFileArg) {
+                    // Remove "-ts ts-files" from toolPath.
+                    toolPath = toolPath.replace(tsFileArgRegex, '')
+                    console.log(tsFileArg)
+                    console.log(toolPath)
+                    if (fileUri) { // from explorer/context menus
+                        // Move "-ts ts-files" behind the fileUri.
+                        exec(`${toolPath} ${fileUri.fsPath} ${tsFileArg}`)
+                    } else { // from command palette
+                        const activeTextEditor = vscode.window.activeTextEditor
+                        if (activeTextEditor) {
+                            const documentUri = activeTextEditor.document.uri
+                            // Move "-ts ts-files" behind the fileUri.
+                            exec(`${toolPath} ${documentUri.fsPath}  ${tsFileArg}`)
+                        }
+                    }
+                } else {
+                    const response = await vscode.window.showErrorMessage(
+                        'The output location of TS file is required. Add ' +
+                        '"-ts ts-filename" to the path of pylupdate.',
+                        'Setting'
+                        )
+                    if (response === 'Setting') {
+                        vscode.commands.executeCommand('workbench.action.openSettings')
+                    }
+                }
+            } else { showPathNotExist('Python lupdate Tool') }
+        }))
+    context.subscriptions.push(vscode.commands.registerCommand(
+        'qtForPython.editTranslation', (fileUri: vscode.Uri) => {
             useTool('linguist', 'Qt Linguist', fileUri)
         }))
     context.subscriptions.push(vscode.commands.registerCommand(
-        'extension.releaseTranslation', (fileUri: vscode.Uri) => {
+        'qtForPython.releaseTranslation', (fileUri: vscode.Uri) => {
             useTool('lrelease', 'Qt lrelease', fileUri)
         }))
     context.subscriptions.push(vscode.commands.registerCommand(
-        'extension.previewQml', (fileUri: vscode.Uri) => {
+        'qtForPython.previewQml', (fileUri: vscode.Uri) => {
             useTool('qmlscene', 'QML Scene', fileUri)
+        }))
+    context.subscriptions.push(vscode.commands.registerCommand(
+        'qtForPython.compileResource', (fileUri: vscode.Uri) => {
+            useTool('pyrcc', 'Python Resource Compiler', fileUri)
         }))
 }
 
@@ -60,6 +104,7 @@ export function deactivate() {
 }
 
 function useTool(id: string, name: string, targetUri: vscode.Uri) {
+    vscode.window.showInformationMessage(`Trying to open ${name}`)
     const toolPath = vscode.workspace.getConfiguration('qtForPython.path').get<string>(id)
     if (toolPath) {
         if (targetUri) { // from explorer/context menus
