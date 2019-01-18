@@ -25,7 +25,7 @@
 
 ### Fixed
 
-* Some command do not trigger the activation event of the extension.
+* Some commands do not trigger the activation event of the extension.
 
 ## 0.0.2
 
