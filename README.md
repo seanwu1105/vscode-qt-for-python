@@ -4,6 +4,8 @@
 [![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![downloads](https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+[![dependencies Status](https://david-dm.org/seanwu1105/vscode-qt-for-python/status.svg)](https://david-dm.org/seanwu1105/vscode-qt-for-python)
+[![devDependencies Status](https://david-dm.org/seanwu1105/vscode-qt-for-python/dev-status.svg)](https://david-dm.org/seanwu1105/vscode-qt-for-python?type=dev)
 
 A Visual Studio Code extension provides some common functionalities for PyQt5 and PySide2 with Qt Creator.
 
@@ -21,19 +23,19 @@ A Visual Studio Code extension provides some common functionalities for PyQt5 an
 
 ## Features
 
-* [x] Qt Markup Language (`*.qml`) highlighting and snippets support
-* [x] QML Module Definition Files (`*.qmldir`) highlighting and snippets support
-* [x] Qt Style Sheets (`*.qss`) highlighting and snippets support
-* [x] Qt Linguist Translation (`*.qt.ts`) highlighting support (XML)
-* [x] Resource Collection Files (`*.qrc`) highlighting support (XML)
-* [x] Qt Designer Form (`*.ui`) highlighting support (XML)
-* [x] Qt Creator User Settings (`*.pro.user`) highlighting support (XML)
-* [x] `qmake` highlighting support
-* [x] New form (Qt Designer `*.ui` file) command
-* [x] Edit form (Qt Designer `*.ui` file) command
-* [x] Edit translation (Qt Linguist `*.qt.ts` file)
-* [x] Release translation (Qt Linguist `*.qt.ts` file) to `*.qm` file
-* [x] Preview QML
+* Qt Markup Language (`*.qml`) highlighting and snippets support
+* QML Module Definition Files (`*.qmldir`) highlighting and snippets support
+* Qt Style Sheets (`*.qss`) highlighting and snippets support
+* Qt Linguist Translation (`*.qt.ts`) highlighting support (XML)
+* Resource Collection Files (`*.qrc`) highlighting support (XML)
+* Qt Designer Form (`*.ui`) highlighting support (XML)
+* Qt Creator User Settings (`*.pro.user`) highlighting support (XML)
+* `qmake` highlighting support
+* New form (Qt Designer `*.ui` file) command
+* Edit form (Qt Designer `*.ui` file) command
+* Edit translation (Qt Linguist `*.qt.ts` file)
+* Release translation (Qt Linguist `*.qt.ts` file) to `*.qm` file
+* Preview QML
 
 ## Requirements
 

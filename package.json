@@ -1,6 +1,6 @@
 {
     "name": "vscode-qt-for-python",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "seanwu",
     "engines": {
         "vscode": "^1.30.0"
@@ -320,13 +320,13 @@
         "@types/mocha": "^2.2.42"
     },
     "icon": "images/icon.png",
-    "homepage": "https://github.com/GLaDOS1105/vscode-qt-for-python",
+    "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
     "repository": {
         "type": "git",
-        "url": "https://github.com/GLaDOS1105/vscode-qt-for-python.git"
+        "url": "https://github.com/seanwu1105/vscode-qt-for-python.git"
     },
     "bugs": {
-        "url": "https://github.com/GLaDOS1105/vscode-qt-for-python/issues",
+        "url": "https://github.com/seanwu1105/vscode-qt-for-python/issues",
         "email": "seanwu1105@gmail.com"
     }
 }

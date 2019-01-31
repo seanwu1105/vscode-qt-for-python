@@ -11,6 +11,13 @@
 * `pyqtdeploy` (PyQt5 only)
 * CI/CD
 
+## 0.1.1
+
+### Changed
+
+* Format the README.md
+* Update the username of badgets
+
 ## 0.1.0
 
 ### Added
