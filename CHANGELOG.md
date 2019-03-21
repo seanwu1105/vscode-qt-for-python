@@ -7,9 +7,15 @@
 * `qmllint`
 * `qmleasing`
 * Color provider for QML and QSS
-* Button for `qmlscene` preview
 * `pyqtdeploy` (PyQt5 only)
 * CI/CD
+
+## 0.2.0
+
+### Added
+
+* Button for `qmlscene` preview
+* Enable/disable configuration
 
 ## 0.1.0
 

@@ -1,6 +1,6 @@
 {
     "name": "vscode-qt-for-python",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "seanwu",
     "engines": {
         "vscode": "^1.30.0"
@@ -148,7 +148,7 @@
                 "qtForPython.path.pyuic": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of UI compiler of Qt for Python (PyQt5 or PySide2). For example, `pyuic5 -d -o ./out.py ` for PyQt5 or `pyside2-uic -d -o ./out.py ` for PySide2."
+                    "markdownDescription": "The path of UI compiler of Qt for Python (PyQt5 or PySide2). For example, `pyuic5 -d -o ./out.py` for PyQt5 or `pyside2-uic -d -o ./out.py` for PySide2."
                 },
                 "qtForPython.path.pylupdate": {
                     "type": "string",
