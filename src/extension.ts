@@ -19,7 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
     // (console.error).
     // This line of code will only be executed once when your extension is
     // activated.
-    console.log('The extension "vscode-qt-for-python" is now active!')
 
     outputChannel = vscode.window.createOutputChannel('Qt for Python')
 
@@ -56,17 +55,15 @@ export function activate(context: vscode.ExtensionContext) {
                 if (tsFileArg) {
                     // Remove "-ts ts-files" from toolPath.
                     toolPath = toolPath.replace(tsFileArgRegex, '')
-                    console.log(tsFileArg)
-                    console.log(toolPath)
                     if (fileUri) { // from explorer/context menus
                         // Move "-ts ts-files" behind the fileUri.
-                        exec(`${toolPath} ${fileUri.fsPath} ${tsFileArg}`)
+                        exec(`${toolPath} "${fileUri.fsPath}" ${tsFileArg}`)
                     } else { // from command palette
                         const activeTextEditor = vscode.window.activeTextEditor
                         if (activeTextEditor) {
                             const documentUri = activeTextEditor.document.uri
                             // Move "-ts ts-files" behind the fileUri.
-                            exec(`${toolPath} ${documentUri.fsPath}  ${tsFileArg}`)
+                            exec(`${toolPath} "${documentUri.fsPath}"  ${tsFileArg}`)
                         }
                     }
                 } else {
@@ -74,7 +71,7 @@ export function activate(context: vscode.ExtensionContext) {
                         'The output location of TS file is required. Add ' +
                         '"-ts ts-filename" to the path of pylupdate.',
                         'Setting'
-                        )
+                    )
                     if (response === 'Setting') {
                         vscode.commands.executeCommand('workbench.action.openSettings')
                     }
@@ -108,12 +105,12 @@ function useTool(id: string, name: string, targetUri: vscode.Uri) {
     const toolPath = vscode.workspace.getConfiguration('qtForPython.path').get<string>(id)
     if (toolPath) {
         if (targetUri) { // from explorer/context menus
-            exec(`${toolPath} ${targetUri.fsPath}`)
+            exec(`${toolPath} "${targetUri.fsPath}"`)
         } else { // from command palette
             const activeTextEditor = vscode.window.activeTextEditor
             if (activeTextEditor) {
                 const documentUri = activeTextEditor.document.uri
-                exec(`${toolPath} ${documentUri.fsPath}`)
+                exec(`${toolPath} "${documentUri.fsPath}"`)
             }
         }
     } else { showPathNotExist(name) }
@@ -130,10 +127,10 @@ async function showPathNotExist(name: string) {
     }
 }
 
-async function exec(file: string, options = { cwd: rootPath }) {
+async function exec(command: string, options = { cwd: rootPath }) {
     let output
     try {
-        output = await util.promisify(child_process.exec)(file, options)
+        output = await util.promisify(child_process.exec)(command, options)
     } catch (err) {
         vscode.window.showErrorMessage(err.message)
         outputChannel.appendLine(`[ERROR] ${err.message}`)

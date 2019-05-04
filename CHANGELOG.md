@@ -15,7 +15,10 @@
 ### Added
 
 * Button for `qmlscene` preview
-* Enable/disable configuration
+
+### Fixed
+
+* Now, the path of input file could include spaces. (thanks to _Paolo (ZioLupo)_)
 
 ## 0.1.0
 
