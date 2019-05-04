@@ -1,6 +1,10 @@
 {
     "name": "vscode-qt-for-python",
+<<<<<<< HEAD
     "version": "0.1.1",
+=======
+    "version": "0.2.0",
+>>>>>>> develop
     "publisher": "seanwu",
     "engines": {
         "vscode": "^1.30.0"
@@ -64,6 +68,36 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "qtForPython.editForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.compileForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.updateTranslation",
+                    "when": "resourceLangId == python"
+                },
+                {
+                    "command": "qtForPython.editTranslation",
+                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.releaseTranslation",
+                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.previewQml",
+                    "when": "resourceLangId == qml"
+                },
+                {
+                    "command": "qtForPython.compileResource",
+                    "when": "resourceExtname == .qrc && resourceLangId == xml"
+                }
+            ],
             "explorer/context": [
                 {
                     "command": "qtForPython.newForm",
@@ -106,34 +140,78 @@
                     "group": "qtForPython@8"
                 }
             ],
-            "commandPalette": [
+            "editor/title": [
                 {
                     "command": "qtForPython.editForm",
-                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@2"
                 },
                 {
                     "command": "qtForPython.compileForm",
-                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@3"
                 },
                 {
                     "command": "qtForPython.updateTranslation",
-                    "when": "resourceLangId == python"
+                    "when": "resourceLangId == python",
+                    "group": "qtForPython@4"
                 },
                 {
                     "command": "qtForPython.editTranslation",
-                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@5"
                 },
                 {
                     "command": "qtForPython.releaseTranslation",
-                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@6"
                 },
                 {
                     "command": "qtForPython.previewQml",
-                    "when": "resourceLangId == qml"
+                    "when": "resourceLangId == qml",
+                    "group": "qtForPython@7"
                 },
                 {
                     "command": "qtForPython.compileResource",
-                    "when": "resourceExtname == .qrc && resourceLangId == xml"
+                    "when": "resourceExtname == .qrc && resourceLangId == xml",
+                    "group": "qtForPython@8"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "qtForPython.editForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@2"
+                },
+                {
+                    "command": "qtForPython.compileForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@3"
+                },
+                {
+                    "command": "qtForPython.updateTranslation",
+                    "when": "resourceLangId == python",
+                    "group": "qtForPython@4"
+                },
+                {
+                    "command": "qtForPython.editTranslation",
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@5"
+                },
+                {
+                    "command": "qtForPython.releaseTranslation",
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@6"
+                },
+                {
+                    "command": "qtForPython.previewQml",
+                    "when": "resourceLangId == qml",
+                    "group": "qtForPython@7"
+                },
+                {
+                    "command": "qtForPython.compileResource",
+                    "when": "resourceExtname == .qrc && resourceLangId == xml",
+                    "group": "qtForPython@8"
                 }
             ]
         },
@@ -143,12 +221,12 @@
                 "qtForPython.path.designer": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of Qt Designer with CLI arguments to create and edit form (`*.ui`) files. For example, `/opt/Qt/5.12.0/gcc_64/bin/designer` in Linux or `C:\\Qt\\5.12.0\\mingw73_64\\bin\\designer.exe` in Windows."
+                    "markdownDescription": "The path of Qt Designer with CLI arguments to create and edit form (`*.ui`) files. For example, `\"/opt/Qt/5.12.0/gcc_64/bin/designer\"` in Linux or `\"C:\\Qt\\5.12.0\\mingw73_64\\bin\\designer.exe\"` in Windows."
                 },
                 "qtForPython.path.pyuic": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of UI compiler of Qt for Python (PyQt5 or PySide2). For example, `pyuic5 -d -o ./out.py ` for PyQt5 or `pyside2-uic -d -o ./out.py ` for PySide2."
+                    "markdownDescription": "The path of UI compiler of Qt for Python (PyQt5 or PySide2). For example, `pyuic5 -d -o ./out.py` for PyQt5 or `pyside2-uic -d -o ./out.py` for PySide2."
                 },
                 "qtForPython.path.pylupdate": {
                     "type": "string",
@@ -158,17 +236,17 @@
                 "qtForPython.path.linguist": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of Qt Linguist with CLI arguments to edit translation (`*.qt.ts`) files. For example, `/opt/Qt/5.12.0/gcc_64/bin/linguist` in Linux or `C:\\Qt\\5.12.0\\mingw73_64\\bin\\linguist.exe` in Windows."
+                    "markdownDescription": "The path of Qt Linguist with CLI arguments to edit translation (`*.qt.ts`) files. For example, `\"/opt/Qt/5.12.0/gcc_64/bin/linguist\"` in Linux or `\"C:\\Qt\\5.12.0\\mingw73_64\\bin\\linguist.exe\"` in Windows."
                 },
                 "qtForPython.path.lrelease": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of Qt lrelease with CLI arguments to edit translation (`*.qt.ts`) files. For example, `/opt/Qt/5.12.0/gcc_64/bin/lrelease -qm ./out.qm` in Linux or `C:\\Qt\\5.12.0\\mingw73_64\\bin\\lrelease.exe -qm .\\out.qm` in Windows."
+                    "markdownDescription": "The path of Qt lrelease with CLI arguments to edit translation (`*.qt.ts`) files. For example, `\"/opt/Qt/5.12.0/gcc_64/bin/lrelease\" -qm ./out.qm` in Linux or `\"C:\\Qt\\5.12.0\\mingw73_64\\bin\\lrelease.exe\" -qm .\\out.qm` in Windows."
                 },
                 "qtForPython.path.qmlscene": {
                     "type": "string",
                     "default": "",
-                    "markdownDescription": "The path of Qt QML Scene (`qmlscene`) with CLI arguments to preview QML (`*.qml`) files. For example, `/opt/Qt/5.12.0/gcc_64/bin/qmlscene --verbose` in Linux or `C:\\Qt\\5.12.0\\mingw73_64\\bin\\qmlscene.exe --verbose` in Windows."
+                    "markdownDescription": "The path of Qt QML Scene (`qmlscene`) with CLI arguments to preview QML (`*.qml`) files. For example, `\"/opt/Qt/5.12.0/gcc_64/bin/qmlscene\" --verbose` in Linux or `\"C:\\Qt\\5.12.0\\mingw73_64\\bin\\qmlscene.exe\" --verbose` in Windows."
                 },
                 "qtForPython.path.pyrcc": {
                     "type": "string",

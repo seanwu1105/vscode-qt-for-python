@@ -7,9 +7,14 @@
 * `qmllint`
 * `qmleasing`
 * Color provider for QML and QSS
-* Button for `qmlscene` preview
 * `pyqtdeploy` (PyQt5 only)
 * CI/CD
+
+## 0.2.0
+
+### Added
+
+* Menus in editor/title and editor/context
 
 ## 0.1.1
 
@@ -17,6 +22,10 @@
 
 * Format the README.md
 * Update the username of badgets
+
+### Fixed
+
+* Now, the path of input file could include spaces. (thanks to _Paolo (ZioLupo)_)
 
 ## 0.1.0
 
