@@ -14,7 +14,7 @@
 
 ### Added
 
-* Button for `qmlscene` preview
+* Menus in editor/title and editor/context
 
 ### Fixed
 

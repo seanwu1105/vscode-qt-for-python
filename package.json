@@ -64,6 +64,36 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "qtForPython.editForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.compileForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.updateTranslation",
+                    "when": "resourceLangId == python"
+                },
+                {
+                    "command": "qtForPython.editTranslation",
+                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.releaseTranslation",
+                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                },
+                {
+                    "command": "qtForPython.previewQml",
+                    "when": "resourceLangId == qml"
+                },
+                {
+                    "command": "qtForPython.compileResource",
+                    "when": "resourceExtname == .qrc && resourceLangId == xml"
+                }
+            ],
             "explorer/context": [
                 {
                     "command": "qtForPython.newForm",
@@ -106,34 +136,78 @@
                     "group": "qtForPython@8"
                 }
             ],
-            "commandPalette": [
+            "editor/title": [
                 {
                     "command": "qtForPython.editForm",
-                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@2"
                 },
                 {
                     "command": "qtForPython.compileForm",
-                    "when": "resourceExtname == .ui && resourceLangId == xml"
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@3"
                 },
                 {
                     "command": "qtForPython.updateTranslation",
-                    "when": "resourceLangId == python"
+                    "when": "resourceLangId == python",
+                    "group": "qtForPython@4"
                 },
                 {
                     "command": "qtForPython.editTranslation",
-                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@5"
                 },
                 {
                     "command": "qtForPython.releaseTranslation",
-                    "when": "resourceExtname == .ts  && resourceLangId == xml"
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@6"
                 },
                 {
                     "command": "qtForPython.previewQml",
-                    "when": "resourceLangId == qml"
+                    "when": "resourceLangId == qml",
+                    "group": "qtForPython@7"
                 },
                 {
                     "command": "qtForPython.compileResource",
-                    "when": "resourceExtname == .qrc && resourceLangId == xml"
+                    "when": "resourceExtname == .qrc && resourceLangId == xml",
+                    "group": "qtForPython@8"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "qtForPython.editForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@2"
+                },
+                {
+                    "command": "qtForPython.compileForm",
+                    "when": "resourceExtname == .ui && resourceLangId == xml",
+                    "group": "qtForPython@3"
+                },
+                {
+                    "command": "qtForPython.updateTranslation",
+                    "when": "resourceLangId == python",
+                    "group": "qtForPython@4"
+                },
+                {
+                    "command": "qtForPython.editTranslation",
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@5"
+                },
+                {
+                    "command": "qtForPython.releaseTranslation",
+                    "when": "resourceExtname == .ts && resourceLangId == xml",
+                    "group": "qtForPython@6"
+                },
+                {
+                    "command": "qtForPython.previewQml",
+                    "when": "resourceLangId == qml",
+                    "group": "qtForPython@7"
+                },
+                {
+                    "command": "qtForPython.compileResource",
+                    "when": "resourceExtname == .qrc && resourceLangId == xml",
+                    "group": "qtForPython@8"
                 }
             ]
         },
