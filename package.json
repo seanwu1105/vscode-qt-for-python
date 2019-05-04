@@ -387,11 +387,11 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "devDependencies": {
-        "typescript": "^3.1.4",
-        "vscode": "^1.1.25",
-        "tslint": "^5.8.0",
-        "@types/node": "^8.10.25",
-        "@types/mocha": "^2.2.42"
+        "typescript": "^3.4.5",
+        "vscode": "^1.1.33",
+        "tslint": "^5.16.0",
+        "@types/node": "^11.13.8",
+        "@types/mocha": "^5.2.6"
     },
     "icon": "images/icon.png",
     "homepage": "https://github.com/GLaDOS1105/vscode-qt-for-python",
