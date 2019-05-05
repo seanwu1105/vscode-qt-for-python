@@ -40,6 +40,31 @@ A Visual Studio Code extension provides some common functionalities for PyQt5 an
 * [x] Preview QML
 * [x] Compile QRC (Qt Resource File) into Python file (require `pyrcc5` or `pyside2-rcc`)
 
+## Supported Environment Variable
+
+The following list shows the supported environment variable you can use for the path of Qt tools in configurations.
+
+### Predefined Variables
+
+* `${workspaceFolder}` - the path of the folder opened in VS Code
+* `${workspaceFolderBasename}` - the name of the folder opened in VS Code without any slashes (/)
+* `${file}` - the current opened file
+* `${relativeFile}` - the current opened file relative to workspaceFolder
+* `${fileBasename}` - the current opened file's basename
+* `${fileBasenameNoExtension}` - the current opened file's basename without file extension
+* `${fileDirname}` - the current opened file's dirname
+* `${fileExtname}` - the current opened file's extension
+* `${lineNumber}` - the current selected line number in the active file
+* `${selectedText}` - the current selected text in the active file
+
+> The example of predefined variables can be found [here](https://code.visualstudio.com/docs/editor/variables-reference).
+
+### System Environment Variables
+
+You can also reference environment variables through the `${env:Name}` syntax (for example, `${env:USER}`).
+
+> Be sure to match the environment variable name's casing, for example `${env:Path}` on Windows.
+
 ## Requirements
 
 This extension requires Qt Designer, Qt Linguist, Qt `lrelease` and Qt `qmlscene` for different features. You could install these tools by installing [Qt Creator](https://www.qt.io/download).

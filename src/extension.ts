@@ -5,11 +5,15 @@ import * as vscode from 'vscode'
 import * as util from 'util'
 import * as child_process from 'child_process'
 
+import { VariableResolver } from './variableResolver'
+
 let outputChannel: vscode.OutputChannel
 let rootPath: undefined | string
 if (vscode.workspace.workspaceFolders) {
     rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath
 } else { rootPath = undefined }
+
+let variableResolver = new VariableResolver()
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -129,8 +133,10 @@ async function showPathNotExist(name: string) {
 
 async function exec(command: string, options = { cwd: rootPath }) {
     let output
+    let resolvedCommand = variableResolver.resolve(command)
+    outputChannel.appendLine(`[INFO] Running command: ${resolvedCommand}`)
     try {
-        output = await util.promisify(child_process.exec)(command, options)
+        output = await util.promisify(child_process.exec)(resolvedCommand, options)
     } catch (err) {
         vscode.window.showErrorMessage(err.message)
         outputChannel.appendLine(`[ERROR] ${err.message}`)

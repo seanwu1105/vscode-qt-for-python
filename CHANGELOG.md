@@ -10,11 +10,20 @@
 * `pyqtdeploy` (PyQt5 only)
 * CI/CD
 
+## 0.3.0
+
+### Added
+
+Partial environment variables are supported in configuration, including
+
+* Visual Studio Code predefined variables
+* Environment variables
+
 ## 0.2.0
 
 ### Added
 
-* Menus in editor/title and editor/context
+Menus in editor/title and editor/context
 
 ## 0.1.1
 
