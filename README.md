@@ -40,9 +40,9 @@ A Visual Studio Code extension provides some common functionalities for PyQt5 an
 * [x] Preview QML
 * [x] Compile QRC (Qt Resource File) into Python file (require `pyrcc5` or `pyside2-rcc`)
 
-## Supported Environment Variable
+## Supported Environment Variables
 
-The following list shows the supported environment variable you can use for the path of Qt tools in configurations.
+The following list shows the supported environment variables you can use for the path of Qt tools in configurations.
 
 ### Predefined Variables
 
@@ -63,7 +63,7 @@ The following list shows the supported environment variable you can use for the 
 
 You can also reference environment variables through the `${env:Name}` syntax (for example, `${env:USER}`).
 
-> Be sure to match the environment variable name's casing, for example `${env:Path}` on Windows.
+> Be sure to match the environment variable name's casing, for example, `${env:Path}` on Windows.
 
 ## Requirements
 
