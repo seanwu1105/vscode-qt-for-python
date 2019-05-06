@@ -25,16 +25,16 @@ Partial environment variables are supported in configuration, including
 
 Menus in editor/title and editor/context
 
+### Fixed
+
+* Now, the path of input file could include spaces. (thanks to _Paolo (ZioLupo)_)
+
 ## 0.1.1
 
 ### Changed
 
 * Format the README.md
 * Update the username of badgets
-
-### Fixed
-
-* Now, the path of input file could include spaces. (thanks to _Paolo (ZioLupo)_)
 
 ## 0.1.0
 
