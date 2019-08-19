@@ -255,7 +255,10 @@
             {
                 "id": "qmake",
                 "extensions": [
-                    ".pro"
+                    ".pro",
+                    ".pri",
+                    ".prf",
+                    ".prl"
                 ],
                 "aliases": [
                     "QMake",
