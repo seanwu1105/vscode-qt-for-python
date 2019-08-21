@@ -1,14 +1,14 @@
 # Change Log
 
-## Unrelease
+## 0.4.1
+
+Remove the new lines in QML snippets.
+
+## 0.4.0
 
 ### Added
 
-* `qmllint`
-* `qmleasing`
-* Color provider for QML and QSS
-* `pyqtdeploy` (PyQt5 only)
-* CI/CD
+Support `.pri`, `.prf`, `.prl` file extensions by applying QMake syntax.
 
 ## 0.3.0
 

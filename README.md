@@ -69,7 +69,7 @@ You can also reference environment variables through the `${env:Name}` syntax (f
 
 This extension requires Qt Designer, Qt Linguist, Qt `lrelease` and Qt `qmlscene` for different features. You could install these tools by installing [Qt Creator](https://www.qt.io/download).
 
-After the installation, you could find the tools within the installing folder of Qt Creator in your computer. For example, if you install Qt Creator 5.12.0 in `/opt/Qt` in Linux, you could find out the binary of these tools in `/opt/Qt/5.12.0/gcc_64/bin`. Or, for Windows, you could find the binary of the tools in `C:\Qt\5.12.0\mingw73_64\bin` if you did not change the default path. You have to set the paths of tools in **Qt for Python** section in user settings of Visual Studio Code before using the commands provided by this extension.
+After the installation, you could find the tools within the installing folder of Qt Creator in your computer. For example, if you install Qt Creator 5.13.0 in `/opt/Qt` in Linux, you could find out the binary of these tools in `/opt/Qt/5.13.0/gcc_64/bin`. Or, for Windows, you could find the binary of the tools in `C:\Qt\5.13.0\mingw73_64\bin` if you did not change the default path. You have to set the paths of tools in **Qt for Python** section in user settings of Visual Studio Code before using the commands provided by this extension.
 
 ## Caveat
 

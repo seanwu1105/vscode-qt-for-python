@@ -20,24 +20,18 @@
     "description": "Create Text Object"
   },
   "Region Start": {
-		"prefix": "#region",
-		"body": [
-			"//#region $0"
-		],
-		"description": "Folding Region Start"
-	},
-	"Region End": {
-		"prefix": "#endregion",
-		"body": [
-			"//#endregion"
-		],
-		"description": "Folding Region End"
+    "prefix": "#region",
+    "body": [
+      "//#region $0",
+      "$1",
+      "//#endregion"
+    ],
+    "description": "Folding Region Start"
   },
   "Property Attribute with Initialization": {
     "prefix": "property",
     "body": [
-      "property ${1|bool,double,enum,int,real,string,url,variant,var,date,point,rect,size|} ${2:name}: ${3:value}",
-      "$0"
+      "property ${1|bool,double,enum,int,real,string,url,variant,var,date,point,rect,size|} ${2:name}: ${3:value}"
     ],
     "description": "Property Attribute with Initialization"
   },
@@ -51,13 +45,13 @@
     "description": "List Attribute with Initialization"
   },
   "Method Attribute": {
-		"prefix": "function",
-		"body": [
-			"function ${1:name}(${2:params}) {",
-			"\t$0",
-			"}"
-		],
-		"description": "Method Attribute"
+    "prefix": "function",
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Method Attribute"
   },
   "Enumeration Attributes": {
     "prefix": "enum",
@@ -73,8 +67,7 @@
   "Property Alias": {
     "prefix": "alias",
     "body": [
-      "property alias ${1:name}: ${2:ref}",
-      "$0"
+      "property alias ${1:name}: ${2:ref}"
     ],
     "description": "Property Alias"
   }
