@@ -56,7 +56,7 @@
       "patterns": [
         {
           "name": "entity.name.type.qss",
-          "match": "\\b(QAbstractScrollArea|QCheckBox|QColumnView|QComboBox|QDateEdit|QDateTimeEdit|QDialog|QDialogButtonBox|QDockWidget|QDoubleSpinBox|QFrame|QGroupBox|QHeaderView|QLabel|QLineEdit|QListView|QListWidget|QMainWindow|QMenu|QMenuBar|QMessageBox|QProgressBar|QPushButton|QRadioButton|QScrollBar|QSizeGrip|QSlider|QSpinBox|QSplitter|QStatusBar|QTabBar|QTabWidget|QTableView|QTableWidget|QTextEdit|QTimeEdit|QToolBar|QToolButton|QToolBox|QToolTip|QTreeView|QTreeWidget|QWidget)\\b"
+          "match": "\\b(QAbstractScrollArea|QAbstractItemView|QCheckBox|QColumnView|QComboBox|QDateEdit|QDateTimeEdit|QDialog|QDialogButtonBox|QDockWidget|QDoubleSpinBox|QFrame|QGroupBox|QHeaderView|QLabel|QLineEdit|QListView|QListWidget|QMainWindow|QMenu|QMenuBar|QMessageBox|QProgressBar|QPlainTextEdit|QPushButton|QRadioButton|QScrollBar|QSizeGrip|QSlider|QSpinBox|QSplitter|QStatusBar|QTabBar|QTabWidget|QTableView|QTableWidget|QTextEdit|QTimeEdit|QToolBar|QToolButton|QToolBox|QToolTip|QTreeView|QTreeWidget|QWidget)\\b"
         }
       ]
     },
