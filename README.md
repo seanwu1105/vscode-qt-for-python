@@ -4,8 +4,6 @@
 [![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![downloads](https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
-[![dependencies Status](https://david-dm.org/seanwu1105/vscode-qt-for-python/status.svg)](https://david-dm.org/seanwu1105/vscode-qt-for-python)
-[![devDependencies Status](https://david-dm.org/seanwu1105/vscode-qt-for-python/dev-status.svg)](https://david-dm.org/seanwu1105/vscode-qt-for-python?type=dev)
 
 A Visual Studio Code extension provides some common functionalities for PyQt5 and PySide2 with Qt Creator.
 
