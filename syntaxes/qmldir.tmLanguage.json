@@ -1,0 +1,83 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "QML Directory",
+  "scopeName": "source.qmldir",
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#keywords"
+    },
+    {
+      "include": "#version"
+    },
+    {
+      "include": "#names"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "patterns": [
+        {
+          "name": "comment.line.number-sign.qmldir",
+          "begin": "#",
+          "end": "$"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.other.qmldir",
+          "match": "\\b(module|singleton|internal|plugin|classname|typeinfo|depends|designersupported)\\b"
+        }
+      ]
+    },
+    "version": {
+      "patterns": [
+        {
+          "name": "constant.numeric.qml",
+          "match": "\\b\\d+\\.\\d+\\b"
+        }
+      ]
+    },
+    "names": {
+      "patterns": [
+        {
+          "include": "#file-name"
+        },
+        {
+          "include": "#module-name"
+        },
+        {
+          "include": "#identifier"
+        }
+      ]
+    },
+    "file-name": {
+      "patterns": [
+        {
+          "name": "string.unquoted.qmldir",
+          "match": "\\b\\w+\\.(qmltypes|qml|js)\\b"
+        }
+      ]
+    },
+    "module-name": {
+      "patterns": [
+        {
+          "name": "entity.name.type.qmldir",
+          "match": "\\b[A-Z]\\w*\\b"
+        }
+      ]
+    },
+    "identifier": {
+      "patterns": [
+        {
+          "name": "variable.parameter.qmldir",
+          "match": "\\b\\w+\\b"
+        }
+      ]
+    }
+  }
+}
