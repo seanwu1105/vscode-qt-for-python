@@ -318,7 +318,7 @@
         {
           "description": "Attribute modifier.",
           "name": "storage.modifier.qml",
-          "match": "\\b(default|alias|readonly)\\b"
+          "match": "\\b(default|alias|readonly|required)\\b"
         },
         {
           "name": "keyword.other.qml",
