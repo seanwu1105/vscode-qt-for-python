@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.2
+
+Fix release workflow by packaging VSIX file before upload it to release asset.
+
 ## 0.5.1
 
 Add publisher property in `package.json` for CI/CD.

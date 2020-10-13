@@ -37,6 +37,10 @@ jobs:
         tag_name: ${{ steps.version_check.outputs.version }}
         release_name: ${{ steps.version_check.outputs.version }}
         body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
+
+    - name: Package VSIX
+      if: steps.version_check.outputs.changed == 'true'
+      run: npx vsce package
     
     - name: Upload VSIX to release assets
       if: steps.version_check.outputs.changed == 'true'
