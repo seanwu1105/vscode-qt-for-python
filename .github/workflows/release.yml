@@ -38,6 +38,17 @@ jobs:
         release_name: ${{ steps.version_check.outputs.version }}
         body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
     
+    - name: Upload VSIX to release assets
+      if: steps.version_check.outputs.changed == 'true'
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
+        asset_name: vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
+        asset_content_type: application/vsix
+
     - name: Publish on Visual Studio Code Extension Marketplace
       if: steps.version_check.outputs.changed == 'true'
       run: npm run deploy

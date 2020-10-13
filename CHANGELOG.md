@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.1
+
+Add publisher property in `package.json` for CI/CD.
+
 ## 0.5.0
 
 Add the syntax highlighting for `require` keyword in QML.
