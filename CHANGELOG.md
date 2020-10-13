@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.5.0
+
+Add the syntax highlighting for `require` keyword in QML.
+
 ## 0.4.1
 
 Remove the new lines in QML snippets.
