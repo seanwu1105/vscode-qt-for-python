@@ -7,7 +7,7 @@
 [![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/aa7530b2ecad4617af3b98d57baf1166)](https://www.codacy.com/gh/seanwu1105/vscode-qt-for-python/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=seanwu1105/vscode-qt-for-python&amp;utm_campaign=Badge_Grade)
 
-A Visual Studio Code extension provides some common functionalities for PyQt5 and PySide2 with Qt Creator.
+A Visual Studio Code extension provides some common functionalities for PyQt5, PySide2, PySide6 with Qt Creator.
 
 |        Qt Markup Language (`qml`)       |         Qt Style Sheets (`qss`)         |    Resource Collection Files (`qrc`)    |
 |:---------------------------------------:|:---------------------------------------:|:---------------------------------------:|

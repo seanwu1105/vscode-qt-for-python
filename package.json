@@ -243,12 +243,12 @@
 				"qtForPython.path.pyuic": {
 					"type": "string",
 					"default": "",
-					"markdownDescription": "The path of UI compiler of Qt for Python (PyQt5 or PySide2). For example, `pyuic5 -d -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-uic -d -o ./\"${fileBasenameNoExtension}.py\"` for PySide2."
+					"markdownDescription": "The path of UI compiler of Qt for Python (PyQt5, PySide2 or PySide6). For example, `pyuic5 -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-uic -o ./\"${fileBasenameNoExtension}.py\"` for PySide2. (`pyside6-uic` for pyside6, settings below are the same)"
 				},
 				"qtForPython.path.pylupdate": {
 					"type": "string",
 					"default": "",
-					"markdownDescription": "The path of `lupdate` of Qt for Python (PyQt5 or PySide2). For example, `pylupdate5 -verbose -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PyQt5 or `pyside2-lupdate -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PySide2."
+					"markdownDescription": "The path of `lupdate` of Qt for Python (PyQt5, PySide2 or PySide6). For example, `pylupdate5 -verbose -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PyQt5 or `pyside2-lupdate -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PySide2."
 				},
 				"qtForPython.path.linguist": {
 					"type": "string",
@@ -268,7 +268,7 @@
 				"qtForPython.path.pyrcc": {
 					"type": "string",
 					"default": "",
-					"markdownDescription": "The path of resource file compiler of Qt for Python (PyQt5 or PySide2). For example, ` pyrcc5 -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-rcc -o ./\"${fileBasenameNoExtension}.py\"` for PySide2."
+					"markdownDescription": "The path of resource file compiler of Qt for Python (PyQt5, PySide2 or PySide6). For example, ` pyrcc5 -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-rcc -o ./\"${fileBasenameNoExtension}.py\"` for PySide2."
 				}
 			}
 		},
