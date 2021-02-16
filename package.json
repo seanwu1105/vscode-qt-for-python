@@ -3,7 +3,7 @@
 	"displayName": "Qt for Python",
 	"description": "Qt for Python (PyQt5 and PySide2) extension for Visual Studio Code.",
 	"publisher": "seanwu",
-	"version": "0.6.0",
+	"version": "0.6.1",
 	"engines": {
 		"vscode": "^1.53.0"
 	},

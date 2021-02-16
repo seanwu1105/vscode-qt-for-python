@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.6.1
+
+Fix: the version of `engines.vscode` is different from `@types/vscode`.
+
 ## 0.6.0
 
 Add basic support for PySide6. Thanks to [pjx206](https://github.com/pjx206). #88
