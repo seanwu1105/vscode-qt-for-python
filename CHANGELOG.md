@@ -1,26 +1,49 @@
-# Change Log
+# Changelog
 
-## 0.6.1
+All notable changes to this project will be documented in this file.
 
-Fix: the version of `engines.vscode` is different from `@types/vscode`.
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 0.6.2 - 2021-04-15
+
+### Updated
+
+- Update license.
+
+## 0.6.1 - 2021-02-13
+
+### Fixed
+
+- Fix the version of `engines.vscode` is different from `@types/vscode`.
 
 ## 0.6.0
 
-Add basic support for PySide6. Thanks to [pjx206](https://github.com/pjx206). #88
+### Added
+
+- Add basic support for PySide6. Thanks to [pjx206](https://github.com/pjx206). #88
 
 ## 0.5.2
+
+### Fixed
 
 Fix release workflow by packaging VSIX file before upload it to release asset.
 
 ## 0.5.1
 
+### Added
+
 Add publisher property in `package.json` for CI/CD.
 
 ## 0.5.0
 
+### Added
+
 Add the syntax highlighting for `require` keyword in QML.
 
 ## 0.4.1
+
+### Updated
 
 Remove the new lines in QML snippets.
 
