@@ -1,22 +1,82 @@
 {
-    "root": true,
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "project": ["tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "no-console": "error",
+    "prefer-const": "error",
+    "no-param-reassign": "error",
+    "no-else-return": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreStrings": true,
+        "ignoreUrls": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
     ],
-    "rules": {
-        "@typescript-eslint/naming-convention": "warn",
-        "@typescript-eslint/semi": "warn",
-        "curly": "warn",
-        "eqeqeq": "warn",
-        "no-throw-literal": "warn",
-        "semi": "off"
-    },
-    "ignorePatterns": [
-        "**/*.d.ts"
+    "class-methods-use-this": "error",
+    "no-magic-numbers": "off",
+    "@typescript-eslint/no-magic-numbers": [
+      "error",
+      { "ignore": [0, 1], "ignoreDefaultValues": true }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "@typescript-eslint/array-type": "error",
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/no-unnecessary-qualifier": "error",
+    "@typescript-eslint/no-unnecessary-type-arguments": "error",
+    "@typescript-eslint/prefer-for-of": "error",
+    "@typescript-eslint/prefer-function-type": "error",
+    "@typescript-eslint/prefer-includes": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "error",
+    "@typescript-eslint/prefer-optional-chain": "error",
+    "@typescript-eslint/prefer-readonly": "error",
+    "@typescript-eslint/prefer-as-const": "error",
+    "@typescript-eslint/prefer-string-starts-ends-with": "error",
+    "@typescript-eslint/prefer-ts-expect-error": "error",
+    "@typescript-eslint/promise-function-async": [
+      "error",
+      { "checkArrowFunctions": false }
+    ],
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": [
+          "static-field",
+          "abstract-field",
+          "instance-field",
+          "decorated-field",
+          "constructor",
+          "static-method",
+          "abstract-method",
+          "instance-method",
+          "decorated-method"
+        ]
+      }
     ]
+  },
+  "ignorePatterns": ["**/*.d.ts"],
+  "overrides": [
+    {
+      "files": ["**/test/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off",
+        "no-console": ["error", { "allow": ["error"] }]
+      }
+    }
+  ]
 }

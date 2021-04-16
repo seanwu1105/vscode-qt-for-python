@@ -2,6 +2,7 @@
   "name": "vscode-qt-for-python",
   "displayName": "Qt for Python",
   "description": "Visual Studio Code extension for PySide6.",
+  "publisher": "seanwu",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -11,9 +12,10 @@
     "package": "webpack --mode production --devtool hidden-source-map",
     "test-compile": "tsc -p ./",
     "test-watch": "tsc -watch -p ./",
-    "pretest": "npm run test-compile && npm run lint",
+    "pretest": "npm run test-compile",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
@@ -24,9 +26,13 @@
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.19.0",
     "glob": "^7.1.6",
+    "husky": "^6.0.0",
+    "lint-staged": "^10.5.4",
     "mocha": "^8.2.1",
+    "prettier": "^2.2.1",
     "ts-loader": "^8.0.14",
     "typescript": "^4.1.3",
+    "vsce": "^1.87.1",
     "vscode-test": "^1.5.0",
     "webpack": "^5.19.0",
     "webpack-cli": "^4.4.0"
@@ -48,5 +54,40 @@
         "title": "Hello World"
       }
     ]
+  },
+  "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seanwu1105/vscode-qt-for-python.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seanwu1105/vscode-qt-for-python/issues",
+    "email": "seanwu1105@gmail.com"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "version"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "version"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "version"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "version"
+    }
+  ],
+  "lint-staged": {
+    "*.ts": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }
