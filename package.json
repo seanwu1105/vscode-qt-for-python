@@ -1,418 +1,51 @@
 {
-	"name": "vscode-qt-for-python",
-	"displayName": "Qt for Python",
-	"description": "Qt for Python (PyQt5 and PySide2) extension for Visual Studio Code.",
-	"publisher": "seanwu",
-	"version": "0.6.2",
-	"engines": {
-		"vscode": "^1.53.0"
-	},
-	"main": "./out/extension.js",
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js",
-		"deploy": "vsce publish --yarn"
-	},
-	"devDependencies": {
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.2.0",
-		"@types/node": "^14.14.28",
-		"@types/vscode": "^1.53.0",
-		"@typescript-eslint/eslint-plugin": "^4.15.1",
-		"@typescript-eslint/parser": "^4.15.1",
-		"eslint": "^7.20.0",
-		"glob": "^7.1.6",
-		"mocha": "^8.3.0",
-		"typescript": "^4.1.5",
-		"vsce": "^1.85.0",
-		"vscode-test": "^1.5.0"
-	},
-	"license": "MIT",
-	"activationEvents": [
-		"onCommand:qtForPython.newForm",
-		"onCommand:qtForPython.editForm",
-		"onCommand:qtForPython.compileForm",
-		"onCommand:qtForPython.updateTranslation",
-		"onCommand:qtForPython.editTranslation",
-		"onCommand:qtForPython.releaseTranslation",
-		"onCommand:qtForPython.previewQml",
-		"onCommand:qtForPython.compileResource"
-	],
-	"contributes": {
-		"commands": [
-			{
-				"command": "qtForPython.newForm",
-				"title": "New Form (Qt Designer UI File)",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.editForm",
-				"title": "Edit Form (Qt Designer UI File)",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.compileForm",
-				"title": "Compile Form (Qt Designer UI File) into Qt for Python File",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.updateTranslation",
-				"title": "Update Qt Linguist Translation File from Qt for Python",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.editTranslation",
-				"title": "Edit Qt Linguist Translation File",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.releaseTranslation",
-				"title": "Release Qt Linguist Translation to QM File",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.previewQml",
-				"title": "Preview QML File",
-				"category": "Qt for Python"
-			},
-			{
-				"command": "qtForPython.compileResource",
-				"title": "Compile Resource File into Qt for Python File",
-				"category": "Qt for Python"
-			}
-		],
-		"menus": {
-			"commandPalette": [
-				{
-					"command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml"
-				},
-				{
-					"command": "qtForPython.compileForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml"
-				},
-				{
-					"command": "qtForPython.updateTranslation",
-					"when": "resourceLangId == python"
-				},
-				{
-					"command": "qtForPython.editTranslation",
-					"when": "resourceExtname == .ts  && resourceLangId == xml"
-				},
-				{
-					"command": "qtForPython.releaseTranslation",
-					"when": "resourceExtname == .ts  && resourceLangId == xml"
-				},
-				{
-					"command": "qtForPython.previewQml",
-					"when": "resourceLangId == qml"
-				},
-				{
-					"command": "qtForPython.compileResource",
-					"when": "resourceExtname == .qrc && resourceLangId == xml"
-				}
-			],
-			"explorer/context": [
-				{
-					"command": "qtForPython.newForm",
-					"when": "explorerResourceIsFolder == true",
-					"group": "qtForPython@1"
-				},
-				{
-					"command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@2"
-				},
-				{
-					"command": "qtForPython.compileForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@3"
-				},
-				{
-					"command": "qtForPython.updateTranslation",
-					"when": "resourceLangId == python",
-					"group": "qtForPython@4"
-				},
-				{
-					"command": "qtForPython.editTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@5"
-				},
-				{
-					"command": "qtForPython.releaseTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@6"
-				},
-				{
-					"command": "qtForPython.previewQml",
-					"when": "resourceLangId == qml",
-					"group": "qtForPython@7"
-				},
-				{
-					"command": "qtForPython.compileResource",
-					"when": "resourceExtname == .qrc && resourceLangId == xml",
-					"group": "qtForPython@8"
-				}
-			],
-			"editor/title": [
-				{
-					"command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@2"
-				},
-				{
-					"command": "qtForPython.compileForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@3"
-				},
-				{
-					"command": "qtForPython.updateTranslation",
-					"when": "resourceLangId == python",
-					"group": "qtForPython@4"
-				},
-				{
-					"command": "qtForPython.editTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@5"
-				},
-				{
-					"command": "qtForPython.releaseTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@6"
-				},
-				{
-					"command": "qtForPython.previewQml",
-					"when": "resourceLangId == qml",
-					"group": "qtForPython@7"
-				},
-				{
-					"command": "qtForPython.compileResource",
-					"when": "resourceExtname == .qrc && resourceLangId == xml",
-					"group": "qtForPython@8"
-				}
-			],
-			"editor/context": [
-				{
-					"command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@2"
-				},
-				{
-					"command": "qtForPython.compileForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@3"
-				},
-				{
-					"command": "qtForPython.updateTranslation",
-					"when": "resourceLangId == python",
-					"group": "qtForPython@4"
-				},
-				{
-					"command": "qtForPython.editTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@5"
-				},
-				{
-					"command": "qtForPython.releaseTranslation",
-					"when": "resourceExtname == .ts && resourceLangId == xml",
-					"group": "qtForPython@6"
-				},
-				{
-					"command": "qtForPython.previewQml",
-					"when": "resourceLangId == qml",
-					"group": "qtForPython@7"
-				},
-				{
-					"command": "qtForPython.compileResource",
-					"when": "resourceExtname == .qrc && resourceLangId == xml",
-					"group": "qtForPython@8"
-				}
-			]
-		},
-		"configuration": {
-			"title": "Qt for Python",
-			"properties": {
-				"qtForPython.path.designer": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of Qt Designer with CLI arguments to create and edit form (`*.ui`) files. For example, `\"/opt/Qt/5.13.0/gcc_64/bin/designer\"` in Linux or `\"C:\\Qt\\5.13.0\\mingw73_64\\bin\\designer.exe\"` in Windows."
-				},
-				"qtForPython.path.pyuic": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of UI compiler of Qt for Python (PyQt5, PySide2 or PySide6). For example, `pyuic5 -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-uic -o ./\"${fileBasenameNoExtension}.py\"` for PySide2. (`pyside6-uic` for pyside6, settings below are the same)"
-				},
-				"qtForPython.path.pylupdate": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of `lupdate` of Qt for Python (PyQt5, PySide2 or PySide6). For example, `pylupdate5 -verbose -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PyQt5 or `pyside2-lupdate -ts ./\"${fileBasenameNoExtension}.qt.ts\"` for PySide2."
-				},
-				"qtForPython.path.linguist": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of Qt Linguist with CLI arguments to edit translation (`*.qt.ts`) files. For example, `\"/opt/Qt/5.13.0/gcc_64/bin/linguist\"` in Linux or `\"C:\\Qt\\5.13.0\\mingw73_64\\bin\\linguist.exe\"` in Windows."
-				},
-				"qtForPython.path.lrelease": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of Qt lrelease with CLI arguments to edit translation (`*.qt.ts`) files. For example, `\"/opt/Qt/5.13.0/gcc_64/bin/lrelease\" -qm ./out.qm` in Linux or `\"C:\\Qt\\5.13.0\\mingw73_64\\bin\\lrelease.exe\" -qm .\\out.qm` in Windows."
-				},
-				"qtForPython.path.qmlscene": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of Qt QML Scene (`qmlscene`) with CLI arguments to preview QML (`*.qml`) files. For example, `\"/opt/Qt/5.13.0/gcc_64/bin/qmlscene\" --verbose` in Linux or `\"C:\\Qt\\5.13.0\\mingw73_64\\bin\\qmlscene.exe\" --verbose` in Windows."
-				},
-				"qtForPython.path.pyrcc": {
-					"type": "string",
-					"default": "",
-					"markdownDescription": "The path of resource file compiler of Qt for Python (PyQt5, PySide2 or PySide6). For example, ` pyrcc5 -o ./\"${fileBasenameNoExtension}.py\"` for PyQt5 or `pyside2-rcc -o ./\"${fileBasenameNoExtension}.py\"` for PySide2."
-				}
-			}
-		},
-		"languages": [
-			{
-				"id": "qmake",
-				"extensions": [
-					".pro",
-					".pri",
-					".prf",
-					".prl"
-				],
-				"aliases": [
-					"QMake",
-					"qmake",
-					"Qt Project"
-				],
-				"configuration": "./languages/qmake-language-configuration.json"
-			},
-			{
-				"id": "qml",
-				"extensions": [
-					".qml"
-				],
-				"aliases": [
-					"QML",
-					"qml"
-				],
-				"configuration": "./languages/qml-language-configuration.json"
-			},
-			{
-				"id": "qmldir",
-				"filenames": [
-					"qmldir"
-				],
-				"aliases": [
-					"QML Directory",
-					"qmldir"
-				],
-				"configuration": "./languages/qmldir-language-configuration.json"
-			},
-			{
-				"id": "qss",
-				"extensions": [
-					".qss"
-				],
-				"aliases": [
-					"QSS",
-					"qss"
-				],
-				"configuration": "./languages/qss-language-configuration.json"
-			},
-			{
-				"id": "xml",
-				"extensions": [
-					".qt.ts",
-					".ui",
-					".pro.user",
-					".qrc"
-				]
-			}
-		],
-		"grammars": [
-			{
-				"language": "qmake",
-				"scopeName": "source.qmake",
-				"path": "./syntaxes/qmake.tmLanguage.json"
-			},
-			{
-				"language": "qml",
-				"scopeName": "source.qml",
-				"embeddedLanguages": {
-					"meta.embedded.block.js": "javascript"
-				},
-				"path": "./syntaxes/qml.tmLanguage.json"
-			},
-			{
-				"language": "qmldir",
-				"scopeName": "source.qmldir",
-				"path": "./syntaxes/qmldir.tmLanguage.json"
-			},
-			{
-				"language": "qss",
-				"scopeName": "source.qss",
-				"path": "./syntaxes/qss.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "qml",
-				"path": "./snippets/qml.json"
-			},
-			{
-				"language": "qmldir",
-				"path": "./snippets/qmldir.json"
-			},
-			{
-				"language": "qss",
-				"path": "./snippets/qss.json"
-			}
-		]
-	},
-	"categories": [
-		"Programming Languages",
-		"Snippets"
-	],
-	"keywords": [
-		"Qt",
-		"QML",
-		"PyQt",
-		"PySide",
-		"QtQuick"
-	],
-	"icon": "images/icon.png",
-	"homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/seanwu1105/vscode-qt-for-python.git"
-	},
-	"bugs": {
-		"url": "https://github.com/seanwu1105/vscode-qt-for-python/issues",
-		"email": "seanwu1105@gmail.com"
-	},
-	"badges": [
-		{
-			"url": "https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg",
-			"href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
-			"description": "version"
-		},
-		{
-			"url": "https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg",
-			"href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
-			"description": "version"
-		},
-		{
-			"url": "https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg",
-			"href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
-			"description": "version"
-		},
-		{
-			"url": "https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg",
-			"href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
-			"description": "version"
-		}
-	]
+  "name": "vscode-qt-for-python",
+  "displayName": "Qt for Python",
+  "description": "Visual Studio Code extension for PySide6.",
+  "version": "1.0.0",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscode-qt-for-python.helloWorld"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-qt-for-python.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "test-compile": "tsc -p ./",
+    "test-watch": "tsc -watch -p ./",
+    "pretest": "npm run test-compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.55.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.19.0",
+    "glob": "^7.1.6",
+    "mocha": "^8.2.1",
+    "ts-loader": "^8.0.14",
+    "typescript": "^4.1.3",
+    "vscode-test": "^1.5.0",
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0"
+  }
 }

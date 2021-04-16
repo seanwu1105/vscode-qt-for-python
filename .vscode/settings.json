@@ -7,10 +7,5 @@
         "out": true // set this to false to include "out" folder in search results
     },
     // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-    "typescript.tsc.autoDetect": "off",
-    "editor.formatOnSave": true,
-    "javascript.format.semicolons": "insert",
-    "typescript.format.semicolons": "insert",
-    "javascript.preferences.quoteStyle": "single",
-    "typescript.preferences.quoteStyle": "single",
+    "typescript.tsc.autoDetect": "off"
 }
