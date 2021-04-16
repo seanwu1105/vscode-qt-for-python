@@ -1,3 +1,4 @@
+import json
 import sys
 
-sys.stdout.write(f'{sys.path}')
+sys.stdout.write(json.dumps(sys.path))
