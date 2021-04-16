@@ -3,24 +3,7 @@
   "displayName": "Qt for Python",
   "description": "Visual Studio Code extension for PySide6.",
   "version": "1.0.0",
-  "engines": {
-    "vscode": "^1.55.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:vscode-qt-for-python.helloWorld"
-  ],
-  "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-qt-for-python.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
+  "license": "MIT",
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
@@ -47,5 +30,23 @@
     "vscode-test": "^1.5.0",
     "webpack": "^5.19.0",
     "webpack-cli": "^4.4.0"
+  },
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:vscode-qt-for-python.helloWorld"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-qt-for-python.helloWorld",
+        "title": "Hello World"
+      }
+    ]
   }
 }
