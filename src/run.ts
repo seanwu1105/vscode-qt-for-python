@@ -1,37 +1,17 @@
 import { exec } from 'child_process';
-import * as path from 'path';
 import { promisify } from 'util';
-import * as vscode from 'vscode';
-import { assertNotNullable } from './assertions';
+import { BaseError } from './errors';
 
-export async function python(filePath: string) {
-  return run(`${getPython()} ./python/${filePath}`);
+export async function run({ command, cwd }: { command: string; cwd?: string }) {
+  try {
+    const { stdout, stderr } = await promisify(exec)(command, { cwd });
+    if (stderr) throw new ExecutionError(stderr);
+    return stdout;
+  } catch (e: unknown) {
+    throw new ExecutionError(e);
+  }
 }
 
-function getPython() {
-  const pythonPath = vscode.workspace
-    .getConfiguration('python')
-    .get<string>('pythonPath');
-
-  if (!pythonPath) throw new PythonNotInstallError();
-
-  // assume pythonPath is relative to workspace root.
-  if (!vscode.workspace.workspaceFolders) return pythonPath;
-  return path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, pythonPath);
-}
-
-async function run(command: string) {
-  return promisify(exec)(command, { cwd: getSrcPath() });
-}
-
-function getSrcPath() {
-  const extensionId = 'seanwu.vscode-qt-for-python';
-  const extensionPath = vscode.extensions.getExtension(extensionId)
-    ?.extensionPath;
-  assertNotNullable(extensionPath);
-  return path.join(extensionPath, 'src');
-}
-
-export class PythonNotInstallError extends Error {
-  readonly name = 'PythonNotInstallError';
+export class ExecutionError extends BaseError {
+  readonly name = 'ExecutionError';
 }

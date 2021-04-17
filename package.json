@@ -43,18 +43,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:vscode-qt-for-python.helloWorld"
-  ],
   "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-qt-for-python.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
   "repository": {
     "type": "git",
@@ -89,5 +78,141 @@
   "lint-staged": {
     "*.ts": "eslint --cache --fix",
     "*.{js,css,md}": "prettier --write"
+  },
+  "activationEvents": [
+    "onCommand:qtForPython.newForm",
+    "onCommand:qtForPython.editForm"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "qtForPython.newForm",
+				"title": "New Form (Qt Designer UI File)",
+				"category": "Qt for Python"
+      },
+      {
+				"command": "qtForPython.editForm",
+				"title": "Edit Form (Qt Designer UI File)",
+				"category": "Qt for Python"
+			}
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "qtForPython.editForm",
+					"when": "resourceExtname == .ui && resourceLangId == xml"
+        }
+      ],
+      "explorer/context": [
+        {
+					"command": "qtForPython.newForm",
+					"when": "explorerResourceIsFolder == true",
+					"group": "qtForPython@1"
+				},
+				{
+					"command": "qtForPython.editForm",
+					"when": "resourceExtname == .ui && resourceLangId == xml",
+					"group": "qtForPython@2"
+				}
+      ]
+    },
+    "languages": [
+			{
+				"id": "qmake",
+				"extensions": [
+					".pro",
+					".pri",
+					".prf",
+					".prl"
+				],
+				"aliases": [
+					"QMake",
+					"qmake",
+					"Qt Project"
+				],
+				"configuration": "./languages/qmake-language-configuration.json"
+			},
+			{
+				"id": "qml",
+				"extensions": [
+					".qml"
+				],
+				"aliases": [
+					"QML",
+					"qml"
+				],
+				"configuration": "./languages/qml-language-configuration.json"
+			},
+			{
+				"id": "qmldir",
+				"filenames": [
+					"qmldir"
+				],
+				"aliases": [
+					"QML Directory",
+					"qmldir"
+				],
+				"configuration": "./languages/qmldir-language-configuration.json"
+			},
+			{
+				"id": "qss",
+				"extensions": [
+					".qss"
+				],
+				"aliases": [
+					"QSS",
+					"qss"
+				],
+				"configuration": "./languages/qss-language-configuration.json"
+			},
+			{
+				"id": "xml",
+				"extensions": [
+					".qt.ts",
+					".ui",
+					".pro.user",
+					".qrc"
+				]
+			}
+		],
+		"grammars": [
+			{
+				"language": "qmake",
+				"scopeName": "source.qmake",
+				"path": "./syntaxes/qmake.tmLanguage.json"
+			},
+			{
+				"language": "qml",
+				"scopeName": "source.qml",
+				"embeddedLanguages": {
+					"meta.embedded.block.js": "javascript"
+				},
+				"path": "./syntaxes/qml.tmLanguage.json"
+			},
+			{
+				"language": "qmldir",
+				"scopeName": "source.qmldir",
+				"path": "./syntaxes/qmldir.tmLanguage.json"
+			},
+			{
+				"language": "qss",
+				"scopeName": "source.qss",
+				"path": "./syntaxes/qss.tmLanguage.json"
+			}
+		],
+		"snippets": [
+			{
+				"language": "qml",
+				"path": "./snippets/qml.json"
+			},
+			{
+				"language": "qmldir",
+				"path": "./snippets/qmldir.json"
+			},
+			{
+				"language": "qss",
+				"path": "./snippets/qss.json"
+			}
+		]
   }
 }

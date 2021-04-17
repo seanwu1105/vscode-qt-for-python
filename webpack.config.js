@@ -1,3 +1,4 @@
+/* eslint-disable */
 //@ts-check
 
 'use strict';
