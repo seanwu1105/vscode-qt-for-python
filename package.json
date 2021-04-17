@@ -116,6 +116,16 @@
 				}
       ]
     },
+    "configuration": {
+      "title": "Qt for Python",
+      "properties": {
+        "qtForPython.path.designer": {
+          "type": ["null", "string"],
+          "default": null,
+          "markdownDescription": "The path of Qt Designer with CLI options to create and edit form (`*.ui`) files. Set to `null` or `\"\"` to automatically find from your Python site-packages directories. For examples, `\"/opt/Qt/6.0.0/gcc_64/bin/designer\"` in Linux."
+        }
+      }
+    },
     "languages": [
 			{
 				"id": "qmake",

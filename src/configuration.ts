@@ -1,3 +1,6 @@
-import { extensionName } from './extension';
+import { EXTENSION_NAME } from './constants';
 
-export const pathConfigBaseName = `${extensionName}.path`;
+export const pathConfigBaseName = `${EXTENSION_NAME}.path`;
+
+// eslint-disable-next-line no-console
+console.log(EXTENSION_NAME, pathConfigBaseName);

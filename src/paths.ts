@@ -1,10 +1,10 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
 import { assertNotNullable } from './assertions';
-import { extensionId } from './extension';
+import { EXTENSION_ID } from './constants';
 
 export function getSrcPath() {
-  const extensionPath = vscode.extensions.getExtension(extensionId)
+  const extensionPath = vscode.extensions.getExtension(EXTENSION_ID)
     ?.extensionPath;
   assertNotNullable(extensionPath);
   return path.join(extensionPath, 'src');
