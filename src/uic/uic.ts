@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as yargs from 'yargs';
 import { PredefinedVariableResolver } from '../predefined-variable-resolver';
 import { run } from '../run';
-import { Tool } from './tool';
+import { Tool } from '../tool';
 
 export class Uic {
   readonly name = 'uic';

@@ -1,6 +1,6 @@
 import { PredefinedVariableResolver } from '../predefined-variable-resolver';
 import { run } from '../run';
-import { Tool } from './tool';
+import { Tool } from '../tool';
 
 export class Designer {
   readonly name = 'designer';

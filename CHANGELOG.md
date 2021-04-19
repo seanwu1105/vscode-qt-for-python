@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 1.0.0 - 2021-??-??
 
-- [ ] Smart Python path.
-- [ ] Smart tools discover.
-- [ ] Auto UI compile.
+- [x] Smart Python path.
+- [x] Smart tools discover.
+- [x] Auto UI compile.
 - [ ] Auto RCC compile.
 - [x] Support Linux.
 - [ ] Support Windows.
@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Support PyQt6.
 - [ ] Support PySide2.
 - [ ] Support PyQt5.
+- [ ] Error dialog actions
+  - [ ] Install PySide6/PyQt6/PySide2/PyQt5
+  - [ ] Set paths in config
 
 ## 0.6.2 - 2021-04-15
 

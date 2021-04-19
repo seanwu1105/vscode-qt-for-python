@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import { assertNotNullable } from './assertions';
+import { Designer } from './designer/designer';
 import { getActiveDocumentPath, getActiveWorkspaceFolderPath } from './paths';
-import { Designer } from './tools/designer';
-import { Uic } from './tools/uic';
+import { Uic } from './uic/uic';
 
 async function newForm(dirUri?: vscode.Uri) {
   return new Designer().run({ cwd: dirUri?.fsPath });

@@ -86,7 +86,8 @@
   "activationEvents": [
     "onCommand:qtForPython.newForm",
     "onCommand:qtForPython.editForm",
-    "onCommand:qtForPython.compileForm"
+    "onCommand:qtForPython.compileForm",
+    "workspaceContains:**/*.ui"
   ],
   "contributes": {
     "commands": [
