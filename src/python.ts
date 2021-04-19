@@ -8,7 +8,7 @@ import { run } from './run';
 export async function python(fileName: string, args: string[]) {
   try {
     return run({
-      command: `${getPython()} ./python/${fileName}.py ${args.join(' ')}`,
+      command: `"${getPython()}" "./python/${fileName}.py" ${args.join(' ')}`,
       cwd: getSrcPath(),
     });
   } catch (e: unknown) {

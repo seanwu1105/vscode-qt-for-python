@@ -17,11 +17,15 @@
     "test": "node ./out/test/runTest.js",
     "prepare": "husky install"
   },
+  "dependencies": {
+    "yargs": "^16.2.0"
+  },
   "devDependencies": {
     "@types/glob": "^7.1.3",
     "@types/mocha": "^8.0.4",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.55.0",
+    "@types/yargs": "^16.0.1",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.19.0",
@@ -81,148 +85,217 @@
   },
   "activationEvents": [
     "onCommand:qtForPython.newForm",
-    "onCommand:qtForPython.editForm"
+    "onCommand:qtForPython.editForm",
+    "onCommand:qtForPython.compileForm"
   ],
   "contributes": {
     "commands": [
       {
         "command": "qtForPython.newForm",
-				"title": "New Form (Qt Designer UI File)",
-				"category": "Qt for Python"
+        "title": "New Form (Qt Designer UI File)",
+        "category": "Qt for Python"
       },
       {
-				"command": "qtForPython.editForm",
-				"title": "Edit Form (Qt Designer UI File)",
-				"category": "Qt for Python"
-			}
+        "command": "qtForPython.editForm",
+        "title": "Edit Form (Qt Designer UI File)",
+        "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.compileForm",
+        "title": "Compile Form (Qt Designer UI File) into Qt for Python File",
+        "category": "Qt for Python"
+      }
     ],
     "menus": {
       "commandPalette": [
         {
           "command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml"
+          "when": "resourceExtname == .ui && resourceLangId == xml"
+        },
+        {
+          "command": "qtForPython.compileForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml"
         }
       ],
       "explorer/context": [
         {
-					"command": "qtForPython.newForm",
-					"when": "explorerResourceIsFolder == true",
-					"group": "qtForPython@1"
-				},
-				{
-					"command": "qtForPython.editForm",
-					"when": "resourceExtname == .ui && resourceLangId == xml",
-					"group": "qtForPython@2"
-				}
+          "command": "qtForPython.newForm",
+          "when": "explorerResourceIsFolder == true",
+          "group": "qtForPython@1"
+        },
+        {
+          "command": "qtForPython.editForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@2"
+        },
+        {
+          "command": "qtForPython.compileForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@3"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "qtForPython.editForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@2"
+        },
+        {
+          "command": "qtForPython.compileForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@3"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "qtForPython.editForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@2"
+        },
+        {
+          "command": "qtForPython.compileForm",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython@3"
+        }
       ]
     },
     "configuration": {
       "title": "Qt for Python",
       "properties": {
-        "qtForPython.path.designer": {
-          "type": ["null", "string"],
+        "qtForPython.designer.path": {
+          "type": [
+            "null",
+            "string"
+          ],
           "default": null,
-          "markdownDescription": "The path of Qt Designer with CLI options to create and edit form (`*.ui`) files. Set to `null` or `\"\"` to automatically find from your Python site-packages directories. For examples, `\"/opt/Qt/6.0.0/gcc_64/bin/designer\"` in Linux."
+          "markdownDescription": "The path of PySide6 Qt Designer without CLI options to create and edit form (`*.ui`) files. Set to `null` or empty string to automatically find from your Python site-packages directories. For examples, `/opt/Qt/6.0.0/gcc_64/bin/designer` in Linux."
+        },
+        "qtForPython.designer.args": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Arguments passed in PySide 6 Qt Designer. Each argument is a separate item in the array. For example, `--enableinternaldynamicproperties`."
+        },
+        "qtForPython.uic.path": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "default": null,
+          "markdownDescription": "The path of PySide6 UI compiler without CLI options. Set to `null` or empty string to automatically find from your Python site-packages directories. For example, `pyside6-uic` in Linux."
+        },
+        "qtForPython.uic.args": {
+          "type": "array",
+          "default": [
+            "--generator python",
+            "--output \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}uic${pathSeparator}${fileBasenameNoExtension}.py\""
+          ],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Arguments passed in PySide 6 UI compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
         }
       }
     },
     "languages": [
-			{
-				"id": "qmake",
-				"extensions": [
-					".pro",
-					".pri",
-					".prf",
-					".prl"
-				],
-				"aliases": [
-					"QMake",
-					"qmake",
-					"Qt Project"
-				],
-				"configuration": "./languages/qmake-language-configuration.json"
-			},
-			{
-				"id": "qml",
-				"extensions": [
-					".qml"
-				],
-				"aliases": [
-					"QML",
-					"qml"
-				],
-				"configuration": "./languages/qml-language-configuration.json"
-			},
-			{
-				"id": "qmldir",
-				"filenames": [
-					"qmldir"
-				],
-				"aliases": [
-					"QML Directory",
-					"qmldir"
-				],
-				"configuration": "./languages/qmldir-language-configuration.json"
-			},
-			{
-				"id": "qss",
-				"extensions": [
-					".qss"
-				],
-				"aliases": [
-					"QSS",
-					"qss"
-				],
-				"configuration": "./languages/qss-language-configuration.json"
-			},
-			{
-				"id": "xml",
-				"extensions": [
-					".qt.ts",
-					".ui",
-					".pro.user",
-					".qrc"
-				]
-			}
-		],
-		"grammars": [
-			{
-				"language": "qmake",
-				"scopeName": "source.qmake",
-				"path": "./syntaxes/qmake.tmLanguage.json"
-			},
-			{
-				"language": "qml",
-				"scopeName": "source.qml",
-				"embeddedLanguages": {
-					"meta.embedded.block.js": "javascript"
-				},
-				"path": "./syntaxes/qml.tmLanguage.json"
-			},
-			{
-				"language": "qmldir",
-				"scopeName": "source.qmldir",
-				"path": "./syntaxes/qmldir.tmLanguage.json"
-			},
-			{
-				"language": "qss",
-				"scopeName": "source.qss",
-				"path": "./syntaxes/qss.tmLanguage.json"
-			}
-		],
-		"snippets": [
-			{
-				"language": "qml",
-				"path": "./snippets/qml.json"
-			},
-			{
-				"language": "qmldir",
-				"path": "./snippets/qmldir.json"
-			},
-			{
-				"language": "qss",
-				"path": "./snippets/qss.json"
-			}
-		]
+      {
+        "id": "qmake",
+        "extensions": [
+          ".pro",
+          ".pri",
+          ".prf",
+          ".prl"
+        ],
+        "aliases": [
+          "QMake",
+          "qmake",
+          "Qt Project"
+        ],
+        "configuration": "./languages/qmake-language-configuration.json"
+      },
+      {
+        "id": "qml",
+        "extensions": [
+          ".qml"
+        ],
+        "aliases": [
+          "QML",
+          "qml"
+        ],
+        "configuration": "./languages/qml-language-configuration.json"
+      },
+      {
+        "id": "qmldir",
+        "filenames": [
+          "qmldir"
+        ],
+        "aliases": [
+          "QML Directory",
+          "qmldir"
+        ],
+        "configuration": "./languages/qmldir-language-configuration.json"
+      },
+      {
+        "id": "qss",
+        "extensions": [
+          ".qss"
+        ],
+        "aliases": [
+          "QSS",
+          "qss"
+        ],
+        "configuration": "./languages/qss-language-configuration.json"
+      },
+      {
+        "id": "xml",
+        "extensions": [
+          ".qt.ts",
+          ".ui",
+          ".pro.user",
+          ".qrc"
+        ]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "qmake",
+        "scopeName": "source.qmake",
+        "path": "./syntaxes/qmake.tmLanguage.json"
+      },
+      {
+        "language": "qml",
+        "scopeName": "source.qml",
+        "embeddedLanguages": {
+          "meta.embedded.block.js": "javascript"
+        },
+        "path": "./syntaxes/qml.tmLanguage.json"
+      },
+      {
+        "language": "qmldir",
+        "scopeName": "source.qmldir",
+        "path": "./syntaxes/qmldir.tmLanguage.json"
+      },
+      {
+        "language": "qss",
+        "scopeName": "source.qss",
+        "path": "./syntaxes/qss.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "qml",
+        "path": "./snippets/qml.json"
+      },
+      {
+        "language": "qmldir",
+        "path": "./snippets/qmldir.json"
+      },
+      {
+        "language": "qss",
+        "path": "./snippets/qss.json"
+      }
+    ]
   }
 }

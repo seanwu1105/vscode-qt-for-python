@@ -1,12 +1,21 @@
+import { PredefinedVariableResolver } from '../predefined-variable-resolver';
 import { run } from '../run';
 import { Tool } from './tool';
 
 export class Designer {
-  private readonly tool = new Tool('designer', 'designer');
+  readonly name = 'designer';
 
-  async open({ filePaths = [], cwd }: { filePaths?: string[]; cwd?: string }) {
+  async run({ filePaths = [], cwd }: { filePaths?: string[]; cwd?: string }) {
+    const tool = new Tool(
+      this.name,
+      'designer',
+      new PredefinedVariableResolver(filePaths[0])
+    );
     return run({
-      command: `${await this.tool.getPath()} ${filePaths.join(' ')}`,
+      command:
+        `"${await tool.getPath()}" ` +
+        `${tool.args.join(' ')} ` +
+        `${filePaths.map(p => `"${p}"`).join(' ')}`,
       cwd,
     });
   }

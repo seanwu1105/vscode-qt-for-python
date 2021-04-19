@@ -14,7 +14,10 @@ function registerCommands(context: vscode.ExtensionContext) {
         `${EXTENSION_NAME}.${command.name}`,
         async (...args) => {
           try {
-            return await command.callback(...args);
+            const result = await command.callback(...args);
+            // eslint-disable-next-line no-console
+            console.log(result);
+            return result;
           } catch (e: unknown) {
             return showErrorMessage(e);
           }
