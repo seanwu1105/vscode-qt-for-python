@@ -1,15 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es6",
-    "outDir": "out",
-    "lib": ["esnext"],
-    "sourceMap": true,
+    "rootDir": ".",
+    "outDir": ".",
     "resolveJsonModule": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedParameters": true
+    "composite": true
   },
-  "exclude": ["node_modules", ".vscode-test"]
+  "files": ["package.json"]
 }
