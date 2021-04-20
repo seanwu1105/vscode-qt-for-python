@@ -10,7 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Smart Python path.
 - [x] Smart tools discover.
 - [x] Auto UI compile.
-- [ ] Auto RCC compile.
+- [x] Auto RCC compile.
+- [ ] Editor title icons.
+- [ ] Support lupdate.
+- [ ] Support lrelease.
+- [ ] Support qml preview
+- [ ] Support edit translate.
 - [x] Support Linux.
 - [ ] Support Windows.
 - [x] Support PySide6.

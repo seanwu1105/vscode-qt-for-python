@@ -1,7 +1,8 @@
+import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
+import { EXTENSION_ID } from '../constants';
 import { assertNotNullable } from './assertions';
-import { EXTENSION_ID } from './constants';
 
 export function getSrcPath() {
   const extensionPath = vscode.extensions.getExtension(EXTENSION_ID)
@@ -29,4 +30,9 @@ export function getFsPathOrActiveDocumentPath(uri?: vscode.Uri) {
     filePath = activeDocumentPath;
   }
   return filePath;
+}
+
+export function createPathIfNotExist(targetPath: string) {
+  if (!fs.existsSync(targetPath)) fs.mkdirSync(targetPath, { recursive: true });
+  return targetPath;
 }

@@ -1,5 +1,6 @@
-import { editForm, newForm } from './designer/commands';
-import { compileForm } from './uic/commands';
+import { editForm, newForm } from './tools/designer';
+import { compileResource } from './tools/rcc';
+import { compileForm } from './tools/uic';
 
 interface Command {
   readonly name: string;
@@ -18,5 +19,9 @@ export const commands: Command[] = [
   {
     name: 'compileForm',
     callback: compileForm,
+  },
+  {
+    name: 'compileResource',
+    callback: compileResource,
   },
 ];

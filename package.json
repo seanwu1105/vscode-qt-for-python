@@ -107,6 +107,11 @@
         "command": "qtForPython.compileForm",
         "title": "Compile Form (Qt Designer UI File) into Qt for Python File",
         "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.compileResource",
+        "title": "Compile Resource File into Qt for Python File",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -118,47 +123,66 @@
         {
           "command": "qtForPython.compileForm",
           "when": "resourceExtname == .ui && resourceLangId == xml"
+        },
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml"
         }
       ],
       "explorer/context": [
         {
           "command": "qtForPython.newForm",
           "when": "explorerResourceIsFolder == true",
-          "group": "qtForPython@1"
+          "group": "qtForPython"
         },
         {
           "command": "qtForPython.editForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@2"
+          "group": "qtForPython"
         },
         {
           "command": "qtForPython.compileForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@3"
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/title": [
         {
           "command": "qtForPython.editForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@2"
+          "group": "qtForPython"
         },
         {
           "command": "qtForPython.compileForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@3"
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
         {
           "command": "qtForPython.editForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@2"
+          "group": "qtForPython"
         },
         {
           "command": "qtForPython.compileForm",
           "when": "resourceExtname == .ui && resourceLangId == xml",
-          "group": "qtForPython@3"
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ]
     },
@@ -202,7 +226,32 @@
         },
         "qtForPython.uic.liveCompilation": {
           "type": "boolean",
-          "default": true
+          "default": true,
+          "markdownDescription": "Automatically recompile Qt UI files when any `*.ui` file has changed or created."
+        },
+        "qtForPython.rcc.path": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "default": null,
+          "markdownDescription": "The path of PySide6 Resource compiler without CLI options. Set to `null` or empty string to automatically find from your Python site-packages directories. For example, `pyside6-rcc` in Linux."
+        },
+        "qtForPython.rcc.args": {
+          "type": "array",
+          "default": [
+            "--generator python",
+            "--output \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}rcc${pathSeparator}${fileBasenameNoExtension}.py\""
+          ],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Arguments passed in PySide 6 Resource compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
+        },
+        "qtForPython.rcc.liveCompilation": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Automatically recompile Qt Resource files when any `*.qrc` file has changed or created."
         }
       }
     },

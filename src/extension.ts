@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { commands } from './command';
+import { commands } from './commands';
 import { EXTENSION_NAME } from './constants';
 import * as liveCompilations from './live-compilations';
-import { showErrorMessage } from './message';
+import { showErrorMessage } from './utils/message';
 
 export function activate(context: vscode.ExtensionContext) {
   registerCommands(context);

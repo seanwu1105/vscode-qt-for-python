@@ -1,7 +1,9 @@
+import * as path from 'path';
 import * as vscode from 'vscode';
-import { EXTENSION_NAME } from './constants';
-import { PredefinedVariableResolver } from './predefined-variable-resolver';
-import { python } from './python';
+import * as yargs from 'yargs';
+import { EXTENSION_NAME } from '../constants';
+import { PredefinedVariableResolver } from '../utils/predefined-variable-resolver';
+import { python } from '../utils/python';
 
 export class Tool {
   private readonly config = vscode.workspace.getConfiguration(
@@ -25,5 +27,17 @@ export class Tool {
     if (path) return path;
 
     return python('find_tool', [this.filename]);
+  }
+
+  getOutputPath() {
+    const argv = yargs
+      .options({
+        o: { type: 'string' },
+        output: { type: 'string' },
+      })
+      .parse(this.args.join(' '));
+    const outputFilePath = argv.o ?? argv.output;
+    if (!outputFilePath) return undefined;
+    return path.dirname(outputFilePath);
   }
 }
