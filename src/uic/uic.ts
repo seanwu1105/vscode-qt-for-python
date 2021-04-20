@@ -5,25 +5,23 @@ import { PredefinedVariableResolver } from '../predefined-variable-resolver';
 import { run } from '../run';
 import { Tool } from '../tool';
 
-export class Uic {
-  readonly name = 'uic';
+export const NAME = 'uic';
 
-  async run({ inPath, cwd }: { inPath: string; cwd?: string }) {
-    const tool = new Tool(
-      this.name,
-      'uic',
-      new PredefinedVariableResolver(inPath)
-    );
-    const outputPath = getOutputPath(tool.args);
-    if (outputPath) createPathIfNotExist(outputPath);
-    return run({
-      command:
-        `"${await tool.getPath()}" ` +
-        `${tool.args.join(' ')} ` +
-        `"${inPath}"`,
-      cwd,
-    });
-  }
+export async function compile({
+  inPath,
+  cwd,
+}: {
+  inPath: string;
+  cwd?: string;
+}) {
+  const tool = new Tool(NAME, 'uic', new PredefinedVariableResolver(inPath));
+  const outputPath = getOutputPath(tool.args);
+  if (outputPath) createPathIfNotExist(outputPath);
+  return run({
+    command:
+      `"${await tool.getPath()}" ` + `${tool.args.join(' ')} ` + `"${inPath}"`,
+    cwd,
+  });
 }
 
 function getOutputPath(args: string[]) {
