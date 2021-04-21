@@ -106,12 +106,20 @@
       {
         "command": "qtForPython.compileForm",
         "title": "Compile Form (Qt Designer UI File) into Qt for Python File",
-        "category": "Qt for Python"
+        "category": "Qt for Python",
+        "icon": {
+          "light": "resources/light/uic.svg",
+          "dark": "resources/dark/uic.svg"
+        }
       },
       {
         "command": "qtForPython.compileResource",
         "title": "Compile Resource File into Qt for Python File",
-        "category": "Qt for Python"
+        "category": "Qt for Python",
+        "icon": {
+          "light": "resources/light/rcc.svg",
+          "dark": "resources/dark/rcc.svg"
+        }
       }
     ],
     "menus": {
