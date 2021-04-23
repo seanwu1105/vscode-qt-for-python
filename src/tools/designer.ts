@@ -28,14 +28,10 @@ async function open({
   filePaths?: string[];
   cwd?: string;
 }) {
-  const tool = new Tool(
-    NAME,
-    'designer',
-    new PredefinedVariableResolver(filePaths[0])
-  );
+  const tool = new Tool(NAME, new PredefinedVariableResolver(filePaths[0]));
   return run({
     command:
-      `"${await tool.getPath()}" ` +
+      `${await tool.getPathWithQuotes()} ` +
       `${tool.args.join(' ')} ` +
       `${filePaths.map(p => `"${p}"`).join(' ')}`,
     cwd,

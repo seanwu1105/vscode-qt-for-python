@@ -1,0 +1,9 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "ms-python.python",
+  "python.pythonPath": ".venv/bin/python",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintUseMinimalCheckers": false
+}

@@ -1,103 +1,101 @@
 [[package]]
-category = "dev"
-description = "An abstract syntax tree for Python with inference support."
 name = "astroid"
+version = "2.5.3"
+description = "An abstract syntax tree for Python with inference support."
+category = "dev"
 optional = false
 python-versions = ">=3.6"
-version = "2.5.3"
 
 [package.dependencies]
 lazy-object-proxy = ">=1.4.0"
 wrapt = ">=1.11,<1.13"
 
 [[package]]
-category = "dev"
-description = "Atomic file writes."
-marker = "sys_platform == \"win32\""
 name = "atomicwrites"
+version = "1.4.0"
+description = "Atomic file writes."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.4.0"
 
 [[package]]
-category = "dev"
-description = "Classes Without Boilerplate"
 name = "attrs"
+version = "20.3.0"
+description = "Classes Without Boilerplate"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.3.0"
 
 [package.extras]
-dev = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "furo", "sphinx", "pre-commit"]
+dev = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "furo", "sphinx", "pre-commit"]
 docs = ["furo", "sphinx", "zope.interface"]
-tests = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
-tests_no_zope = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
+tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
+tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
 
 [[package]]
-category = "dev"
-description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
 name = "autopep8"
+version = "1.5.6"
+description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.5.6"
 
 [package.dependencies]
 pycodestyle = ">=2.7.0"
 toml = "*"
 
 [[package]]
-category = "dev"
-description = "Cross-platform colored terminal text."
-marker = "sys_platform == \"win32\""
 name = "colorama"
+version = "0.4.4"
+description = "Cross-platform colored terminal text."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "0.4.4"
 
 [[package]]
-category = "dev"
-description = "A Python utility / library to sort Python imports."
 name = "isort"
+version = "5.8.0"
+description = "A Python utility / library to sort Python imports."
+category = "dev"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "5.8.0"
 
 [package.extras]
-colors = ["colorama (>=0.4.3,<0.5.0)"]
 pipfile_deprecated_finder = ["pipreqs", "requirementslib"]
 requirements_deprecated_finder = ["pipreqs", "pip-api"]
+colors = ["colorama (>=0.4.3,<0.5.0)"]
 
 [[package]]
-category = "dev"
-description = "A fast and thorough lazy object proxy."
 name = "lazy-object-proxy"
+version = "1.6.0"
+description = "A fast and thorough lazy object proxy."
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
-version = "1.6.0"
 
 [[package]]
-category = "dev"
-description = "McCabe checker, plugin for flake8"
 name = "mccabe"
+version = "0.6.1"
+description = "McCabe checker, plugin for flake8"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.6.1"
 
 [[package]]
-category = "dev"
-description = "More routines for operating on iterables, beyond itertools"
 name = "more-itertools"
+version = "8.7.0"
+description = "More routines for operating on iterables, beyond itertools"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
-version = "8.7.0"
 
 [[package]]
-category = "dev"
-description = "Optional static typing for Python"
 name = "mypy"
+version = "0.812"
+description = "Optional static typing for Python"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
-version = "0.812"
 
 [package.dependencies]
 mypy-extensions = ">=0.4.3,<0.5.0"
@@ -108,89 +106,100 @@ typing-extensions = ">=3.7.4"
 dmypy = ["psutil (>=4.0)"]
 
 [[package]]
-category = "dev"
-description = "Experimental type system extensions for programs checked with the mypy typechecker."
 name = "mypy-extensions"
+version = "0.4.3"
+description = "Experimental type system extensions for programs checked with the mypy typechecker."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.4.3"
 
 [[package]]
-category = "dev"
-description = "Core utilities for Python packages"
 name = "packaging"
+version = "20.9"
+description = "Core utilities for Python packages"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "20.9"
 
 [package.dependencies]
 pyparsing = ">=2.0.2"
 
 [[package]]
-category = "dev"
-description = "plugin and hook calling mechanisms for python"
 name = "pluggy"
+version = "0.13.1"
+description = "plugin and hook calling mechanisms for python"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "0.13.1"
 
 [package.extras]
 dev = ["pre-commit", "tox"]
 
 [[package]]
-category = "dev"
-description = "library with cross-python path, ini-parsing, io, code, log facilities"
 name = "py"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 version = "1.10.0"
-
-[[package]]
+description = "library with cross-python path, ini-parsing, io, code, log facilities"
 category = "dev"
-description = "Python style guide checker"
-name = "pycodestyle"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "2.7.0"
 
 [[package]]
+name = "pycodestyle"
+version = "2.7.0"
+description = "Python style guide checker"
 category = "dev"
-description = "python code static checker"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
+
+[[package]]
 name = "pylint"
+version = "2.7.4"
+description = "python code static checker"
+category = "dev"
 optional = false
 python-versions = "~=3.6"
-version = "2.7.4"
 
 [package.dependencies]
 astroid = ">=2.5.2,<2.7"
-colorama = "*"
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
 isort = ">=4.2.5,<6"
 mccabe = ">=0.6,<0.7"
 toml = ">=0.7.1"
 
 [package.extras]
-docs = ["sphinx (3.5.1)", "python-docs-theme (2020.12)"]
+docs = ["sphinx (==3.5.1)", "python-docs-theme (==2020.12)"]
 
 [[package]]
-category = "dev"
-description = "Python parsing module"
 name = "pyparsing"
+version = "2.4.7"
+description = "Python parsing module"
+category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "2.4.7"
 
 [[package]]
-category = "dev"
-description = "pytest: simple powerful testing with Python"
-name = "pytest"
+name = "pyside6"
+version = "6.0.3"
+description = "Python bindings for the Qt cross-platform application and UI framework"
+category = "main"
 optional = false
-python-versions = ">=3.5"
-version = "5.4.3"
+python-versions = ">=3.6, <3.10"
 
 [package.dependencies]
-atomicwrites = ">=1.0"
+shiboken6 = "6.0.3"
+
+[[package]]
+name = "pytest"
+version = "5.4.3"
+description = "pytest: simple powerful testing with Python"
+category = "dev"
+optional = false
+python-versions = ">=3.5"
+
+[package.dependencies]
+atomicwrites = {version = ">=1.0", markers = "sys_platform == \"win32\""}
 attrs = ">=17.4.0"
-colorama = "*"
+colorama = {version = "*", markers = "sys_platform == \"win32\""}
 more-itertools = ">=4.0.0"
 packaging = "*"
 pluggy = ">=0.12,<1.0"
@@ -198,53 +207,61 @@ py = ">=1.5.0"
 wcwidth = "*"
 
 [package.extras]
-checkqa-mypy = ["mypy (v0.761)"]
+checkqa-mypy = ["mypy (==v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
-category = "dev"
-description = "Python Library for Tom's Obvious, Minimal Language"
+name = "shiboken6"
+version = "6.0.3"
+description = "Python / C++ bindings helper module"
+category = "main"
+optional = false
+python-versions = ">=3.6, <3.10"
+
+[[package]]
 name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
-version = "0.10.2"
 
 [[package]]
-category = "dev"
-description = "a fork of Python 2 and 3 ast modules with type comment support"
 name = "typed-ast"
-optional = false
-python-versions = "*"
 version = "1.4.3"
+description = "a fork of Python 2 and 3 ast modules with type comment support"
+category = "dev"
+optional = false
+python-versions = "*"
 
 [[package]]
-category = "dev"
-description = "Backported and Experimental Type Hints for Python 3.5+"
 name = "typing-extensions"
-optional = false
-python-versions = "*"
 version = "3.7.4.3"
+description = "Backported and Experimental Type Hints for Python 3.5+"
+category = "dev"
+optional = false
+python-versions = "*"
 
 [[package]]
-category = "dev"
-description = "Measures the displayed width of unicode strings in a terminal"
 name = "wcwidth"
+version = "0.2.5"
+description = "Measures the displayed width of unicode strings in a terminal"
+category = "dev"
 optional = false
 python-versions = "*"
-version = "0.2.5"
 
 [[package]]
-category = "dev"
-description = "Module for decorators, wrappers and monkey patching."
 name = "wrapt"
+version = "1.12.1"
+description = "Module for decorators, wrappers and monkey patching."
+category = "dev"
 optional = false
 python-versions = "*"
-version = "1.12.1"
 
 [metadata]
-content-hash = "d33ee38b2442be2c0b9e9dad6cd1169c41f4ee014e4b4772cf419f15272a8450"
-lock-version = "1.0"
-python-versions = "^3.8"
+lock-version = "1.1"
+python-versions = "~3.8"
+content-hash = "9a40d42bfa18901a1cf7f9f06708e45754470e5f75e57ca0140fd3a0ea192663"
 
 [metadata.files]
 astroid = [
@@ -355,9 +372,21 @@ pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
+pyside6 = [
+    {file = "PySide6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-macosx_10_14_x86_64.whl", hash = "sha256:d763540fafae44ca8a5114cdd3546913666d83a2874da173ee86b534fd13af59"},
+    {file = "PySide6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-macosx_10_15_x86_64.whl", hash = "sha256:a4b34fb7022ef7dc290ef0e954c2c9eea572da1d64d32742d0f1eaaeab8500ac"},
+    {file = "PySide6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-manylinux1_x86_64.whl", hash = "sha256:5a491256b6a2166e1ee0b9e4a0180436ba1a7bb893adca4921fac026d8636d80"},
+    {file = "PySide6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-none-win_amd64.whl", hash = "sha256:8c40ef4c0fa6db5e91fb8434f3747ad39fa5e72364c5d52cf2e69ab2c90987b7"},
+]
 pytest = [
     {file = "pytest-5.4.3-py3-none-any.whl", hash = "sha256:5c0db86b698e8f170ba4582a492248919255fcd4c79b1ee64ace34301fb589a1"},
     {file = "pytest-5.4.3.tar.gz", hash = "sha256:7979331bfcba207414f5e1263b5a0f8f521d0f457318836a7355531ed1a4c7d8"},
+]
+shiboken6 = [
+    {file = "shiboken6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-macosx_10_14_x86_64.whl", hash = "sha256:5f69e15d8bc5003a283c5e8fb52e4f6f0d546964611095c7fdf2d255682ba01d"},
+    {file = "shiboken6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-macosx_10_15_x86_64.whl", hash = "sha256:459c50a36bfc2de3ade47494ced3d87e9e4bfea3d36919cfb81b9fccf73d641c"},
+    {file = "shiboken6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-abi3-manylinux1_x86_64.whl", hash = "sha256:3e5d2719b8607c1eef224c552e4f02af4e2be1000e40ff8653f4be9cbc4bc75e"},
+    {file = "shiboken6-6.0.3-6.0.3-cp36.cp37.cp38.cp39-none-win_amd64.whl", hash = "sha256:8fff1cbea0c6469c8a88394c7783c5054b9f4eea5ca9e0aa159f8a6835d5b578"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},

@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Smart tools discover.
 - [x] Auto UI compile.
 - [x] Auto RCC compile.
-- [ ] Editor title icons.
+- [x] Editor title icons.
 - [ ] Support lupdate.
 - [ ] Support lrelease.
 - [ ] Support qml preview

@@ -15,11 +15,13 @@ const NAME = 'uic';
 
 export async function compileForm(fileUri?: vscode.Uri) {
   const inPath = getFsPathOrActiveDocumentPath(fileUri);
-  const tool = new Tool(NAME, 'uic', new PredefinedVariableResolver(inPath));
+  const tool = new Tool(NAME, new PredefinedVariableResolver(inPath));
   const outputPath = tool.getOutputPath();
   if (outputPath) createPathIfNotExist(outputPath);
   return run({
-    command: `"${await tool.getPath()}" ${tool.args.join(' ')} "${inPath}"`,
+    command: `${await tool.getPathWithQuotes()} ${tool.args.join(
+      ' '
+    )} "${inPath}"`,
     cwd: getActiveWorkspaceFolderPath(),
   });
 }

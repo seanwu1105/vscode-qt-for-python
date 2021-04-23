@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 import * as yargs from 'yargs';
 import { EXTENSION_NAME } from '../constants';
 import { PredefinedVariableResolver } from '../utils/predefined-variable-resolver';
-import { python } from '../utils/python';
+import { resolvePythonScript } from '../utils/python';
 
 export class Tool {
   private readonly config = vscode.workspace.getConfiguration(
@@ -18,15 +18,13 @@ export class Tool {
 
   constructor(
     private readonly name: string,
-    private readonly filename: string,
     private readonly predefinedVariableResolver = new PredefinedVariableResolver()
   ) {}
 
-  async getPath() {
+  async getPathWithQuotes() {
     const path = this.config.get<string>('path');
-    if (path) return path;
-
-    return python('find_tool', [this.filename]);
+    if (path) return `"${path}"`;
+    return resolvePythonScript(this.name);
   }
 
   getOutputPath() {
