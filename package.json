@@ -1,7 +1,7 @@
 {
   "name": "vscode-qt-for-python",
   "displayName": "Qt for Python",
-  "description": "Visual Studio Code extension for PySide6.",
+  "description": "Visual Studio Code extension for PySide6 and PyQt6.",
   "publisher": "seanwu",
   "version": "1.0.0",
   "license": "MIT",
@@ -18,11 +18,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "lodash-es": "^4.17.21",
     "rxjs": "^6.6.7",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
+    "@types/lodash-es": "^4.17.4",
     "@types/mocha": "^8.0.4",
     "@types/node": "^12.11.7",
     "@types/vscode": "^1.55.0",
@@ -89,6 +91,7 @@
     "onCommand:qtForPython.newForm",
     "onCommand:qtForPython.editForm",
     "onCommand:qtForPython.compileForm",
+    "onCommand:qtForPython.updateTranslation",
     "workspaceContains:**/*.ui"
   ],
   "contributes": {
@@ -120,6 +123,11 @@
           "light": "resources/light/rcc.svg",
           "dark": "resources/dark/rcc.svg"
         }
+      },
+      {
+        "command": "qtForPython.updateTranslation",
+        "title": "Update Qt Linguist Translation file",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -135,6 +143,10 @@
         {
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml"
+        },
+        {
+          "command": "qtForPython.updateTranslation",
+          "when": "resourceLangId == python || resourceExtname == .ui && resourceLangId == xml"
         }
       ],
       "explorer/context": [
@@ -157,6 +169,11 @@
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.updateTranslation",
+          "when": "resourceLangId == python || resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/title": [
@@ -173,6 +190,11 @@
         {
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.updateTranslation",
+          "when": "resourceLangId == python || resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
         }
       ],
@@ -191,6 +213,11 @@
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.updateTranslation",
+          "when": "resourceLangId == python || resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ]
     },
@@ -203,7 +230,7 @@
             "string"
           ],
           "default": null,
-          "markdownDescription": "The path of PySide6 Qt Designer without CLI options to create and edit form (`*.ui`) files. Set to `null` or empty string to automatically find from your Python site-packages directories. For examples, `/opt/Qt/6.0.0/gcc_64/bin/designer` in Linux."
+          "markdownDescription": "The path of Qt Designer without CLI options to create and edit form `*.ui` files. Set to `null` or empty string to automatically find from your installed Python modules. For examples, `pyside6-designer` in Linux."
         },
         "qtForPython.designer.args": {
           "type": "array",
@@ -211,7 +238,7 @@
           "items": {
             "type": "string"
           },
-          "markdownDescription": "Arguments passed in PySide 6 Qt Designer. Each argument is a separate item in the array. For example, `--enableinternaldynamicproperties`."
+          "markdownDescription": "Arguments passed in Qt Designer. Each argument is a separate item in the array. For example, `--enableinternaldynamicproperties`."
         },
         "qtForPython.uic.path": {
           "type": [
@@ -219,7 +246,7 @@
             "string"
           ],
           "default": null,
-          "markdownDescription": "The path of PySide6 UI compiler without CLI options. Set to `null` or empty string to automatically find from your Python site-packages directories. For example, `pyside6-uic` in Linux."
+          "markdownDescription": "The path of UI compiler without CLI options. Set to `null` or empty string to automatically find from your installed Python modules. For example, `pyside6-uic` in Linux."
         },
         "qtForPython.uic.args": {
           "type": "array",
@@ -230,7 +257,7 @@
           "items": {
             "type": "string"
           },
-          "markdownDescription": "Arguments passed in PySide 6 UI compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
+          "markdownDescription": "Arguments passed in UI compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
         },
         "qtForPython.uic.liveCompilation": {
           "type": "boolean",
@@ -243,7 +270,7 @@
             "string"
           ],
           "default": null,
-          "markdownDescription": "The path of PySide6 Resource compiler without CLI options. Set to `null` or empty string to automatically find from your Python site-packages directories. For example, `pyside6-rcc` in Linux."
+          "markdownDescription": "The path of resource compiler without CLI options. Set to `null` or empty string to automatically find from your installed Python modules. For example, `pyside6-rcc` in Linux."
         },
         "qtForPython.rcc.args": {
           "type": "array",
@@ -254,12 +281,36 @@
           "items": {
             "type": "string"
           },
-          "markdownDescription": "Arguments passed in PySide 6 Resource compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
+          "markdownDescription": "Arguments passed in resource compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
         },
         "qtForPython.rcc.liveCompilation": {
           "type": "boolean",
           "default": true,
           "markdownDescription": "Automatically recompile Qt Resource files when any `*.qrc` file has changed or created."
+        },
+        "qtForPython.lupdate.path": {
+          "type": [
+            "null",
+            "string"
+          ],
+          "default": null,
+          "markdownDescription": "The path of lupdate tool without CLI options. Set to `null` or empty string to automatically find from your installed Python modules. For example, `pylupdate6` in Linux."
+        },
+        "qtForPython.lupdate.args": {
+          "type": "array",
+          "default": [
+            "--ts \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}lupdate${pathSeparator}${fileBasenameNoExtension}.qt.ts\"",
+            "--verbose"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Arguments passed in lupdate tool. Each argument is a separate item in the array. For example, `--ts ${file}.qt.ts`."
+        },
+        "qtForPython.lupdate.liveCompilation": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Automatically update translation files when any `*.ui` file has changed or created."
         }
       }
     },
@@ -314,11 +365,12 @@
       },
       {
         "id": "xml",
+        "firstLine": "^<\\?xml\\s+.*\\?>\\s*",
         "extensions": [
-          ".qt.ts",
           ".ui",
           ".pro.user",
-          ".qrc"
+          ".qrc",
+          ".qt.ts"
         ]
       }
     ],

@@ -1,8 +1,9 @@
-import { merge, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { defer, merge, Observable, Subscription } from 'rxjs';
+import { catchError, concatMapTo } from 'rxjs/operators';
 import * as vscode from 'vscode';
 import { commands } from './commands';
 import { EXTENSION_NAME } from './constants';
+import { liveTranslation$ as liveUiTranslation$ } from './tools/lupdate';
 import { liveCompilation$ as liveResourceCompilation$ } from './tools/rcc';
 import { liveCompilation$ as liveUiCompilation$ } from './tools/uic';
 import { showErrorMessage } from './utils/message';
@@ -11,7 +12,7 @@ const subscriptions: Subscription[] = [];
 
 export function activate(context: vscode.ExtensionContext) {
   registerCommands(context);
-  startLiveCompilations();
+  startLiveCommandExecutions();
 }
 
 function registerCommands(context: vscode.ExtensionContext) {
@@ -31,10 +32,19 @@ function registerCommands(context: vscode.ExtensionContext) {
   );
 }
 
-function startLiveCompilations() {
-  const subscription = merge(liveUiCompilation$, liveResourceCompilation$)
-    .pipe(catchError((err: unknown) => showErrorMessage(err)))
-    .subscribe();
+function startLiveCommandExecutions() {
+  const liveCommandExecutions$: Observable<any> = merge(
+    liveUiCompilation$,
+    liveResourceCompilation$,
+    liveUiTranslation$
+  ).pipe(
+    catchError((err: unknown) =>
+      defer(() => showErrorMessage(err)).pipe(
+        concatMapTo(liveCommandExecutions$)
+      )
+    )
+  );
+  const subscription = liveCommandExecutions$.subscribe();
   subscriptions.push(subscription);
 }
 

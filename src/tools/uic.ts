@@ -1,5 +1,5 @@
-import { fromEventPattern, iif, merge } from 'rxjs';
-import { concatMap, mergeMap, switchMap } from 'rxjs/operators';
+import { iif } from 'rxjs';
+import { mergeMap, switchMap } from 'rxjs/operators';
 import * as vscode from 'vscode';
 import {
   createPathIfNotExist,
@@ -8,7 +8,11 @@ import {
 } from '../utils/paths';
 import { PredefinedVariableResolver } from '../utils/predefined-variable-resolver';
 import { run } from '../utils/run';
-import { createFileWatcher$, enabled$ } from '../utils/watcher';
+import {
+  createFileWatcher$,
+  enabled$,
+  watchFileChangedAndCreated,
+} from '../utils/watcher';
 import { Tool } from './tool';
 
 const NAME = 'uic';
@@ -19,30 +23,18 @@ export async function compileForm(fileUri?: vscode.Uri) {
   const outputPath = tool.getOutputPath();
   if (outputPath) createPathIfNotExist(outputPath);
   return run({
-    command: `${await tool.getPathWithQuotes()} ${tool.args.join(
-      ' '
-    )} "${inPath}"`,
+    command:
+      `${await tool.getPathWithQuotes()} ` +
+      `${tool.args.join(' ')} "${inPath}"`,
     cwd: getActiveWorkspaceFolderPath(),
   });
 }
 
 const uiFileWatcher$ = createFileWatcher$('**/*.ui');
 
-const onUiFileChanged$ = uiFileWatcher$.pipe(
-  concatMap(watcher =>
-    fromEventPattern<vscode.Uri>(handler => watcher.onDidChange(handler))
-  )
-);
-
-const onUiFileCreated$ = uiFileWatcher$.pipe(
-  concatMap(watcher =>
-    fromEventPattern<vscode.Uri>(handler => watcher.onDidCreate(handler))
-  )
-);
-
 export const liveCompilation$ = enabled$('uic').pipe(
   switchMap(enabled =>
-    iif(() => enabled, merge(onUiFileChanged$, onUiFileCreated$))
+    iif(() => enabled, uiFileWatcher$.pipe(watchFileChangedAndCreated()))
   ),
   mergeMap(uri => compileForm(uri))
 );

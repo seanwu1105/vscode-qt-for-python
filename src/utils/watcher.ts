@@ -1,5 +1,12 @@
-import { defer, ReplaySubject } from 'rxjs';
 import {
+  defer,
+  fromEventPattern,
+  merge,
+  Observable,
+  ReplaySubject,
+} from 'rxjs';
+import {
+  concatMap,
   concatMapTo,
   distinctUntilChanged,
   map,
@@ -10,7 +17,7 @@ import {
 import * as vscode from 'vscode';
 import { EXTENSION_NAME } from '../constants';
 import { configurationChanged$ } from './configuration';
-import { finalizeLast, isNonNullable } from './rx-operators';
+import { finalizeLast } from './rx-operators';
 
 export function enabled$(toolName: SupportedTool) {
   return defer(async () =>
@@ -33,10 +40,21 @@ export function createFileWatcher$(pattern: string) {
     tap(watcher => watcher$.next(watcher)),
     concatMapTo(watcher$),
     shareReplay({ bufferSize: 1, refCount: true }),
-    isNonNullable(),
     finalizeLast(watcher => watcher.dispose()),
     shareReplay({ bufferSize: 1, refCount: true })
   );
 }
 
-type SupportedTool = 'uic' | 'rcc';
+export function watchFileChangedAndCreated() {
+  return (source$: Observable<vscode.FileSystemWatcher>) =>
+    merge(
+      source$.pipe(
+        concatMap(w => fromEventPattern<vscode.Uri>(h => w.onDidChange(h)))
+      ),
+      source$.pipe(
+        concatMap(w => fromEventPattern<vscode.Uri>(h => w.onDidCreate(h)))
+      )
+    );
+}
+
+type SupportedTool = 'uic' | 'rcc' | 'lupdate';

@@ -15,27 +15,26 @@ import {
 } from '../utils/watcher';
 import { Tool } from './tool';
 
-const NAME = 'rcc';
+const NAME = 'lupdate';
 
-export async function compileResource(fileUri?: vscode.Uri) {
+export async function updateTranslation(fileUri?: vscode.Uri) {
   const inPath = getFsPathOrActiveDocumentPath(fileUri);
   const tool = new Tool(NAME, new PredefinedVariableResolver(inPath));
-  const outputPath = tool.getOutputPath();
+  const outputPath = tool.getOutputPath(['ts']);
   if (outputPath) createPathIfNotExist(outputPath);
   return run({
     command:
       `${await tool.getPathWithQuotes()} ` +
-      `${tool.args.join(' ')} ` +
-      `"${inPath}"`,
+      `${tool.args.join(' ')} "${inPath}"`,
     cwd: getActiveWorkspaceFolderPath(),
   });
 }
 
-const qrcFileWatcher$ = createFileWatcher$('**/*.qrc');
+const uiFileWatcher$ = createFileWatcher$('**/*.ui');
 
-export const liveCompilation$ = enabled$('uic').pipe(
+export const liveTranslation$ = enabled$('lupdate').pipe(
   switchMap(enabled =>
-    iif(() => enabled, qrcFileWatcher$.pipe(watchFileChangedAndCreated()))
+    iif(() => enabled, uiFileWatcher$.pipe(watchFileChangedAndCreated()))
   ),
-  mergeMap(uri => compileResource(uri))
+  mergeMap(uri => updateTranslation(uri))
 );

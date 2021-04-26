@@ -12,14 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Auto UI compile.
 - [x] Auto RCC compile.
 - [x] Editor title icons.
-- [ ] Support lupdate.
+- [x] Support lupdate.
 - [ ] Support simple lrelease.
 - [ ] Support simple qml preview
 - [ ] Support simple edit translate.
 - [x] Support Linux.
 - [ ] Support Windows.
 - [x] Support PySide6.
-- [ ] Support PyQt6.
+- [x] Support PyQt6.
 - [ ] Support PySide2.
 - [ ] Support PyQt5.
 - [ ] Error dialog actions

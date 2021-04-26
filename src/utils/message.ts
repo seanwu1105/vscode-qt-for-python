@@ -7,5 +7,5 @@ export async function showErrorMessage(error: unknown) {
   else message = JSON.stringify(error);
   // eslint-disable-next-line no-console
   console.error(message);
-  vscode.window.showErrorMessage(message);
+  return vscode.window.showErrorMessage(message);
 }

@@ -1,4 +1,5 @@
 import { editForm, newForm } from './tools/designer';
+import { updateTranslation } from './tools/lupdate';
 import { compileResource } from './tools/rcc';
 import { compileForm } from './tools/uic';
 
@@ -23,5 +24,9 @@ export const commands: Command[] = [
   {
     name: 'compileResource',
     callback: compileResource,
+  },
+  {
+    name: 'updateTranslation',
+    callback: updateTranslation,
   },
 ];

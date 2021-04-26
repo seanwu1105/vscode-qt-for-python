@@ -1,3 +1,4 @@
+import { find } from 'lodash-es';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as yargs from 'yargs';
@@ -27,14 +28,12 @@ export class Tool {
     return resolvePythonScript(this.name);
   }
 
-  getOutputPath() {
-    const argv = yargs
-      .options({
-        o: { type: 'string' },
-        output: { type: 'string' },
-      })
-      .parse(this.args.join(' '));
-    const outputFilePath = argv.o ?? argv.output;
+  getOutputPath(keys = ['o', 'output']) {
+    const options = Object.fromEntries(
+      keys.map(k => [k, { type: 'string' as const }])
+    );
+    const argv = yargs.options(options).parse(this.args.join(' '));
+    const outputFilePath = find(argv, (v, k) => !!v && keys.includes(k));
     if (!outputFilePath) return undefined;
     return path.dirname(outputFilePath);
   }
