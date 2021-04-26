@@ -13,9 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Auto RCC compile.
 - [x] Editor title icons.
 - [ ] Support lupdate.
-- [ ] Support lrelease.
-- [ ] Support qml preview
-- [ ] Support edit translate.
+- [ ] Support simple lrelease.
+- [ ] Support simple qml preview
+- [ ] Support simple edit translate.
 - [x] Support Linux.
 - [ ] Support Windows.
 - [x] Support PySide6.

@@ -5,10 +5,10 @@ from utils import is_installed
 
 if __name__ == '__main__':
     if is_installed('PySide6'):
-        from PySide6.scripts.pyside_tool import rcc
+        from PySide6.scripts.pyside_tool import rcc as main
     else:
         raise ModuleNotFoundError(
             'No Qt for Python module with rcc tool is installed.'
         )
     sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(rcc())
+    sys.exit(main())
