@@ -33,7 +33,7 @@ export async function compileResource(fileUri?: vscode.Uri) {
 
 const qrcFileWatcher$ = createFileWatcher$('**/*.qrc');
 
-export const liveCompilation$ = enabled$('uic').pipe(
+export const liveExecution$ = enabled$('uic').pipe(
   switchMap(enabled =>
     iif(() => enabled, qrcFileWatcher$.pipe(watchFileChangedAndCreated()))
   ),

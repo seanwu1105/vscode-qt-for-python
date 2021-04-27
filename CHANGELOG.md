@@ -13,15 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [x] Auto RCC compile.
 - [x] Editor title icons.
 - [x] Support lupdate.
-- [ ] Support simple lrelease.
-- [ ] Support simple qml preview
-- [ ] Support simple edit translate.
+- [ ] ~~Support simple lrelease.~~
+- [ ] ~~Support simple qml preview.~~
+- [ ] ~~Support simple edit translate.~~
 - [x] Support Linux.
 - [ ] Support Windows.
 - [x] Support PySide6.
 - [x] Support PyQt6.
 - [ ] Support PySide2.
-- [ ] Support PyQt5.
+- [x] Support PyQt5.
+- [ ] Install, lint and test Python subproject on CD.
 - [ ] Error dialog actions
   - [ ] Install PySide6/PyQt6/PySide2/PyQt5
   - [ ] Set paths in config

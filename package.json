@@ -251,15 +251,14 @@
         "qtForPython.uic.args": {
           "type": "array",
           "default": [
-            "--generator python",
-            "--output \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}uic${pathSeparator}${fileBasenameNoExtension}.py\""
+            "-o \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}uic${pathSeparator}${fileBasenameNoExtension}.py\""
           ],
           "items": {
             "type": "string"
           },
           "markdownDescription": "Arguments passed in UI compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
         },
-        "qtForPython.uic.liveCompilation": {
+        "qtForPython.uic.liveExecution": {
           "type": "boolean",
           "default": true,
           "markdownDescription": "Automatically recompile Qt UI files when any `*.ui` file has changed or created."
@@ -275,15 +274,14 @@
         "qtForPython.rcc.args": {
           "type": "array",
           "default": [
-            "--generator python",
-            "--output \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}rcc${pathSeparator}${fileBasenameNoExtension}.py\""
+            "-o \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}rcc${pathSeparator}${fileBasenameNoExtension}.py\""
           ],
           "items": {
             "type": "string"
           },
           "markdownDescription": "Arguments passed in resource compiler. Each argument is a separate item in the array. For example, `--output ${file}`."
         },
-        "qtForPython.rcc.liveCompilation": {
+        "qtForPython.rcc.liveExecution": {
           "type": "boolean",
           "default": true,
           "markdownDescription": "Automatically recompile Qt Resource files when any `*.qrc` file has changed or created."
@@ -299,15 +297,14 @@
         "qtForPython.lupdate.args": {
           "type": "array",
           "default": [
-            "--ts \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}lupdate${pathSeparator}${fileBasenameNoExtension}.qt.ts\"",
-            "--verbose"
+            "-ts \"${workspaceFolder}${pathSeparator}.qt_for_python${pathSeparator}lupdate${pathSeparator}${fileBasenameNoExtension}.qt.ts\""
           ],
           "items": {
             "type": "string"
           },
           "markdownDescription": "Arguments passed in lupdate tool. Each argument is a separate item in the array. For example, `--ts ${file}.qt.ts`."
         },
-        "qtForPython.lupdate.liveCompilation": {
+        "qtForPython.lupdate.liveExecution": {
           "type": "boolean",
           "default": false,
           "markdownDescription": "Automatically update translation files when any `*.ui` file has changed or created."

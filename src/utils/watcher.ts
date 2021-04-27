@@ -23,7 +23,7 @@ export function enabled$(toolName: SupportedTool) {
   return defer(async () =>
     vscode.workspace
       .getConfiguration(`${EXTENSION_NAME}.${toolName}`)
-      .get<boolean>('liveCompilation')
+      .get<boolean>('liveExecution')
   ).pipe(
     map(enabled => !!enabled),
     repeatWhen(() => configurationChanged$),

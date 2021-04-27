@@ -1,11 +1,11 @@
 import { defer, merge, Observable, Subscription } from 'rxjs';
-import { catchError, concatMapTo } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import * as vscode from 'vscode';
 import { commands } from './commands';
 import { EXTENSION_NAME } from './constants';
-import { liveTranslation$ as liveUiTranslation$ } from './tools/lupdate';
-import { liveCompilation$ as liveResourceCompilation$ } from './tools/rcc';
-import { liveCompilation$ as liveUiCompilation$ } from './tools/uic';
+import { liveExecution$ as liveUiTranslation$ } from './tools/lupdate';
+import { liveExecution$ as liveResourceCompilation$ } from './tools/rcc';
+import { liveExecution$ as liveUiCompilation$ } from './tools/uic';
 import { showErrorMessage } from './utils/message';
 
 const subscriptions: Subscription[] = [];
@@ -39,9 +39,10 @@ function startLiveCommandExecutions() {
     liveUiTranslation$
   ).pipe(
     catchError((err: unknown) =>
-      defer(() => showErrorMessage(err)).pipe(
-        concatMapTo(liveCommandExecutions$)
-      )
+      defer(() => {
+        showErrorMessage(err);
+        return liveCommandExecutions$;
+      })
     )
   );
   const subscription = liveCommandExecutions$.subscribe();

@@ -2,7 +2,7 @@ name: build
 on: [push, pull_request]
 
 jobs:
-  lint:
+  ts-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,7 +19,7 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  test:
+  ts-test:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]

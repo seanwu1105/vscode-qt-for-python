@@ -32,7 +32,7 @@ export async function compileForm(fileUri?: vscode.Uri) {
 
 const uiFileWatcher$ = createFileWatcher$('**/*.ui');
 
-export const liveCompilation$ = enabled$('uic').pipe(
+export const liveExecution$ = enabled$('uic').pipe(
   switchMap(enabled =>
     iif(() => enabled, uiFileWatcher$.pipe(watchFileChangedAndCreated()))
   ),
