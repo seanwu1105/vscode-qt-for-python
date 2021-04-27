@@ -5,5 +5,10 @@
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.mypyEnabled": true,
-  "python.linting.pylintUseMinimalCheckers": false
+  "python.linting.pylintUseMinimalCheckers": false,
+  "python.analysis.extraPaths": ["./scripts"],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true
+  }
 }

@@ -5,7 +5,7 @@ import { NotFoundError } from './errors';
 import { getActiveWorkspaceFolderPath, getSrcPath } from './paths';
 
 export async function resolvePythonScript(fileName: string) {
-  return `"${getPythonPath()}" "${getSrcPath()}/python/${fileName}.py"`;
+  return `"${getPythonPath()}" "${getSrcPath()}/python/scripts/${fileName}.py"`;
 }
 
 function getPythonPath() {

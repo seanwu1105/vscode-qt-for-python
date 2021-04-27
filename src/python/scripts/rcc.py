@@ -1,7 +1,6 @@
-import re
 import sys
 
-from utils import is_installed
+from utils import is_installed, remove_vendor_suffix
 
 if __name__ == '__main__':
     if is_installed('PySide6'):
@@ -12,5 +11,5 @@ if __name__ == '__main__':
         raise ModuleNotFoundError(
             'No Qt for Python module with rcc tool is installed.'
         )
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
+    sys.argv[0] = remove_vendor_suffix(sys.argv[0])
     sys.exit(main())

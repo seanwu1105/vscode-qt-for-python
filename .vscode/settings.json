@@ -7,22 +7,19 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll": true
+  },
   "typescript.tsc.autoDetect": "off",
   "typescript.preferences.importModuleSpecifier": "relative",
-  "[typescript]": {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.organizeImports": true
-    },
-  },
-  "python.pythonPath": "src/python/.venv/bin/python",
+  "python.pythonPath": "./src/python/.venv/bin/python",
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.pylintArgs": [
-    "--rcfile=src/python/pylintrc"
-  ],
+  "python.linting.pylintArgs": ["--rcfile=src/python/pylintrc"],
   "python.linting.mypyEnabled": true,
   "python.linting.pylintUseMinimalCheckers": false,
+  "python.analysis.extraPaths": ["./src/python/scripts"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   }
