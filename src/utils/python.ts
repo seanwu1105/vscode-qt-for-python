@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { NotFoundError } from './error';
 import { getActiveWorkspaceFolderPath, getSrcPath } from './paths';
 
 export async function resolvePythonScript(fileName: string) {
@@ -9,11 +8,9 @@ export async function resolvePythonScript(fileName: string) {
 }
 
 function getPythonPath() {
-  const pythonPath = vscode.workspace
-    .getConfiguration('python')
-    .get<string>('pythonPath');
-
-  if (!pythonPath) throw new NotFoundError('Python not found with pythonPath.');
+  const pythonPath =
+    vscode.workspace.getConfiguration('python').get<string>('pythonPath') ??
+    'python';
 
   // assume pythonPath is relative to workspace root.
   const activeWorkspaceFolderPath = getActiveWorkspaceFolderPath();
