@@ -9,7 +9,7 @@ def is_installed(name: str) -> bool:
 
 
 def remove_vendor_suffix(string: str) -> str:
-    return re.sub(r'(-script\.pyw|\.exe)?$', '', string)
+    return re.sub(r'(-script\.pyw|\.exe|.py)?$', '', string)
 
 
 class QtToolModuleNotFoundError(Exception):

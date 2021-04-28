@@ -29,13 +29,13 @@ A Visual Studio Code extension provides some common untilities for PySide6, PyQt
 - `qmake` highlighting support
 - New or open form (Qt Designer `*.ui` file)
   - Automatically get `designer` from installed Qt for Python modules or set manually
-- Compile form (Qt Designer `*.ui` file) into Python file (require PySide6, PyQt6 or PyQt5 to be installed)
+- Compile form (Qt Designer `*.ui` file) into Python file (require PySide6, PyQt6, PySide2 or PyQt5 to be installed)
   - Automatically get `uic` from installed Qt for Python modules or set manually
   - Automatically re-compile on form files changed
-- Update translation (Qt Linguist `*.qt.ts` file) from Python file (require PySide6, PyQt6 or PyQt5 to be installed)
+- Update translation (Qt Linguist `*.qt.ts` file) from Python file (require PyQt6, PySide2 or PyQt5 to be installed)
   - Automatically get `lupdate` from installed Qt for Python modules or set manually
   - Automatically re-update on form files changed
-- Compile Qt Resource File (`*.qrc`) into Python file (require PySide6 or PyQt5 to be installed)
+- Compile Qt Resource File (`*.qrc`) into Python file (require PySide6, PySide2 or PyQt5 to be installed)
   - Automatically get `rcc` from installed Qt for Python modules or set manually
   - Automatically re-compile on resource files changed
 
@@ -74,7 +74,7 @@ You can also reference environment variables through the `${env:Name}` syntax (f
 
 - Python
 - [Python Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) with `python.pythonPath` configuration (defaults to `python`)
-- Qt for Python packages including PySide6, PyQt6 and PyQt5.
+- Qt for Python packages including PySide6, PyQt6, PySide2 and PyQt5.
 
 ## Release Notes
 
