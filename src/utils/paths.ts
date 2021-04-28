@@ -14,7 +14,7 @@ export function getSrcPath() {
 export function getActiveWorkspaceFolderPath() {
   if (vscode.workspace.workspaceFolders)
     return vscode.workspace.workspaceFolders[0].uri.fsPath;
-  return undefined;
+  return;
 }
 
 export function getActiveDocumentPath() {

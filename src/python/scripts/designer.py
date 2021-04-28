@@ -1,13 +1,17 @@
 import sys
 
-from utils import is_installed, remove_vendor_suffix
+from common import (QtToolModuleNotFoundError, catch_known_errors,
+                    is_installed, remove_vendor_suffix)
 
-if __name__ == '__main__':
+
+def run():
     if is_installed('PySide6'):
         from PySide6.scripts.pyside_tool import designer as main
     else:
-        raise ModuleNotFoundError(
-            'No Qt for Python module with designer tool is installed.'
-        )
+        raise QtToolModuleNotFoundError('designer')
     sys.argv[0] = remove_vendor_suffix(sys.argv[0])
     sys.exit(main())
+
+
+if __name__ == '__main__':
+    catch_known_errors(run)

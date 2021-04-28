@@ -6,7 +6,7 @@ import { EXTENSION_NAME } from './constants';
 import { liveExecution$ as liveUiTranslation$ } from './tools/lupdate';
 import { liveExecution$ as liveResourceCompilation$ } from './tools/rcc';
 import { liveExecution$ as liveUiCompilation$ } from './tools/uic';
-import { showErrorMessage } from './utils/message';
+import { showErrorMessage } from './utils/error';
 
 const subscriptions: Subscription[] = [];
 

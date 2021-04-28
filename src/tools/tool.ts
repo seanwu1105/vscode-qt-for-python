@@ -2,7 +2,7 @@ import { find } from 'lodash-es';
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as yargs from 'yargs';
-import { EXTENSION_NAME } from '../constants';
+import { EXTENSION_NAME, SupportedTool } from '../constants';
 import { PredefinedVariableResolver } from '../utils/predefined-variable-resolver';
 import { resolvePythonScript } from '../utils/python';
 
@@ -18,7 +18,7 @@ export class Tool {
   }
 
   constructor(
-    private readonly name: string,
+    private readonly name: SupportedTool,
     private readonly predefinedVariableResolver = new PredefinedVariableResolver()
   ) {}
 
@@ -28,13 +28,21 @@ export class Tool {
     return resolvePythonScript(this.name);
   }
 
+  async updatePath(value: string) {
+    return this.config.update(
+      'path',
+      value,
+      vscode.ConfigurationTarget.Workspace
+    );
+  }
+
   getOutputPath(keys = ['o', 'output']) {
     const options = Object.fromEntries(
       keys.map(k => [k, { type: 'string' as const }])
     );
     const argv = yargs.options(options).parse(this.args.join(' '));
     const outputFilePath = find(argv, (v, k) => !!v && keys.includes(k));
-    if (!outputFilePath) return undefined;
+    if (!outputFilePath) return;
     return path.dirname(outputFilePath);
   }
 }

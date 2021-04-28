@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
-import { BaseError } from './errors';
+import { ExecutionError } from './error';
 
 export async function run({ command, cwd }: { command: string; cwd?: string }) {
   try {
@@ -10,8 +10,4 @@ export async function run({ command, cwd }: { command: string; cwd?: string }) {
   } catch (e: unknown) {
     throw new ExecutionError(e);
   }
-}
-
-export class ExecutionError extends BaseError {
-  readonly name = 'ExecutionError';
 }

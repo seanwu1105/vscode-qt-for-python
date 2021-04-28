@@ -23,9 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [ ] Support PySide2.
 - [x] Support PyQt5.
 - [x] Install, lint and test Python subproject on CD.
-- [ ] Error dialog actions
-  - [ ] Install PySide6/PyQt6/PySide2/PyQt5
-  - [ ] Set paths in config
+- [x] Error dialog actions
+  - [x] Install PySide6/PyQt6/PySide2/PyQt5
+  - [x] Set paths in config
 
 ## 0.6.2 - 2021-04-15
 

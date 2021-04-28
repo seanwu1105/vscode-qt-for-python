@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { NotFoundError } from './errors';
+import { NotFoundError } from './error';
 import { getActiveWorkspaceFolderPath, getSrcPath } from './paths';
 
 export async function resolvePythonScript(fileName: string) {
@@ -21,4 +21,10 @@ function getPythonPath() {
   const relativePath = path.join(activeWorkspaceFolderPath, pythonPath);
   if (fs.existsSync(relativePath)) return relativePath;
   return pythonPath;
+}
+
+export async function installPythonPackage(pypiPackageName: string) {
+  const terminal = vscode.window.createTerminal();
+  terminal.show();
+  terminal.sendText(`"${getPythonPath()}" -m pip install ${pypiPackageName}`);
 }

@@ -15,11 +15,13 @@ import {
   tap,
 } from 'rxjs/operators';
 import * as vscode from 'vscode';
-import { EXTENSION_NAME } from '../constants';
+import { EXTENSION_NAME, SupportedTool } from '../constants';
 import { configurationChanged$ } from './configuration';
 import { finalizeLast } from './rx-operators';
 
-export function enabled$(toolName: SupportedTool) {
+export function enabled$(
+  toolName: Extract<SupportedTool, 'uic' | 'rcc' | 'lupdate'>
+) {
   return defer(async () =>
     vscode.workspace
       .getConfiguration(`${EXTENSION_NAME}.${toolName}`)
@@ -56,5 +58,3 @@ export function watchFileChangedAndCreated() {
       )
     );
 }
-
-type SupportedTool = 'uic' | 'rcc' | 'lupdate';

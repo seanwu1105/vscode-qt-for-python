@@ -44,7 +44,7 @@ export async function updateTranslation(fileUri?: vscode.Uri) {
 function getTsPathForPylupdate(tool: Tool) {
   const matched = tool.args.join(' ').match(/-ts\s+"(\S+)"/);
   if (matched) return path.dirname(matched[1]);
-  return undefined;
+  return;
 }
 
 const uiFileWatcher$ = createFileWatcher$('**/*.ui');
