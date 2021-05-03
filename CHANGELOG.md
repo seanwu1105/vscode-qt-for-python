@@ -5,11 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unrelease
-
-- [ ] Support Windows.
-
-## 1.0.0 - 2021-04-??
+## 1.0.0 - 2021-05-03
 
 ### Added
 
@@ -25,6 +21,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Handle `QtToolModuleNotFoundError`
   - Install PySide6 or PyQt6.
   - Set the missing tool path manually in configuration by selecting an executable.
+
+### Changed
+
+- Categorize configurations depending on each target tool.
 
 ### Fixed
 

@@ -42,8 +42,12 @@ export async function updateTranslation(fileUri?: vscode.Uri) {
  * it manually.
  */
 function getTsPathForPylupdate(tool: Tool) {
-  const matched = tool.args.join(' ').match(/-ts\s+"(\S+)"/);
-  if (matched) return path.dirname(matched[1]);
+  const matched = tool.args
+    .join(' ')
+    .match(/-ts\s+("(?<pathWithSpaces>[\S\s]+)"|(?<path>[\S]+))(\s+|$)/);
+  if (matched?.groups)
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return path.dirname(matched.groups.pathWithSpaces ?? matched.groups.path);
   return;
 }
 
