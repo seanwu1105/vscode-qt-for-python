@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { iif } from 'rxjs';
+import { EMPTY, iif } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
 import * as vscode from 'vscode';
 import {
@@ -55,7 +55,7 @@ const uiFileWatcher$ = createFileWatcher$('**/*.ui');
 
 export const liveExecution$ = enabled$('lupdate').pipe(
   switchMap(enabled =>
-    iif(() => enabled, uiFileWatcher$.pipe(watchFileChangedAndCreated()))
+    iif(() => enabled, uiFileWatcher$.pipe(watchFileChangedAndCreated()), EMPTY)
   ),
   mergeMap(uri => updateTranslation(uri))
 );

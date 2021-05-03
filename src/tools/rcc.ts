@@ -1,4 +1,4 @@
-import { iif } from 'rxjs';
+import { EMPTY, iif } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
 import * as vscode from 'vscode';
 import {
@@ -33,9 +33,13 @@ export async function compileResource(fileUri?: vscode.Uri) {
 
 const qrcFileWatcher$ = createFileWatcher$('**/*.qrc');
 
-export const liveExecution$ = enabled$('uic').pipe(
+export const liveExecution$ = enabled$('rcc').pipe(
   switchMap(enabled =>
-    iif(() => enabled, qrcFileWatcher$.pipe(watchFileChangedAndCreated()))
+    iif(
+      () => enabled,
+      qrcFileWatcher$.pipe(watchFileChangedAndCreated()),
+      EMPTY
+    )
   ),
   mergeMap(uri => compileResource(uri))
 );
