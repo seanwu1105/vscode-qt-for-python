@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.0.0 - 2021-05-03
+
+### Added
+
+- Get Python interpreter with `python.pythonPath` configuration.
+- Discover Qt tools automatically from installed Qt for Python packages. #13
+- Support re-compile UI files with `uic` on changed. #100
+- Support re-compile RCC files with `rcc` on changed.
+- Support re-update translation with `lupdate` on changed.
+- Drop `lrelease` support as it is not included in any Qt for Python packages.
+- Drop QML preview tool support as it is not included in any Qt for Python packages.
+- Drop translation editor support as it is not included in any Qt for Python packages.
+- Show error dialog on exception
+- Handle `QtToolModuleNotFoundError`
+  - Install PySide6 or PyQt6.
+  - Set the missing tool path manually in configuration by selecting an executable.
+
+### Changed
+
+- Categorize configurations depending on each target tool.
+
+### Fixed
+
+- Fix `pyuic6` command with new path discovery mechanism. #95
+
 ## 0.6.2 - 2021-04-15
 
 ### Updated

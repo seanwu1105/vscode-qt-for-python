@@ -2,59 +2,59 @@ name: release
 on:
   push:
     branches:
-    - master
+      - master
 
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Check if version has been updated
-      id: version_check
-      uses: EndBug/version-check@v1
-      with:
-        diff-search: true
-        token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '15'
 
-    - name: Install Node.js
-      if: steps.version_check.outputs.changed == 'true'
-      uses: actions/setup-node@v1
-      with:
-        node-version: 10.x
+      - name: Check if version has been updated
+        id: version_check
+        uses: EndBug/version-check@v2
+        with:
+          diff-search: true
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: npm install
-      if: steps.version_check.outputs.changed == 'true'
+      - name: Install dependencies
+        run: npm install
+        if: steps.version_check.outputs.changed == 'true'
 
-    - name: Create GitHub release
-      id: create_release
-      if: steps.version_check.outputs.changed == 'true'
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ steps.version_check.outputs.version }}
-        release_name: ${{ steps.version_check.outputs.version }}
-        body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
+      - name: Package VSIX
+        if: steps.version_check.outputs.changed == 'true'
+        run: npx vsce package
 
-    - name: Package VSIX
-      if: steps.version_check.outputs.changed == 'true'
-      run: npx vsce package
-    
-    - name: Upload VSIX to release assets
-      if: steps.version_check.outputs.changed == 'true'
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
-        asset_name: vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
-        asset_content_type: application/vsix
+      - name: Publish on Visual Studio Code Extension Marketplace
+        if: steps.version_check.outputs.changed == 'true'
+        run: npx vsce publish
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
-    - name: Publish on Visual Studio Code Extension Marketplace
-      if: steps.version_check.outputs.changed == 'true'
-      run: npm run deploy
-      env:
-        VSCE_PAT: ${{ secrets.VSCE_PAT }}
+      - name: Create GitHub release
+        id: create_release
+        if: steps.version_check.outputs.changed == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version_check.outputs.version }}
+          release_name: ${{ steps.version_check.outputs.version }}
+          body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
+
+      - name: Upload VSIX to release assets
+        if: steps.version_check.outputs.changed == 'true'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
+          asset_name: vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
+          asset_content_type: application/vsix

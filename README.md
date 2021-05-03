@@ -5,40 +5,39 @@
 [![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![downloads](https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aa7530b2ecad4617af3b98d57baf1166)](https://www.codacy.com/gh/seanwu1105/vscode-qt-for-python/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=seanwu1105/vscode-qt-for-python&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/aa7530b2ecad4617af3b98d57baf1166)](https://www.codacy.com/gh/seanwu1105/vscode-qt-for-python/dashboard?utm_source=github.com&utm_medium=referral&utm_content=seanwu1105/vscode-qt-for-python&utm_campaign=Badge_Grade)
 
-A Visual Studio Code extension provides some common functionalities for PyQt5, PySide2, PySide6 with Qt Creator.
+A Visual Studio Code extension provides some common untilities for PySide6, PyQt6 and PyQt5.
 
-|        Qt Markup Language (`qml`)       |         Qt Style Sheets (`qss`)         |    Resource Collection Files (`qrc`)    |
-|:---------------------------------------:|:---------------------------------------:|:---------------------------------------:|
+|       Qt Markup Language (`qml`)        |         Qt Style Sheets (`qss`)         |    Resource Collection Files (`qrc`)    |
+| :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
 | ![qml](https://i.imgur.com/YDWuDDJ.png) | ![qss](https://i.imgur.com/N1w3vs9.png) | ![qrc](https://i.imgur.com/6qW1YTI.png) |
 
-|          `qmake` Files (`pro`)          |     Qt Linguist Translation (`qt.ts`)    |   QML Module Definition Files (`qmldir`)   |
-|:---------------------------------------:|:----------------------------------------:|:------------------------------------------:|
+|          `qmake` Files (`pro`)          |    Qt Linguist Translation (`qt.ts`)     |   QML Module Definition Files (`qmldir`)   |
+| :-------------------------------------: | :--------------------------------------: | :----------------------------------------: |
 | ![pro](https://i.imgur.com/kI3m5c4.png) | ![qtts](https://i.imgur.com/TnizAQd.png) | ![qmldir](https://i.imgur.com/F6NH69h.png) |
 
-|         Qt Markup Language (`*.qml`)        |          Qt Designer Form (`*.ui`)          | Qt Linguist Translation (`*.qt.ts`)         |
-|:-------------------------------------------:|:-------------------------------------------:|---------------------------------------------|
-| ![preview](https://i.imgur.com/fSwBIjL.png) | ![preview](https://i.imgur.com/1MMSV2b.png) | ![preview](https://i.imgur.com/Wjf2PkO.png) |
+## Highlight Features
 
-## Features
-
-* [x] Qt Markup Language (`*.qml`) highlighting and snippets support
-* [x] QML Module Definition Files (`*.qmldir`) highlighting and snippets support
-* [x] Qt Style Sheets (`*.qss`) highlighting and snippets support
-* [x] Qt Linguist Translation (`*.qt.ts`) highlighting support (XML)
-* [x] Resource Collection Files (`*.qrc`) highlighting support (XML)
-* [x] Qt Designer Form (`*.ui`) highlighting support (XML)
-* [x] Qt Creator User Settings (`*.pro.user`) highlighting support (XML)
-* [x] `qmake` highlighting support
-* [x] New form (Qt Designer `*.ui` file) command
-* [x] Edit form (Qt Designer `*.ui` file) command
-* [x] Compile form (Qt Designer `*.ui` file) into Python file (require `pyuic5` or `pyside2-uic`)
-* [x] Update translation (Qt Linguist `*.qt.ts` file) from Python file (require `pylupdate5` or `pyside2-lupdate`)
-* [x] Edit translation (Qt Linguist `*.qt.ts` file)
-* [x] Release translation (Qt Linguist `*.qt.ts` file) to `*.qm` file
-* [x] Preview QML
-* [x] Compile QRC (Qt Resource File) into Python file (require `pyrcc5` or `pyside2-rcc`)
+- Qt Markup Language (`*.qml`) highlighting and snippets support
+- QML Module Definition Files (`*.qmldir`) highlighting and snippets support
+- Qt Style Sheets (`*.qss`) highlighting and snippets support
+- Qt Linguist Translation (`*.qt.ts`) highlighting support (XML)
+- Resource Collection Files (`*.qrc`) highlighting support (XML)
+- Qt Designer Form (`*.ui`) highlighting support (XML)
+- Qt Creator User Settings (`*.pro.user`) highlighting support (XML)
+- `qmake` highlighting support
+- New or open form (Qt Designer `*.ui` file)
+  - Automatically get `designer` from installed Qt for Python modules or set manually
+- Compile form (Qt Designer `*.ui` file) into Python file (require PySide6, PyQt6, PySide2 or PyQt5 to be installed)
+  - Automatically get `uic` from installed Qt for Python modules or set manually
+  - Automatically re-compile on form files changed
+- Update translation (Qt Linguist `*.qt.ts` file) from Python file (require PyQt6, PySide2 or PyQt5 to be installed)
+  - Automatically get `lupdate` from installed Qt for Python modules or set manually
+  - Automatically re-update on form files changed
+- Compile Qt Resource File (`*.qrc`) into Python file (require PySide6, PySide2 or PyQt5 to be installed)
+  - Automatically get `rcc` from installed Qt for Python modules or set manually
+  - Automatically re-compile on resource files changed
 
 ## Supported Environment Variables
 
@@ -46,16 +45,22 @@ The following list shows the supported environment variables you can use for the
 
 ### Predefined Variables
 
-* `${workspaceFolder}` - the path of the folder opened in VS Code
-* `${workspaceFolderBasename}` - the name of the folder opened in VS Code without any slashes (/)
-* `${file}` - the current opened file
-* `${relativeFile}` - the current opened file relative to workspaceFolder
-* `${fileBasename}` - the current opened file's basename
-* `${fileBasenameNoExtension}` - the current opened file's basename without file extension
-* `${fileDirname}` - the current opened file's dirname
-* `${fileExtname}` - the current opened file's extension
-* `${lineNumber}` - the current selected line number in the active file
-* `${selectedText}` - the current selected text in the active file
+- `${workspaceFolder}` - the path of the folder opened in VS Code
+- `${workspaceFolderBasename}` - the name of the folder opened in VS Code without any slashes (/)
+- `${file}` - the current opened file
+- `${fileWorkspaceFolder}` - the current opened file's workspace folder
+- `${relativeFile}` - the current opened file relative to `workspaceFolder`
+- `${relativeFileDirname}` - the current opened file's dirname relative to `workspaceFolder`
+- `${fileBasename}` - the current opened file's basename
+- `${fileBasenameNoExtension}` - the current opened file's basename with no file extension
+- `${fileDirname}` - the current opened file's dirname
+- `${fileExtname}` - the current opened file's extension
+- `${cwd}` - the task runner's current working directory on startup
+- `${lineNumber}` - the current selected line number in the active file
+- `${selectedText}` - the current selected text in the active file
+- `${execPath}` - the path to the running VS Code executable
+- ~~`${defaultBuildTask}` - the name of the default build task~~ (currently not supported)
+- `${pathSeparator}` - the character used by the operating system to separate components in file paths
 
 > The example of predefined variables can be found [here](https://code.visualstudio.com/docs/editor/variables-reference).
 
@@ -67,13 +72,9 @@ You can also reference environment variables through the `${env:Name}` syntax (f
 
 ## Requirements
 
-This extension requires Qt Designer, Qt Linguist, Qt `lrelease` and Qt `qmlscene` for different features. You could install these tools by installing [Qt Creator](https://www.qt.io/download).
-
-After the installation, you could find the tools within the installing folder of Qt Creator in your computer. For example, if you install Qt Creator 5.13.0 in `/opt/Qt` in Linux, you could find out the binary of these tools in `/opt/Qt/5.13.0/gcc_64/bin`. Or, for Windows, you could find the binary of the tools in `C:\Qt\5.13.0\mingw73_64\bin` if you did not change the default path. You have to set the paths of tools in **Qt for Python** section in user settings of Visual Studio Code before using the commands provided by this extension.
-
-## Caveat
-
-* All file generated by the following command would overwrite the existing files with the same name **without warning**.
+- Python
+- [Python Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python) with `python.pythonPath` configuration (defaults to `python`)
+- Qt for Python packages including PySide6, PyQt6, PySide2 and PyQt5.
 
 ## Release Notes
 
