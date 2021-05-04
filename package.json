@@ -20,7 +20,7 @@
   "dependencies": {
     "lodash-es": "^4.17.21",
     "rxjs": "^6.6.7",
-    "yargs": "^17.0.0"
+    "yargs": "^17.0.1"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
