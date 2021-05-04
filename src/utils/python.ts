@@ -1,10 +1,10 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import { getActiveWorkspaceFolderPath, getSrcPath } from './paths';
+import { getActiveWorkspaceFolderPath, getExtensionPath } from './paths';
 
 export async function resolvePythonScript(fileName: string) {
-  return `"${getPythonPath()}" "${getSrcPath()}/python/scripts/${fileName}.py"`;
+  return `"${getPythonPath()}" "${getExtensionPath()}/python/scripts/${fileName}.py"`;
 }
 
 function getPythonPath() {

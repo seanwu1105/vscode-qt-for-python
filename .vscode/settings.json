@@ -13,13 +13,13 @@
   },
   "typescript.tsc.autoDetect": "off",
   "typescript.preferences.importModuleSpecifier": "relative",
-  "python.pythonPath": "./src/python/.venv/bin/python",
+  "python.pythonPath": "./python/.venv/bin/python",
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.pylintArgs": ["--rcfile=src/python/pylintrc"],
+  "python.linting.pylintArgs": ["--rcfile=python/pylintrc"],
   "python.linting.mypyEnabled": true,
   "python.linting.pylintUseMinimalCheckers": false,
-  "python.analysis.extraPaths": ["./src/python/scripts"],
+  "python.analysis.extraPaths": ["./python/scripts"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   }

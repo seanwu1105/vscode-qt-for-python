@@ -8,5 +8,11 @@ src/**
 **/.eslintrc.json
 **/*.map
 **/*.ts
+
+# Prettier
 .prettierignore
 .prettierrc.json
+
+# Python
+python/**
+!python/scripts/**.py

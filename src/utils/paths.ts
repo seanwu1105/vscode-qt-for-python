@@ -1,14 +1,13 @@
 import * as fs from 'fs';
-import * as path from 'path';
 import * as vscode from 'vscode';
 import { EXTENSION_ID } from '../constants';
 import { assertNotNullable } from './assertions';
 
-export function getSrcPath() {
+export function getExtensionPath() {
   const extensionPath = vscode.extensions.getExtension(EXTENSION_ID)
     ?.extensionPath;
   assertNotNullable(extensionPath);
-  return path.join(extensionPath, 'src');
+  return extensionPath;
 }
 
 export function getActiveWorkspaceFolderPath() {
