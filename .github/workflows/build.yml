@@ -116,3 +116,9 @@ jobs:
 
       - name: Package VSIX
         run: npx vsce package --yarn
+
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v2
+        with:
+          name: vscode-qt-for-python.vsix
+          path: vscode-qt-for-python-*.vsix
