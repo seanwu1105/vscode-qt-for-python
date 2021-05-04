@@ -29,7 +29,7 @@ jobs:
 
       - name: Package VSIX
         if: steps.version_check.outputs.changed == 'true'
-        run: npx vsce package
+        run: npx vsce package --yarn
 
       - name: Publish on Visual Studio Code Extension Marketplace
         if: steps.version_check.outputs.changed == 'true'

@@ -115,5 +115,4 @@ jobs:
         run: npm install
 
       - name: Package VSIX
-        if: steps.version_check.outputs.changed == 'true'
-        run: npx vsce package
+        run: npx vsce package --yarn
