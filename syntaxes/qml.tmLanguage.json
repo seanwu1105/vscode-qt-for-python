@@ -47,6 +47,9 @@
             },
             {
               "include": "#identifier"
+            },
+            {
+              "include": "#comment"
             }
           ],
           "end": "$"
@@ -179,6 +182,9 @@
             },
             {
               "include": "#identifier"
+            },
+            {
+              "include": "#comment"
             }
           ]
         }
