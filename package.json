@@ -53,6 +53,7 @@
   ],
   "main": "./dist/extension.js",
   "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
+  "icon": "resources/images/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/seanwu1105/vscode-qt-for-python.git"
