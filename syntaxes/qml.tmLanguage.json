@@ -261,6 +261,20 @@
     "comment": {
       "patterns": [
         {
+          "begin": "(\\/\\/:)",
+          "beginCaptures": {
+            "1": {
+              "name": "storage.type.class.qml.tr"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "include": "#comment-contents"
+            }
+          ]
+        },
+        {
           "begin": "(\\/\\/[~|=])\\s*([A-Za-z_$][\\w$.\\[\\]]*)",
           "beginCaptures": {
             "1": {
