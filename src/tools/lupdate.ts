@@ -45,9 +45,11 @@ function getTsPathForPylupdate(tool: Tool) {
   const matched = tool.args
     .join(' ')
     .match(/-ts\s+("(?<pathWithSpaces>[\S\s]+)"|(?<path>[\S]+))(\s+|$)/);
-  if (matched?.groups)
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return path.dirname(matched.groups.pathWithSpaces ?? matched.groups.path);
+  if (matched?.groups) {
+    if (matched.groups.pathWithSpaces)
+      return path.dirname(matched.groups.pathWithSpaces);
+    if (matched.groups.path) return path.dirname(matched.groups.path);
+  }
   return;
 }
 

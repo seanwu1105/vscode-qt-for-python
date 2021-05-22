@@ -82,6 +82,6 @@ async function setToolPath(toolName: SupportedTool) {
   const toolUri = await vscode.window.showOpenDialog({
     canSelectMany: false,
   });
-  if (!toolUri || toolUri.length === 0) return;
+  if (!toolUri || !toolUri[0]) return;
   return new Tool(toolName).updatePath(toolUri[0].fsPath);
 }

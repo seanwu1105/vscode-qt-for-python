@@ -11,9 +11,12 @@ export function getExtensionPath() {
 }
 
 export function getActiveWorkspaceFolderPath() {
-  if (vscode.workspace.workspaceFolders)
-    return vscode.workspace.workspaceFolders[0].uri.fsPath;
-  return;
+  if (
+    !vscode.workspace.workspaceFolders ||
+    !vscode.workspace.workspaceFolders[0]
+  )
+    return;
+  return vscode.workspace.workspaceFolders[0].uri.fsPath;
 }
 
 export function getActiveDocumentPath() {

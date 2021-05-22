@@ -10,7 +10,8 @@
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "noUncheckedIndexedAccess": true
   },
   "exclude": ["node_modules", ".vscode-test"]
 }

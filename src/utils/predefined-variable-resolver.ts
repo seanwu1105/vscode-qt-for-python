@@ -26,7 +26,11 @@ interface PredefinedVariables {
 
 class PredefinedVariableProvider implements PredefinedVariables {
   get workspaceFolder() {
-    if (!vscode.workspace.workspaceFolders) return '';
+    if (
+      !vscode.workspace.workspaceFolders ||
+      !vscode.workspace.workspaceFolders[0]
+    )
+      return '';
     return vscode.workspace.workspaceFolders[0].uri.fsPath;
   }
 
@@ -83,7 +87,7 @@ class PredefinedVariableProvider implements PredefinedVariables {
   }
 
   get selectedText() {
-    if (vscode.workspace.textDocuments.length === 0) return '';
+    if (!vscode.workspace.textDocuments[0]) return '';
     return vscode.workspace.textDocuments[0].getText(
       vscode.window.activeTextEditor?.selection
     );
