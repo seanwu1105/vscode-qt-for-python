@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "rxjs": "^6.6.7",
+    "rxjs": "^7.1.0",
     "yargs": "^17.0.0"
   },
   "devDependencies": {
