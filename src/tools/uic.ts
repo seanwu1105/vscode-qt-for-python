@@ -20,7 +20,7 @@ const NAME = 'uic';
 export async function compileForm(fileUri?: vscode.Uri) {
   const inPath = getFsPathOrActiveDocumentPath(fileUri);
   const tool = new Tool(NAME, new PredefinedVariableResolver(inPath));
-  const outputPath = tool.getOutputPath();
+  const outputPath = await tool.getOutputPath();
   if (outputPath) createPathIfNotExist(outputPath);
   return run({
     command:

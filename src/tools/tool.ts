@@ -36,11 +36,11 @@ export class Tool {
     );
   }
 
-  getOutputPath(keys = ['o', 'output']) {
+  async getOutputPath(keys = ['o', 'output']) {
     const options = Object.fromEntries(
       keys.map(k => [k, { type: 'string' as const }])
     );
-    const argv = yargs.options(options).parse(this.args.join(' '));
+    const argv = await yargs.options(options).parse(this.args.join(' '));
     const outputFilePath = find(argv, (v, k) => !!v && keys.includes(k));
     if (!outputFilePath) return;
     return path.dirname(outputFilePath);

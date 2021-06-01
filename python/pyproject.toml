@@ -6,14 +6,14 @@ authors = ["Sean Wu <seanwu1105@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.8"
-PySide6 = "^6.0.3"
-PyQt6 = "^6.0.3"
+PySide6 = "^6.1.0"
+PyQt6 = "^6.1.0"
 PySide2 = "^5.15.2"
 PyQt5 = "^5.15.4"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.3"
-pylint = "^2.8.2"
+pytest = "^6.2.4"
+pylint = "^2.8.3"
 mypy = "^0.812"
 autopep8 = "^1.5.7"
 

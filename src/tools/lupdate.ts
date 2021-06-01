@@ -21,7 +21,8 @@ const NAME = 'lupdate';
 export async function updateTranslation(fileUri?: vscode.Uri) {
   const inPath = getFsPathOrActiveDocumentPath(fileUri);
   const tool = new Tool(NAME, new PredefinedVariableResolver(inPath));
-  const outputPath = tool.getOutputPath(['ts']) ?? getTsPathForPylupdate(tool);
+  const outputPath =
+    (await tool.getOutputPath(['ts'])) ?? getTsPathForPylupdate(tool);
   if (outputPath) createPathIfNotExist(outputPath);
   return run({
     command:
