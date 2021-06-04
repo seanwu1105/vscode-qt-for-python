@@ -224,7 +224,7 @@
         {
           "description": "A list as value.",
           "begin": "(?<=\\w)\\s*\\:\\s*\\[",
-          "end": "\\]",
+          "end": "\\](.*)$",
           "patterns": [
             {
               "include": "#object"
@@ -232,7 +232,12 @@
             {
               "include": "source.js"
             }
-          ]
+          ],
+          "endCaptures": {
+            "0": {
+              "patterns": [{ "include": "source.js" }]
+            }
+          }
         },
         {
           "description": "A block of JavaScript code as value.",
