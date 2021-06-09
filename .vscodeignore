@@ -14,5 +14,5 @@ src/**
 .prettierrc.json
 
 # Python
-python/**
-!python/scripts/**.py
+python/*
+!python/scripts/
