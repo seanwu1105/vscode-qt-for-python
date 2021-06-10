@@ -1,7 +1,9 @@
-.vscode/**
-.vscode-test/**
-out/**
-src/**
+.github/
+.vscode/
+.vscode-test/
+node_modules/
+out/
+src/
 .gitignore
 .yarnrc
 **/tsconfig.json
@@ -9,10 +11,13 @@ src/**
 **/*.map
 **/*.ts
 
+# Husky
+.husky/
+
 # Prettier
 .prettierignore
 .prettierrc.json
 
 # Python
-python/**
-!python/scripts/**.py
+python/*
+!python/scripts/
