@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { NotFoundError } from './error';
 import { getExtensionPath } from './paths';
 
 export async function resolvePythonScript(fileName: string) {
@@ -13,7 +14,13 @@ async function getPythonInterpreterPath(): Promise<string> {
   const pythonExecCommand =
     pythonExtensionApi?.settings.getExecutionDetails().execCommand;
   if (pythonExecCommand) return pythonExecCommand[0];
-  return 'python';
+  const pythonDefaultInterpreter = vscode.workspace
+    .getConfiguration('python')
+    .get<string>('defaultInterpreterPath');
+  if (pythonDefaultInterpreter) return pythonDefaultInterpreter;
+  throw new NotFoundError(
+    'Python interpreter cannot could not be obtained from the Python extension.'
+  );
 }
 
 export async function installPythonPackage(pypiPackageName: string) {
