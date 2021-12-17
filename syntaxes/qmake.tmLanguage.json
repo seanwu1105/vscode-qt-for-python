@@ -86,7 +86,7 @@
           "name": "variable.other.qmake"
         },
         {
-          "match": "[\\w\\d\\\/_\\-\\.\\:]+",
+          "match": "[\\w\\d\\/_\\-\\.\\:]+",
           "name": "constant.other.filename.qmake"
         },
         {

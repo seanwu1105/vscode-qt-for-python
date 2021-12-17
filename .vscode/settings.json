@@ -21,5 +21,8 @@
   "python.analysis.extraPaths": ["./python/scripts"],
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
