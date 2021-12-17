@@ -241,12 +241,18 @@
         },
         {
           "description": "A block of JavaScript code as value.",
-          "begin": "(?<=\\w)\\s*\\:\\s*\\{",
-          "end": "\\}",
-          "contentName": "meta.embedded.block.js",
+          "begin": "(?<=\\w)\\s*\\:(?=\\s*\\{?\\s*$)",
+          "end": "(?<=\\})",
           "patterns": [
             {
-              "include": "source.js"
+              "begin": "\\{",
+              "end": "\\}",
+              "contentName": "meta.embedded.block.js",
+              "patterns": [
+                {
+                  "include": "source.js"
+                }
+              ]
             }
           ]
         },
