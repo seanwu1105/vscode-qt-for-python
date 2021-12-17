@@ -1,31 +1,17 @@
 {
   "Object Creation": {
     "prefix": "object",
-    "body": [
-      "${1:Typename} {",
-      "\tid: ${2:idName}",
-      "$0",
-      "}"
-    ],
+    "body": ["${1:Typename} {", "\tid: ${2:idName}", "$0", "}"],
     "description": "Create Object"
   },
   "Text Creation": {
     "prefix": "Text",
-    "body": [
-      "Text {",
-      "\ttext: ${1:string}",
-      "$0",
-      "}"
-    ],
+    "body": ["Text {", "\ttext: ${1:string}", "$0", "}"],
     "description": "Create Text Object"
   },
   "Region Start": {
     "prefix": "#region",
-    "body": [
-      "//#region $0",
-      "$1",
-      "//#endregion"
-    ],
+    "body": ["//#region $0", "$1", "//#endregion"],
     "description": "Folding Region Start"
   },
   "Property Attribute with Initialization": {
@@ -37,20 +23,12 @@
   },
   "List Attribute with Initialization": {
     "prefix": "list",
-    "body": [
-      "property list<${1:Type}> ${2:name}: [",
-      "\t$0",
-      "]"
-    ],
+    "body": ["property list<${1:Type}> ${2:name}: [", "\t$0", "]"],
     "description": "List Attribute with Initialization"
   },
   "Method Attribute": {
     "prefix": "function",
-    "body": [
-      "function ${1:name}(${2:params}) {",
-      "\t$0",
-      "}"
-    ],
+    "body": ["function ${1:name}(${2:params}) {", "\t$0", "}"],
     "description": "Method Attribute"
   },
   "Enumeration Attributes": {
@@ -66,9 +44,7 @@
   },
   "Property Alias": {
     "prefix": "alias",
-    "body": [
-      "property alias ${1:name}: ${2:ref}"
-    ],
+    "body": ["property alias ${1:name}: ${2:ref}"],
     "description": "Property Alias"
   }
 }

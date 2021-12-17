@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to
+[Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 1.1.6 - 2021-12-16
+
+### Fixed
+
+- Fix incorrect syntax highlighting when adding new-line characters before a
+  JavaScript code block. #165
 
 ## 1.1.5 - 2021-12-02
 
@@ -15,7 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Clean up unnecessary files on bundling. #126 (thanks to [tjquillan](https://github.com/tjquillan))
+- Clean up unnecessary files on bundling. #126 (thanks to
+  [tjquillan](https://github.com/tjquillan))
 
 ## 1.1.3 - 2021-06-08
 
@@ -27,8 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Apply JS highlighting after list property. This is just a workaround as the highlighting cannot be applied with
-  multi-line expression. #116
+- Apply JS highlighting after list property. This is just a workaround as the
+  highlighting cannot be applied with multi-line expression. #116
 
 ## 1.1.1 - 2021-05-22
 
@@ -57,7 +66,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Bundle `/python/scripts` with extension.
-- Add `--yarn` option when package extension with `vsce`. See [this issue](https://github.com/microsoft/vscode-vsce/issues/439) for the workaround.
+- Add `--yarn` option when package extension with `vsce`. See
+  [this issue](https://github.com/microsoft/vscode-vsce/issues/439) for the
+  workaround.
 
 ## 1.0.0 - 2021-05-03
 
@@ -69,12 +80,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support re-compile RCC files with `rcc` on changed.
 - Support re-update translation with `lupdate` on changed.
 - Drop `lrelease` support as it is not included in any Qt for Python packages.
-- Drop QML preview tool support as it is not included in any Qt for Python packages.
-- Drop translation editor support as it is not included in any Qt for Python packages.
+- Drop QML preview tool support as it is not included in any Qt for Python
+  packages.
+- Drop translation editor support as it is not included in any Qt for Python
+  packages.
 - Show error dialog on exception
 - Handle `QtToolModuleNotFoundError`
   - Install PySide6 or PyQt6.
-  - Set the missing tool path manually in configuration by selecting an executable.
+  - Set the missing tool path manually in configuration by selecting an
+    executable.
 
 ### Changed
 
@@ -100,7 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add basic support for PySide6. Thanks to [pjx206](https://github.com/pjx206). #88
+- Add basic support for PySide6. Thanks to [pjx206](https://github.com/pjx206).
+  #88
 
 ## 0.5.2
 
@@ -149,7 +164,8 @@ Menus in editor/title and editor/context
 
 ### Fixed
 
-- Now, the path of input file could include spaces. (thanks to _Paolo (ZioLupo)_)
+- Now, the path of input file could include spaces. (thanks to _Paolo
+  (ZioLupo)_)
 
 ## 0.1.1
 

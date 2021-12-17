@@ -46,7 +46,9 @@ jobs:
         with:
           tag_name: ${{ steps.version_check.outputs.version }}
           release_name: ${{ steps.version_check.outputs.version }}
-          body: Thanks for following along! For more information check out the [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
+          body:
+            Thanks for following along! For more information check out the
+            [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
 
       - name: Upload VSIX to release assets
         if: steps.version_check.outputs.changed == 'true'
@@ -55,6 +57,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
-          asset_name: vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
+          asset_path:
+            ./vscode-qt-for-python-${{ steps.version_check.outputs.version
+            }}.vsix
+          asset_name:
+            vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
           asset_content_type: application/vsix

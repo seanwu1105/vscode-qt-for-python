@@ -4,8 +4,8 @@ import { EXTENSION_ID } from '../constants';
 import { assertNotNullable } from './assertions';
 
 export function getExtensionPath() {
-  const extensionPath = vscode.extensions.getExtension(EXTENSION_ID)
-    ?.extensionPath;
+  const extensionPath =
+    vscode.extensions.getExtension(EXTENSION_ID)?.extensionPath;
   assertNotNullable(extensionPath);
   return extensionPath;
 }
