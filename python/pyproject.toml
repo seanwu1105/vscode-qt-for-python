@@ -14,7 +14,7 @@ PyQt5 = "^5.15.4"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 pylint = "^2.12.1"
-mypy = "^0.910"
+mypy = "^0.942"
 autopep8 = "^1.5.7"
 
 [build-system]
