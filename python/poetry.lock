@@ -264,14 +264,39 @@ shiboken2 = "5.15.2"
 
 [[package]]
 name = "pyside6"
-version = "6.2.1"
+version = "6.3.0"
 description = "Python bindings for the Qt cross-platform application and UI framework"
 category = "main"
 optional = false
-python-versions = ">=3.6, <3.11"
+python-versions = "<3.11,>=3.6"
 
 [package.dependencies]
-shiboken6 = "6.2.1"
+PySide6-Addons = "6.3.0"
+PySide6-Essentials = "6.3.0"
+shiboken6 = "6.3.0"
+
+[[package]]
+name = "pyside6-addons"
+version = "6.3.0"
+description = "Python bindings for the Qt cross-platform application and UI framework (Addons)"
+category = "main"
+optional = false
+python-versions = "<3.11,>=3.6"
+
+[package.dependencies]
+PySide6-Essentials = "6.3.0"
+shiboken6 = "6.3.0"
+
+[[package]]
+name = "pyside6-essentials"
+version = "6.3.0"
+description = "Python bindings for the Qt cross-platform application and UI framework (Essentials)"
+category = "main"
+optional = false
+python-versions = "<3.11,>=3.6"
+
+[package.dependencies]
+shiboken6 = "6.3.0"
 
 [[package]]
 name = "pytest"
@@ -304,11 +329,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <3.10"
 
 [[package]]
 name = "shiboken6"
-version = "6.2.1"
-description = "Python / C++ bindings helper module"
+version = "6.3.0"
+description = "Python/C++ bindings helper module"
 category = "main"
 optional = false
-python-versions = ">=3.6, <3.11"
+python-versions = "<3.11,>=3.6"
 
 [[package]]
 name = "toml"
@@ -337,7 +362,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.8"
-content-hash = "25e4e0359b88b5c891f32c84cfb5e1d510e6c61cb6ba2e373daa8147a5e2aa63"
+content-hash = "e4def867c69bab1afbe9d827d5f3946409d484ed6c9c8169403d451fe4b8c6a0"
 
 [metadata.files]
 astroid = [
@@ -528,9 +553,19 @@ pyside2 = [
     {file = "PySide2-5.15.2-5.15.2-cp35.cp36.cp37.cp38.cp39-none-win_amd64.whl", hash = "sha256:1316aa22dd330df096daf7b0defe9c00297a66e0b4907f057aaa3e88c53d1aff"},
 ]
 pyside6 = [
-    {file = "PySide6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_14_x86_64.whl", hash = "sha256:f1ac2cd8b9712d2a2fbe0780a895afc0d4cdb7869d698d64ea75bde6b862ed8a"},
-    {file = "PySide6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl", hash = "sha256:8fd5a9d0948392098f293a82ecf44d3daf347704e8058c654b4b5fdd2d96ee68"},
-    {file = "PySide6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-none-win_amd64.whl", hash = "sha256:9e2397584304c3d3084dabae0571bd879f0b12145ec81a31873872a26abd9010"},
+    {file = "PySide6-6.3.0-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:2517377c49b5d5c66afc51dab02814d76af1fc7545bf6b76b3d1de86ce9a4507"},
+    {file = "PySide6-6.3.0-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:53d61ff66bb81a099e71e43e7470060a9141a8e6782d6eb6cc52b9a9cf38730c"},
+    {file = "PySide6-6.3.0-cp36-abi3-win_amd64.whl", hash = "sha256:c2368a0f346935167bf741712772b63dee130b29a9270e018cf9474eef1948a0"},
+]
+pyside6-addons = [
+    {file = "PySide6_Addons-6.3.0-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:4937fc42aec85d5dde62b2d47e29d76a63722d2a0d72e11772baa3e9925bf234"},
+    {file = "PySide6_Addons-6.3.0-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:59e96866abbe468087575b63a697c4b1cc97e65f20874d26d8f0d10f5c8c8728"},
+    {file = "PySide6_Addons-6.3.0-cp36-abi3-win_amd64.whl", hash = "sha256:143228bde402426df9d2b97ac4d8de8e97b7c8d51c76362bcd439dc9e2ab3e86"},
+]
+pyside6-essentials = [
+    {file = "PySide6_Essentials-6.3.0-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:1c2a2a2b26fc923b3527907462ae5828b7e50a2c0fcf9923b086781af3911060"},
+    {file = "PySide6_Essentials-6.3.0-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:a486abe04be6270da798eae9c78b40f605008f19d5d9c880b1683783c715882d"},
+    {file = "PySide6_Essentials-6.3.0-cp36-abi3-win_amd64.whl", hash = "sha256:7304353ab13cc9b5b0a86b3487f24b133a68c5b8c1312516510c0d49469f80d8"},
 ]
 pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
@@ -545,9 +580,9 @@ shiboken2 = [
     {file = "shiboken2-5.15.2-5.15.2-cp35.cp36.cp37.cp38.cp39-none-win_amd64.whl", hash = "sha256:14a33169cf1bd919e4c4c4408fffbcd424c919a3f702df412b8d72b694e4c1d5"},
 ]
 shiboken6 = [
-    {file = "shiboken6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_14_x86_64.whl", hash = "sha256:6f89e4725eb19898bfbc717b593f94398c68c4224e8b2631077b623080e0b8f5"},
-    {file = "shiboken6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl", hash = "sha256:fe719fe5084be5e39802035e668de85899cfd9ee7b5a65729efb59f703258b51"},
-    {file = "shiboken6-6.2.1-6.2.1-cp36.cp37.cp38.cp39.cp310-none-win_amd64.whl", hash = "sha256:7cb9713ae9c1bf69ad6592b4ce939a4e9c148aaf2c01445e0a13fd7f8490d55e"},
+    {file = "shiboken6-6.3.0-cp36-abi3-macosx_10_9_universal2.whl", hash = "sha256:ead1cee2fea2566321e725a50070c40a9e67aaa015a20a84a39a9e72ff9b426e"},
+    {file = "shiboken6-6.3.0-cp36-abi3-manylinux_2_28_x86_64.whl", hash = "sha256:e68e3cbb595c3047c4d893b84ef88eb5b23dea4e94241e80f5509dcb6613ad3d"},
+    {file = "shiboken6-6.3.0-cp36-abi3-win_amd64.whl", hash = "sha256:096e6b2254e59729ae61acbb80d09c31ad7ea35b6624ec120c15a35b95c70b69"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
