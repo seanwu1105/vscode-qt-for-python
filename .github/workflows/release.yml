@@ -16,50 +16,21 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Check if version has been updated
-        id: version_check
-        uses: EndBug/version-check@v2
+      - uses: google-github-actions/release-please-action@v3
+        id: release
         with:
-          diff-search: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
 
       - name: Install dependencies
-        run: npm install
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.release.outputs.release_created
+        run: npm ci
 
       - name: Package VSIX
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.release.outputs.release_created
         run: npx vsce package --yarn
 
       - name: Publish on Visual Studio Code Extension Marketplace
-        if: steps.version_check.outputs.changed == 'true'
+        if: steps.release.outputs.release_created
         run: npx vsce publish
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
-
-      - name: Create GitHub release
-        id: create_release
-        if: steps.version_check.outputs.changed == 'true'
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.version_check.outputs.version }}
-          release_name: ${{ steps.version_check.outputs.version }}
-          body:
-            Thanks for following along! For more information check out the
-            [CHANGELOG](https://github.com/seanwu1105/vscode-qt-for-python/blob/master/CHANGELOG.md).
-
-      - name: Upload VSIX to release assets
-        if: steps.version_check.outputs.changed == 'true'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path:
-            ./vscode-qt-for-python-${{ steps.version_check.outputs.version
-            }}.vsix
-          asset_name:
-            vscode-qt-for-python-${{ steps.version_check.outputs.version }}.vsix
-          asset_content_type: application/vsix
