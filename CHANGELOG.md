@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/1.1.7...v1.2.0) (2022-07-28)
+
+
+### Features
+
+* update CI (use feat to try release PR) ([13d1518](https://github.com/seanwu1105/vscode-qt-for-python/commit/13d15182c5d75d29aafb6cd915bac8ddf44a429e))
+
+
+### Reverts
+
+* revert changelog header removal ([e907ffd](https://github.com/seanwu1105/vscode-qt-for-python/commit/e907ffd1d39729a71e47e005e5a1ad7e5f43878f))
+
 ## 1.1.7 - 2021-12-16
 
 Republish the release to marketplace.
