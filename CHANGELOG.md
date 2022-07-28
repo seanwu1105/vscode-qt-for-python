@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.2.0...v1.3.0) (2022-07-28)
+
+
+### Features
+
+* upload VSIX to release assets (force release) ([39c32fa](https://github.com/seanwu1105/vscode-qt-for-python/commit/39c32fa7921fc795d348cf0d9ced128b067c5055))
+
+
+### Bug Fixes
+
+* fix wrong curl command ([30817f2](https://github.com/seanwu1105/vscode-qt-for-python/commit/30817f2e5de6466b4afd3278a48d55a163cf5123))
+
 ## [1.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/1.1.7...v1.2.0) (2022-07-28)
 
 
