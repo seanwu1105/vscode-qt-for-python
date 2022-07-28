@@ -16,7 +16,8 @@ jobs:
         with:
           node-version: 16
 
-      - uses: google-github-actions/release-please-action@v3
+      - name: Release Please
+        uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
@@ -34,3 +35,14 @@ jobs:
         run: npx vsce publish
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
+
+      - name: Upload VSIX to release assets
+        if: steps.release.outputs.release_created
+        run: |
+          curl \
+          -X POST \
+          -H "Accept: application/vnd.github+json" \ 
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Content-Type: application/vsix" \
+          --data-binary "@vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix"
+          "${{ steps.release.outputs.upload_url }}?name=vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix"
