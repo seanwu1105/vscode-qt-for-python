@@ -42,11 +42,11 @@ jobs:
           URL=$(echo "${{ steps.release.outputs.upload_url }}" | sed "s/[{][^)]*[}]//g")
           NAME="vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix"
           TARGET="${URL}?name=${NAME}"
-          echo ${TARGET}
+          echo "Upload target: ${TARGET}"
           curl \
           -X POST \
           -H "Accept: application/vnd.github+json" \ 
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -H "Content-Type: application/vsix" \
           --data-binary "@vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix" \
-          ${TARGET}
+          ${TARGET} | cat
