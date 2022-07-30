@@ -39,7 +39,7 @@ jobs:
       - name: Upload VSIX to release assets
         if: steps.release.outputs.release_created
         run: |
-          URL=$(echo ${{ steps.release.outputs.upload_url }} | sed "s/[{][^)]*[}]//g")
+          URL=$(echo "${{ steps.release.outputs.upload_url }}" | sed "s/[{][^)]*[}]//g")
           echo "${URL}?name=vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix"
           curl \
           -X POST \
