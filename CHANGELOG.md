@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.0...v1.3.1) (2022-07-30)
+
+
+### Bug Fixes
+
+* remove {?name,label} in upload_url ([85d667a](https://github.com/seanwu1105/vscode-qt-for-python/commit/85d667a7606d48d183ea679470c2dc3b22925c8b))
+
 ## [1.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.2.0...v1.3.0) (2022-07-28)
 
 
