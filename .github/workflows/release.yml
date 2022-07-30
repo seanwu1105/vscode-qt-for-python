@@ -28,7 +28,7 @@ jobs:
 
       - name: Package VSIX
         if: steps.release.outputs.release_created
-        run: npx vsce package --yarn
+        run: npx vsce package
 
       - name: Publish on Visual Studio Code Extension Marketplace
         if: steps.release.outputs.release_created
@@ -38,15 +38,7 @@ jobs:
 
       - name: Upload VSIX to release assets
         if: steps.release.outputs.release_created
-        run: |
-          URL=$(echo "${{ steps.release.outputs.upload_url }}" | sed "s/[{][^)]*[}]//g")
-          NAME="vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix"
-          TARGET="${URL}?name=${NAME}"
-          echo "Upload target: ${TARGET}"
-          curl \
-          -X POST \
-          -H "Accept: application/vnd.github+json" \ 
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Content-Type: application/vsix" \
-          --data-binary "@vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix" \
-          ${TARGET} | cat
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.release.outputs.upload_url }}
+          asset_path: vscode-qt-for-python-${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}.${{ steps.release.outputs.patch }}.vsix
