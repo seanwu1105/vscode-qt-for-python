@@ -1,96 +1,70 @@
-# Visual Studio Code Extension Qt for Python
+# vscode-qt-for-python README
 
-[![build](https://github.com/seanwu1105/vscode-qt-for-python/workflows/build/badge.svg)](https://github.com/seanwu1105/vscode-qt-for-python/actions?query=workflow:build)
-[![version](https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
-[![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
-[![downloads](https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
-[![installs](https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
+This is the README for your extension "vscode-qt-for-python". After writing up a brief description, we recommend including the following sections.
 
-A Visual Studio Code extension provides some common untilities for PySide6,
-PyQt6 and PyQt5.
+## Features
 
-|       Qt Markup Language (`qml`)        |         Qt Style Sheets (`qss`)         |    Resource Collection Files (`qrc`)    |
-| :-------------------------------------: | :-------------------------------------: | :-------------------------------------: |
-| ![qml](https://i.imgur.com/YDWuDDJ.png) | ![qss](https://i.imgur.com/N1w3vs9.png) | ![qrc](https://i.imgur.com/6qW1YTI.png) |
+Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-|          `qmake` Files (`pro`)          |    Qt Linguist Translation (`qt.ts`)     |   QML Module Definition Files (`qmldir`)   |
-| :-------------------------------------: | :--------------------------------------: | :----------------------------------------: |
-| ![pro](https://i.imgur.com/kI3m5c4.png) | ![qtts](https://i.imgur.com/TnizAQd.png) | ![qmldir](https://i.imgur.com/F6NH69h.png) |
+For example if there is an image subfolder under your extension project workspace:
 
-## Highlight Features
+\!\[feature X\]\(images/feature-x.png\)
 
-- Qt Markup Language (`*.qml`) highlighting and snippets support
-- QML Module Definition Files (`*.qmldir`) highlighting and snippets support
-- Qt Style Sheets (`*.qss`) highlighting and snippets support
-- Qt Linguist Translation (`*.qt.ts`) highlighting support (XML)
-- Resource Collection Files (`*.qrc`) highlighting support (XML)
-- Qt Designer Form (`*.ui`) highlighting support (XML)
-- Qt Creator User Settings (`*.pro.user`) highlighting support (XML)
-- `qmake` highlighting support
-- New or open form (Qt Designer `*.ui` file)
-  - Automatically get `designer` from installed Qt for Python modules or set
-    manually
-- Compile form (Qt Designer `*.ui` file) into Python file (require PySide6,
-  PyQt6, PySide2 or PyQt5 to be installed)
-  - Automatically get `uic` from installed Qt for Python modules or set manually
-  - Automatically re-compile on form files changed
-- Update translation (Qt Linguist `*.qt.ts` file) from Python file (require
-  PyQt6, PySide2 or PyQt5 to be installed)
-  - Automatically get `lupdate` from installed Qt for Python modules or set
-    manually
-  - Automatically re-update on form files changed
-- Compile Qt Resource File (`*.qrc`) into Python file (require PySide6, PySide2
-  or PyQt5 to be installed)
-  - Automatically get `rcc` from installed Qt for Python modules or set manually
-  - Automatically re-compile on resource files changed
-
-## Supported Environment Variables
-
-The following list shows the supported environment variables you can use for the
-path of Qt tools in configurations.
-
-### Predefined Variables
-
-- `${workspaceFolder}` - the path of the folder opened in VS Code
-- `${workspaceFolderBasename}` - the name of the folder opened in VS Code
-  without any slashes (/)
-- `${file}` - the current opened file
-- `${fileWorkspaceFolder}` - the current opened file's workspace folder
-- `${relativeFile}` - the current opened file relative to `workspaceFolder`
-- `${relativeFileDirname}` - the current opened file's dirname relative to
-  `workspaceFolder`
-- `${fileBasename}` - the current opened file's basename
-- `${fileBasenameNoExtension}` - the current opened file's basename with no file
-  extension
-- `${fileDirname}` - the current opened file's dirname
-- `${fileExtname}` - the current opened file's extension
-- `${cwd}` - the task runner's current working directory on startup
-- `${lineNumber}` - the current selected line number in the active file
-- `${selectedText}` - the current selected text in the active file
-- `${execPath}` - the path to the running VS Code executable
-- ~~`${defaultBuildTask}` - the name of the default build task~~ (currently not
-  supported)
-- `${pathSeparator}` - the character used by the operating system to separate
-  components in file paths
-
-> The example of predefined variables can be found
-> [here](https://code.visualstudio.com/docs/editor/variables-reference).
-
-### System Environment Variables
-
-You can also reference environment variables through the `${env:Name}` syntax
-(for example, `${env:USER}`).
-
-> Be sure to match the environment variable name's casing, for example,
-> `${env:Path}` on Windows.
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-- Python
-- [Python Visual Studio Code Extension](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-  with `python.pythonPath` configuration (defaults to `python`)
-- Qt for Python packages including PySide6, PyQt6, PySide2 and PyQt5.
+If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+
+## Extension Settings
+
+Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+
+For example:
+
+This extension contributes the following settings:
+
+* `myExtension.enable`: enable/disable this extension
+* `myExtension.thing`: set to `blah` to do something
+
+## Known Issues
+
+Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
-Please see the release notes in [CHANGELOG](CHANGELOG.md).
+Users appreciate release notes as you update your extension.
+
+### 1.0.0
+
+Initial release of ...
+
+### 1.0.1
+
+Fixed issue #.
+
+### 1.1.0
+
+Added features X, Y, and Z.
+
+-----------------------------------------------------------------------------------------------------------
+## Following extension guidelines
+
+Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+
+* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+
+## Working with Markdown
+
+**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+
+* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
+* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
+* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
+
+### For more information
+
+* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy!**

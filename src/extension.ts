@@ -1,54 +1,26 @@
-import { defer, merge, Observable, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+// The module 'vscode' contains the VS Code extensibility API
+// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { commands } from './commands';
-import { EXTENSION_NAME } from './constants';
-import { liveExecution$ as liveUiTranslation$ } from './tools/lupdate';
-import { liveExecution$ as liveResourceCompilation$ } from './tools/rcc';
-import { liveExecution$ as liveUiCompilation$ } from './tools/uic';
-import { showErrorMessage } from './utils/error';
 
-const subscriptions: Subscription[] = [];
-
+// this method is called when your extension is activated
+// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  registerCommands(context);
-  startLiveCommandExecutions();
+	
+	// Use the console to output diagnostic information (console.log) and errors (console.error)
+	// This line of code will only be executed once when your extension is activated
+	console.log('Congratulations, your extension "vscode-qt-for-python" is now active!');
+
+	// The command has been defined in the package.json file
+	// Now provide the implementation of the command with registerCommand
+	// The commandId parameter must match the command field in package.json
+	let disposable = vscode.commands.registerCommand('vscode-qt-for-python.helloWorld', () => {
+		// The code you place here will be executed every time your command is executed
+		// Display a message box to the user
+		vscode.window.showInformationMessage('Hello World from vscode-qt-for-python!');
+	});
+
+	context.subscriptions.push(disposable);
 }
 
-function registerCommands(context: vscode.ExtensionContext) {
-  return commands.map(command =>
-    context.subscriptions.push(
-      vscode.commands.registerCommand(
-        `${EXTENSION_NAME}.${command.name}`,
-        async (...args) => {
-          try {
-            return await command.callback(...args);
-          } catch (e: unknown) {
-            return showErrorMessage(e);
-          }
-        }
-      )
-    )
-  );
-}
-
-function startLiveCommandExecutions() {
-  const liveCommandExecutions$: Observable<any> = merge(
-    liveUiCompilation$,
-    liveResourceCompilation$,
-    liveUiTranslation$
-  ).pipe(
-    catchError((err: unknown) =>
-      defer(() => {
-        showErrorMessage(err);
-        return liveCommandExecutions$;
-      })
-    )
-  );
-  const subscription = liveCommandExecutions$.subscribe();
-  subscriptions.push(subscription);
-}
-
-export function deactivate() {
-  subscriptions.forEach(s => s.unsubscribe());
-}
+// this method is called when your extension is deactivated
+export function deactivate() {}

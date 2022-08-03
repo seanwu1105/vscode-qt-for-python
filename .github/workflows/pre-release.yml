@@ -1,8 +1,8 @@
-name: release
+name: pre-release
 on:
   push:
     branches:
-      - master
+      - next
 
 jobs:
   release:
@@ -21,6 +21,7 @@ jobs:
         id: release
         with:
           release-type: node
+          default-branch: next
 
       - name: Install dependencies
         if: steps.release.outputs.release_created
@@ -28,11 +29,11 @@ jobs:
 
       - name: Package VSIX
         if: steps.release.outputs.release_created
-        run: npx vsce package
+        run: npx vsce package --pre-release
 
       - name: Publish on Visual Studio Code Extension Marketplace
         if: steps.release.outputs.release_created
-        run: npx vsce publish
+        run: npx vsce publish --pre-release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 

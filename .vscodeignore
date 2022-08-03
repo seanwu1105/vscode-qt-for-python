@@ -1,23 +1,13 @@
-.github/
-.vscode/
-.vscode-test/
-node_modules/
-out/
-src/
+.vscode/**
+.vscode-test/**
+out/**
+node_modules/**
+src/**
 .gitignore
 .yarnrc
+webpack.config.js
+vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
 **/*.map
 **/*.ts
-
-# Husky
-.husky/
-
-# Prettier
-.prettierignore
-.prettierrc.json
-
-# Python
-python/*
-!python/scripts/

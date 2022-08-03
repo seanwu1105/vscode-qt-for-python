@@ -1,5 +1,0 @@
-[virtualenvs]
-in-project = true
-
-[experimental]
-new-installer = false
