@@ -1,0 +1,6 @@
+{
+    "extends": ["@commitlint/config-conventional"],
+    "header-max-length": 50,
+    "body-max-line-length": 80,
+    "footer-max-length": 50
+}
