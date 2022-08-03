@@ -8,21 +8,7 @@
   "engines": {
     "vscode": "^1.69.0"
   },
-  "categories": [
-    "Other"
-  ],
-  "activationEvents": [
-    "onCommand:vscode-qt-for-python.helloWorld"
-  ],
   "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-qt-for-python.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "npm run package",
     "compile": "webpack",
@@ -56,5 +42,55 @@
     "typescript": "^4.7.4",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0"
-  }
+  },
+  "activationEvents": [
+    "onCommand:vscode-qt-for-python.helloWorld"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-qt-for-python.helloWorld",
+        "title": "Hello World"
+      }
+    ]
+  },
+  "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
+  "icon": "assets/images/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seanwu1105/vscode-qt-for-python.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seanwu1105/vscode-qt-for-python/issues",
+    "email": "seanwu1105@gmail.com"
+  },
+  "badges": [
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "version"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "rating"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/d/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "downloads"
+    },
+    {
+      "url": "https://img.shields.io/visual-studio-marketplace/i/seanwu.vscode-qt-for-python.svg",
+      "href": "https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python",
+      "description": "installs"
+    }
+  ],
+  "categories": [
+    "Programming Languages",
+    "Snippets",
+    "Linters",
+    "Formatters",
+    "Other"
+  ]
 }
