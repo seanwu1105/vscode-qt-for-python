@@ -5,6 +5,7 @@
     "lib": ["ES2020"],
     "sourceMap": true,
     "rootDir": "src",
+    "outDir": "out",
     "strict": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
