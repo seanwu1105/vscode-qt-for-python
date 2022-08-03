@@ -1,81 +1,83 @@
 # Change Log
 
-All notable changes to the "vscode-qt-for-python" extension will be documented in this file.
+All notable changes to the "vscode-qt-for-python" extension will be documented
+in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
+to structure this file.
 
 ## [1.3.7](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.6...v1.3.7) (2022-07-30)
 
-
 ### Bug Fixes
 
-* give up and use an external upload action ([9d2d3cf](https://github.com/seanwu1105/vscode-qt-for-python/commit/9d2d3cfa5af0c063a34a924087a3614f81e1bf65))
+- give up and use an external upload action
+  ([9d2d3cf](https://github.com/seanwu1105/vscode-qt-for-python/commit/9d2d3cfa5af0c063a34a924087a3614f81e1bf65))
 
 ## [1.3.6](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.5...v1.3.6) (2022-07-30)
 
-
 ### Bug Fixes
 
-* cat the target variable to curl ([526238d](https://github.com/seanwu1105/vscode-qt-for-python/commit/526238dbcebb03705c145d5a5547493d90ee7cd1))
+- cat the target variable to curl
+  ([526238d](https://github.com/seanwu1105/vscode-qt-for-python/commit/526238dbcebb03705c145d5a5547493d90ee7cd1))
 
 ## [1.3.5](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.4...v1.3.5) (2022-07-30)
 
-
 ### Bug Fixes
 
-* destruct upload target ([3b34bbe](https://github.com/seanwu1105/vscode-qt-for-python/commit/3b34bbe64e2135bb18fc1efd1bffe3a8101290be))
+- destruct upload target
+  ([3b34bbe](https://github.com/seanwu1105/vscode-qt-for-python/commit/3b34bbe64e2135bb18fc1efd1bffe3a8101290be))
 
 ## [1.3.4](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.3...v1.3.4) (2022-07-30)
 
-
 ### Bug Fixes
 
-* wrap upload_url with quotes to escape brackets ([c32e345](https://github.com/seanwu1105/vscode-qt-for-python/commit/c32e345972305fc91baac79daa966ff0f2d20dd0))
+- wrap upload_url with quotes to escape brackets
+  ([c32e345](https://github.com/seanwu1105/vscode-qt-for-python/commit/c32e345972305fc91baac79daa966ff0f2d20dd0))
 
 ## [1.3.3](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.2...v1.3.3) (2022-07-30)
 
-
 ### Bug Fixes
 
-* debug release workflow ([2c6b104](https://github.com/seanwu1105/vscode-qt-for-python/commit/2c6b104664949a960eb3f7d93a7723b7a2b99fcf))
+- debug release workflow
+  ([2c6b104](https://github.com/seanwu1105/vscode-qt-for-python/commit/2c6b104664949a960eb3f7d93a7723b7a2b99fcf))
 
 ## [1.3.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.1...v1.3.2) (2022-07-30)
 
-
 ### Bug Fixes
 
-* use parenthesis to concat URL ([94e74ab](https://github.com/seanwu1105/vscode-qt-for-python/commit/94e74ab1fd3392bc4dc6bd6e61dea2dddd2ae71d))
+- use parenthesis to concat URL
+  ([94e74ab](https://github.com/seanwu1105/vscode-qt-for-python/commit/94e74ab1fd3392bc4dc6bd6e61dea2dddd2ae71d))
 
 ## [1.3.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.0...v1.3.1) (2022-07-30)
 
-
 ### Bug Fixes
 
-* remove {?name,label} in upload_url ([85d667a](https://github.com/seanwu1105/vscode-qt-for-python/commit/85d667a7606d48d183ea679470c2dc3b22925c8b))
+- remove {?name,label} in upload_url
+  ([85d667a](https://github.com/seanwu1105/vscode-qt-for-python/commit/85d667a7606d48d183ea679470c2dc3b22925c8b))
 
 ## [1.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.2.0...v1.3.0) (2022-07-28)
 
-
 ### Features
 
-* upload VSIX to release assets (force release) ([39c32fa](https://github.com/seanwu1105/vscode-qt-for-python/commit/39c32fa7921fc795d348cf0d9ced128b067c5055))
-
+- upload VSIX to release assets (force release)
+  ([39c32fa](https://github.com/seanwu1105/vscode-qt-for-python/commit/39c32fa7921fc795d348cf0d9ced128b067c5055))
 
 ### Bug Fixes
 
-* fix wrong curl command ([30817f2](https://github.com/seanwu1105/vscode-qt-for-python/commit/30817f2e5de6466b4afd3278a48d55a163cf5123))
+- fix wrong curl command
+  ([30817f2](https://github.com/seanwu1105/vscode-qt-for-python/commit/30817f2e5de6466b4afd3278a48d55a163cf5123))
 
 ## [1.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/1.1.7...v1.2.0) (2022-07-28)
 
-
 ### Features
 
-* update CI (use feat to try release PR) ([13d1518](https://github.com/seanwu1105/vscode-qt-for-python/commit/13d15182c5d75d29aafb6cd915bac8ddf44a429e))
-
+- update CI (use feat to try release PR)
+  ([13d1518](https://github.com/seanwu1105/vscode-qt-for-python/commit/13d15182c5d75d29aafb6cd915bac8ddf44a429e))
 
 ### Reverts
 
-* revert changelog header removal ([e907ffd](https://github.com/seanwu1105/vscode-qt-for-python/commit/e907ffd1d39729a71e47e005e5a1ad7e5f43878f))
+- revert changelog header removal
+  ([e907ffd](https://github.com/seanwu1105/vscode-qt-for-python/commit/e907ffd1d39729a71e47e005e5a1ad7e5f43878f))
 
 ## 1.1.7 - 2021-12-16
 
