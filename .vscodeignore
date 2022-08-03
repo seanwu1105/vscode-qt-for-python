@@ -455,3 +455,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,node,python,qt
+
+# Python Scripts
+python/*
+!python/scripts/
