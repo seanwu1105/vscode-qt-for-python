@@ -60,8 +60,8 @@ jobs:
         run: poetry install --no-root
       - name: Lint
         run: |
-          poetry run python -m pylint scripts tests
-          poetry run python -m mypy scripts tests
+          poetry run python -m pylint scripts
+          poetry run python -m mypy scripts
 
   py-test:
     strategy:
@@ -85,4 +85,4 @@ jobs:
       - name: Install dependencies
         run: poetry install --no-root
       - name: Test
-        run: poetry run python -m pytest tests/
+        run: poetry run python -m pytest --cov

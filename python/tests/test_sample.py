@@ -1,5 +1,4 @@
-def inc(x):
-    return x + 1
+from scripts.sample import inc
 
 
 def test_answer():

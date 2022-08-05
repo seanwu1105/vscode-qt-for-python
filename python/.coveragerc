@@ -1,0 +1,5 @@
+[run]
+omit = **/test_*.py
+
+[report]
+fail_under = 100

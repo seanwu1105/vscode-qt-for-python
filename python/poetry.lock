@@ -75,6 +75,20 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
+name = "coverage"
+version = "6.4.2"
+description = "Code coverage measurement for Python"
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+tomli = {version = "*", optional = true, markers = "python_full_version <= \"3.11.0a6\" and extra == \"toml\""}
+
+[package.extras]
+toml = ["tomli"]
+
+[[package]]
 name = "dill"
 version = "0.3.5.1"
 description = "serialize all of python"
@@ -292,6 +306,21 @@ checkqa-mypy = ["mypy (==v0.761)"]
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xmlschema"]
 
 [[package]]
+name = "pytest-cov"
+version = "3.0.0"
+description = "Pytest plugin for measuring coverage."
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+coverage = {version = ">=5.2.1", extras = ["toml"]}
+pytest = ">=4.6"
+
+[package.extras]
+testing = ["virtualenv", "pytest-xdist", "six", "process-tests", "hunter", "fields"]
+
+[[package]]
 name = "shiboken6"
 version = "6.3.1"
 description = "Python/C++ bindings helper module"
@@ -342,7 +371,7 @@ python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,>=2.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "~3.9"
-content-hash = "138d78d4123e55206975afe466d46684f0d4a9fded77d9412ac75136f2a1c35e"
+content-hash = "bc5fe4206964dd7b16d8f7cd976ef8f9cde0824f848f19b990c774379b039d1a"
 
 [metadata.files]
 astroid = []
@@ -351,6 +380,7 @@ attrs = []
 black = []
 click = []
 colorama = []
+coverage = []
 dill = []
 isort = [
     {file = "isort-5.10.1-py3-none-any.whl", hash = "sha256:6f62d78e2f89b4500b080fe3a81690850cd254227f27f75c3a0c491a1f351ba7"},
@@ -422,6 +452,7 @@ pyside6 = []
 pyside6-addons = []
 pyside6-essentials = []
 pytest = []
+pytest-cov = []
 shiboken6 = []
 tomli = []
 tomlkit = []
