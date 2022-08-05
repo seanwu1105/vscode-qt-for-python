@@ -3,3 +3,8 @@
 
 npx lint-staged
 npm test
+
+cd python
+poetry run python -m black .
+poetry run python -m pylint scripts tests
+poetry run python -m pytest
