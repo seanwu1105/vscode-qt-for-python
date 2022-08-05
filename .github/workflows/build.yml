@@ -12,7 +12,7 @@ jobs:
       - name: TypeScript compile
         run: npx tsc
 
-  lint:
+  ts-lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,7 +22,7 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  test:
+  ts-test:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -39,3 +39,50 @@ jobs:
         if: runner.os == 'Linux'
       - run: npm test
         if: runner.os != 'Linux'
+
+  py-lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: '1.1.12'
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Lint
+        run: |
+          poetry run python -m pylint scripts tests
+          poetry run python -m mypy scripts tests
+
+  py-test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: python/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Set up Poetry
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: '1.1.12'
+      - name: Install dependencies
+        run: poetry install --no-root
+      - name: Test
+        run: poetry run python -m pytest tests/
