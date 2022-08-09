@@ -27,7 +27,7 @@ def test_qmllint_pass_qml():
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
-    assert file["filename"] == get_assets_path(filename)
+    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
     assert file["success"] == True
     assert file["warnings"] == []
 
@@ -41,7 +41,7 @@ def test_qmllint_missing_import_qml():
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
-    assert file["filename"] == get_assets_path(filename)
+    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
     assert file["success"] == False
     assert len(file["warnings"]) > 0
 
@@ -64,7 +64,7 @@ def test_qmllint_syntax_error_qml():
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
-    assert file["filename"] == get_assets_path(filename)
+    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
     assert file["success"] == False
     assert len(file["warnings"]) > 0
 
@@ -87,7 +87,7 @@ def test_qmllint_multiline_string_qml():
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
-    assert file["filename"] == get_assets_path(filename)
+    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
     assert file["success"] == True
     assert len(file["warnings"]) == 1
 
@@ -113,7 +113,9 @@ def lint_qml(filename: str, debug=False):
 
 def invoke_qmllint_py(args: list[str]):
     return subprocess.run(
-        ["python", "qmllint.py", "--json", *args], cwd=SCRIPTS_DIR, capture_output=True
+        ["poetry", "run", "python", "qmllint.py", "--json", *args],
+        cwd=SCRIPTS_DIR,
+        capture_output=True,
     )
 
 
