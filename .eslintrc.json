@@ -61,6 +61,7 @@
           "error",
           { "checkArrowFunctions": false }
         ],
+        "@typescript-eslint/consistent-type-imports": "error",
         "@typescript-eslint/member-ordering": [
           "error",
           {
