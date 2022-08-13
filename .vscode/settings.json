@@ -1,11 +1,9 @@
 {
   "files.exclude": {
-    "out": false,
-    "dist": false
+    "out": false
   },
   "search.exclude": {
-    "out": true,
-    "dist": true
+    "out": true
   },
   "typescript.tsc.autoDetect": "off",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
