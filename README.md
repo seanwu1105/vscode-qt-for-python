@@ -1,5 +1,17 @@
 # Visual Studio Code Extension Qt for Python
 
+## Next Release TODOs
+
+- [ ] `qmllint` integration
+  - [ ] `qmllint` language server
+- [ ] Unit tests for ALL TypeScript scripts
+- [ ] Support user-defined tool args
+- [ ] Support user-defined tool paths
+- [ ] Resolve predefined variables in tool paths
+- [ ] Languages highlighting
+- [ ] Simple tools integration
+- [ ] Continuous compilation
+
 [![build](https://github.com/seanwu1105/vscode-qt-for-python/workflows/build/badge.svg)](https://github.com/seanwu1105/vscode-qt-for-python/actions?query=workflow:build)
 [![version](https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
 [![rating](https://img.shields.io/visual-studio-marketplace/r/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
