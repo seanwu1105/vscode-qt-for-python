@@ -9,8 +9,10 @@ import {
   TextDocumentSyncKind,
 } from 'vscode-languageserver/node'
 
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import type { InitializationOptions } from './client'
+import { toDiagnostic } from './converters'
+import { lint } from './lint'
 
 function startServer() {
   let initializationOptions: InitializationOptions
@@ -21,20 +23,45 @@ function startServer() {
 
   connection.onInitialize(params => {
     initializationOptions = params.initializationOptions
-
-    // eslint-disable-next-line no-console
-    console.log('extensionPath', initializationOptions.extensionPath)
-
     return { capabilities: { textDocumentSync: TextDocumentSyncKind.Full } }
   })
 
-  documents.onDidChangeContent(() => {
-    // console.log('change', change)
+  documents.onDidChangeContent(async ({ document: { uri } }) => {
+    const result = await lint({
+      qmlLintCommand: initializationOptions.qmlLintCommand,
+      documentPath: fileURLToPath(uri),
+      options: ['--json'],
+    })
+
+    if (result.kind === 'StdErrError') {
+      const n: ErrorNotification = { message: result.stderr }
+      return connection.sendNotification(ErrorNotification, n)
+    }
+    if (result.kind === 'ParseError') {
+      const n: ErrorNotification = result
+      return connection.sendNotification(ErrorNotification, n)
+    }
+    if (result.kind === 'ExecError') {
+      const n: ErrorNotification = { message: result.error.message }
+      return connection.sendNotification(ErrorNotification, n)
+    }
+
+    return result.value.files.forEach(file =>
+      connection.sendDiagnostics({
+        uri: pathToFileURL(file.filename).href,
+        diagnostics: file.warnings.map(w => toDiagnostic(w)),
+      }),
+    )
   })
 
   documents.listen(connection)
 
   connection.listen()
 }
+
+export type InitializationOptions = { readonly qmlLintCommand: string[] }
+
+export const ErrorNotification = 'ErrorNotification'
+export type ErrorNotification = { readonly message: string }
 
 startServer()

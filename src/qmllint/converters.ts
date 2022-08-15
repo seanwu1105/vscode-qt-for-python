@@ -5,10 +5,13 @@ import type { QmlLintWarning } from './lint'
 export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
   return {
     range: {
-      start: { line: qmlLintWarning.line, character: qmlLintWarning.column },
+      start: {
+        line: qmlLintWarning.line - 1,
+        character: qmlLintWarning.column - 1,
+      },
       end: {
-        line: qmlLintWarning.line,
-        character: qmlLintWarning.column + qmlLintWarning.length,
+        line: qmlLintWarning.line - 1,
+        character: qmlLintWarning.column + qmlLintWarning.length - 1,
       },
     },
     message:
