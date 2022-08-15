@@ -4,6 +4,9 @@
 
 - [ ] `qmllint` integration
   - [ ] `qmllint` language server
+- [ ] Handle exceptions from Python scripts
+- [ ] Support multi-root projects
+- [ ] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts
 - [ ] Support user-defined tool args
 - [ ] Support user-defined tool paths
