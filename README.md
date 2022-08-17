@@ -5,7 +5,7 @@
 - [ ] `qmllint` integration
   - [x] `qmllint` language server
   - [ ] Support ini file
-- [ ] Show errors on notification
+- [x] Show errors on notification
 - [ ] Handle exceptions from Python scripts
 - [ ] Support multi-root projects
 - [ ] Support spaces in paths

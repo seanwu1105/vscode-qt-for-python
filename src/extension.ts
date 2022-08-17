@@ -3,11 +3,13 @@
 // TODO: 3. make onNotification work
 
 import type { ExtensionContext } from 'vscode'
+import { window } from 'vscode'
 import type { LanguageClient } from 'vscode-languageclient/node'
 import {
   startClient as startQmlLintClient,
   stopClient as stopQmlLintClient,
 } from './qmllint/client'
+import type { QmlLintNotification } from './qmllint/server/server'
 import { notNil } from './utils'
 
 let qmlLintClient: LanguageClient | undefined = undefined
@@ -20,19 +22,24 @@ export async function activate({
   const startResult = await startQmlLintClient({
     asAbsolutePath,
     extensionPath,
-    // eslint-disable-next-line no-console
-    onNotification: n => console.log(n.message),
+    onNotification,
   })
+
   if (startResult.kind === 'NotFoundError') {
-    // TODO: Show error to user
-    // eslint-disable-next-line no-console
-    console.error(startResult.message)
+    window.showErrorMessage(startResult.message)
     return
   }
 
   subscriptions.push(startResult)
 
   qmlLintClient = startResult.value
+}
+
+function onNotification(n: QmlLintNotification) {
+  switch (n.kind) {
+    case 'Error':
+      window.showErrorMessage(n.message)
+  }
 }
 
 export async function deactivate() {
