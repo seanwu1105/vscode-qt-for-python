@@ -1,3 +1,4 @@
+import collections
 import json
 import os
 import subprocess
@@ -23,7 +24,7 @@ def test_qmllint_pass_qml():
     result = lint_qml(filename)
     assert result.returncode == 0
 
-    parsed: QmlLintResult = json.loads(result.stdout.decode("utf-8"))
+    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
@@ -37,7 +38,7 @@ def test_qmllint_missing_import_qml():
     result = lint_qml(filename)
     assert result.returncode != 0
 
-    parsed: QmlLintResult = json.loads(result.stdout.decode("utf-8"))
+    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
@@ -46,10 +47,33 @@ def test_qmllint_missing_import_qml():
     assert len(file["warnings"]) > 0
 
     for warning in file["warnings"]:
-        assert type(warning["charOffset"]) == int
-        assert type(warning["column"]) == int
-        assert type(warning["length"]) == int
-        assert type(warning["line"]) == int
+        assert type(warning["charOffset"]) in (int, type(None))
+        assert type(warning["column"]) in (int, type(None))
+        assert type(warning["length"]) in (int, type(None))
+        assert type(warning["line"]) in (int, type(None))
+        assert type(warning["message"]) == str
+        assert type(warning["suggestions"]) == list
+        assert warning["type"] == "warning"
+
+
+def test_qmllint_unknown_import_qml():
+    filename = "unknown_import.qml"
+    result = lint_qml(filename)
+    assert result.returncode != 0
+
+    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
+    assert len(parsed["files"]) == 1
+
+    file = parsed["files"][0]
+    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
+    assert file["success"] == False
+    assert len(file["warnings"]) > 0
+
+    for warning in file["warnings"]:
+        assert type(warning["charOffset"]) in (int, type(None))
+        assert type(warning["column"]) in (int, type(None))
+        assert type(warning["length"]) in (int, type(None))
+        assert type(warning["line"]) in (int, type(None))
         assert type(warning["message"]) == str
         assert type(warning["suggestions"]) == list
         assert warning["type"] == "warning"
@@ -60,7 +84,7 @@ def test_qmllint_syntax_error_qml():
     result = lint_qml(filename)
     assert result.returncode != 0
 
-    parsed: QmlLintResult = json.loads(result.stdout.decode("utf-8"))
+    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
@@ -69,10 +93,10 @@ def test_qmllint_syntax_error_qml():
     assert len(file["warnings"]) > 0
 
     for warning in file["warnings"]:
-        assert type(warning["charOffset"]) == int
-        assert type(warning["column"]) == int
-        assert type(warning["length"]) == int
-        assert type(warning["line"]) == int
+        assert type(warning["charOffset"]) in (int, type(None))
+        assert type(warning["column"]) in (int, type(None))
+        assert type(warning["length"]) in (int, type(None))
+        assert type(warning["line"]) in (int, type(None))
         assert type(warning["message"]) == str
         assert type(warning["suggestions"]) == list
         assert warning["type"] == "critical"
@@ -83,7 +107,7 @@ def test_qmllint_multiline_string_qml():
     result = lint_qml(filename)
     assert result.returncode == 0
 
-    parsed: QmlLintResult = json.loads(result.stdout.decode("utf-8"))
+    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
@@ -92,10 +116,10 @@ def test_qmllint_multiline_string_qml():
     assert len(file["warnings"]) == 1
 
     for warning in file["warnings"]:
-        assert type(warning["charOffset"]) == int
-        assert type(warning["column"]) == int
-        assert type(warning["length"]) == int
-        assert type(warning["line"]) == int
+        assert type(warning["charOffset"]) in (int, type(None))
+        assert type(warning["column"]) in (int, type(None))
+        assert type(warning["length"]) in (int, type(None))
+        assert type(warning["line"]) in (int, type(None))
         assert type(warning["message"]) == str
         assert type(warning["suggestions"]) == list
         assert warning["type"] == "info"
@@ -123,8 +147,14 @@ def get_assets_path(filename: str):
     return os.path.join(ASSETS_DIR, filename)
 
 
+def parse_json(string: str):
+    return json.loads(
+        string, object_hook=lambda d: collections.defaultdict(lambda: None, d)
+    )
+
+
 class QmlLintWarning(typing.TypedDict):
-    charOffset: int
+    charOffset: int | None
     column: int
     length: int
     line: int
