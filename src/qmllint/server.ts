@@ -26,7 +26,10 @@ function startServer() {
     return { capabilities: { textDocumentSync: TextDocumentSyncKind.Full } }
   })
 
-  documents.onDidChangeContent(async ({ document: { uri } }) => {
+  documents.onDidOpen(({ document: { uri } }) => onDocumentChangedOnDisk(uri))
+  documents.onDidSave(({ document: { uri } }) => onDocumentChangedOnDisk(uri))
+
+  async function onDocumentChangedOnDisk(uri: string) {
     const result = await lint({
       qmlLintCommand: initializationOptions.qmlLintCommand,
       documentPath: fileURLToPath(uri),
@@ -52,7 +55,7 @@ function startServer() {
         diagnostics: file.warnings.map(w => toDiagnostic(w)),
       }),
     )
-  })
+  }
 
   documents.listen(connection)
 
