@@ -3,7 +3,9 @@
 ## Next Release TODOs
 
 - [ ] `qmllint` integration
-  - [ ] `qmllint` language server
+  - [x] `qmllint` language server
+  - [ ] Support ini file
+- [ ] Show errors on notification
 - [ ] Handle exceptions from Python scripts
 - [ ] Support multi-root projects
 - [ ] Support spaces in paths
