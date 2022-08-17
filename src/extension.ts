@@ -3,7 +3,7 @@
 // TODO: 3. make onNotification work
 
 import type { ExtensionContext } from 'vscode'
-import type { Disposable, LanguageClient } from 'vscode-languageclient/node'
+import type { LanguageClient } from 'vscode-languageclient/node'
 import {
   startClient as startQmlLintClient,
   stopClient as stopQmlLintClient,
@@ -11,8 +11,6 @@ import {
 import { notNil } from './utils'
 
 let qmlLintClient: LanguageClient | undefined = undefined
-
-const disposables: readonly Disposable[] = []
 
 export async function activate({
   asAbsolutePath,
@@ -30,17 +28,13 @@ export async function activate({
   }
 
   qmlLintClient = startResult.value
-  // TODO: Enable the following.
-  // disposables = [
-  //   ...disposables,
-  //   qmlLintClient.onNotification(
-  //     ErrorNotification,
-  //     ({ message }: ErrorNotification) => console.error(message),
-  //   ),
-  // ]
+  // TODO: Enable the following and add to subscriptions.
+  // qmlLintClient.onNotification(
+  //   ErrorNotification,
+  //   ({ message }: ErrorNotification) => console.error(message),
+  // )
 }
 
 export async function deactivate() {
   if (notNil(qmlLintClient)) await stopQmlLintClient(qmlLintClient)
-  disposables.forEach(d => d.dispose())
 }

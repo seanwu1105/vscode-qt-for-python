@@ -1,17 +1,23 @@
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
+import { notNil } from '../utils'
 import type { QmlLintWarning } from './lint'
 
 export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
   return {
     range: {
       start: {
-        line: qmlLintWarning.line - 1,
-        character: qmlLintWarning.column - 1,
+        line: notNil(qmlLintWarning.line) ? qmlLintWarning.line - 1 : 0,
+        character: notNil(qmlLintWarning.column)
+          ? qmlLintWarning.column - 1
+          : 0,
       },
       end: {
-        line: qmlLintWarning.line - 1,
-        character: qmlLintWarning.column + qmlLintWarning.length - 1,
+        line: notNil(qmlLintWarning.line) ? qmlLintWarning.line - 1 : 0,
+        character:
+          notNil(qmlLintWarning.column) && notNil(qmlLintWarning.length)
+            ? qmlLintWarning.column + qmlLintWarning.length - 1
+            : 1,
       },
     },
     message:

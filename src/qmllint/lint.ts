@@ -1,6 +1,7 @@
 import type { ErrorResult, SuccessResult } from '../result-types'
 import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
+import { notNil } from '../utils'
 
 export async function lint({
   qmlLintCommand,
@@ -71,9 +72,9 @@ type QmlLintFileResult = {
 }
 
 export type QmlLintWarning = {
-  readonly column: number
-  readonly length: number
-  readonly line: number
+  readonly column?: number
+  readonly length?: number
+  readonly line?: number
   readonly message: string
   readonly suggestions: readonly unknown[]
   readonly type: typeof QmlLintWarningType[number]
@@ -99,11 +100,15 @@ function isQmlLintFileResult(value: any): value is QmlLintFileResult {
 
 function isQmlLintWarning(value: any): value is QmlLintWarning {
   if (typeof value !== 'object') return false
-  if (typeof value['column'] !== 'number') return false
-  if (typeof value['length'] !== 'number') return false
-  if (typeof value['line'] !== 'number') return false
+
   if (typeof value['message'] !== 'string') return false
   if (!Array.isArray(value['suggestions'])) return false
   if (!QmlLintWarningType.includes(value['type'])) return false
+
+  if (notNil(value['column']) && typeof value['column'] !== 'number')
+    return false
+  if (notNil(value['length']) && typeof value['length'] !== 'number')
+    return false
+  if (notNil(value['line']) && typeof value['line'] !== 'number') return false
   return true
 }
