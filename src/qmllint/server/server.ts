@@ -11,10 +11,10 @@ import {
 
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import { toDiagnostic } from './converters'
-import { lint } from './lint'
+import { toDiagnostic } from '../converters'
+import { lint } from '../lint'
 
-function startServer() {
+export function startServer() {
   let initializationOptions: InitializationOptions
 
   const connection = createConnection(ProposedFeatures.all)
@@ -37,16 +37,19 @@ function startServer() {
     })
 
     if (result.kind === 'StdErrError') {
-      const n: ErrorNotification = { message: result.stderr }
-      return connection.sendNotification(ErrorNotification, n)
+      const n: QmlLintNotification = { kind: 'Error', message: result.stderr }
+      return connection.sendNotification(QmlLintNotification, n)
     }
     if (result.kind === 'ParseError') {
-      const n: ErrorNotification = result
-      return connection.sendNotification(ErrorNotification, n)
+      const n: QmlLintNotification = { kind: 'Error', message: result.message }
+      return connection.sendNotification(QmlLintNotification, n)
     }
     if (result.kind === 'ExecError') {
-      const n: ErrorNotification = { message: result.error.message }
-      return connection.sendNotification(ErrorNotification, n)
+      const n: QmlLintNotification = {
+        kind: 'Error',
+        message: result.error.message,
+      }
+      return connection.sendNotification(QmlLintNotification, n)
     }
 
     return result.value.files.forEach(file =>
@@ -64,7 +67,10 @@ function startServer() {
 
 export type InitializationOptions = { readonly qmlLintCommand: string[] }
 
-export const ErrorNotification = 'ErrorNotification'
-export type ErrorNotification = { readonly message: string }
+export const QmlLintNotification = 'QmlLintNotification'
+export type QmlLintNotification = ErrorNotification
 
-startServer()
+type ErrorNotification = {
+  readonly kind: 'Error'
+  readonly message: string
+}

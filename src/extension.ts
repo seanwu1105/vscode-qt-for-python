@@ -15,10 +15,13 @@ let qmlLintClient: LanguageClient | undefined = undefined
 export async function activate({
   asAbsolutePath,
   extensionPath,
+  subscriptions,
 }: ExtensionContext) {
   const startResult = await startQmlLintClient({
     asAbsolutePath,
     extensionPath,
+    // eslint-disable-next-line no-console
+    onNotification: n => console.log(n.message),
   })
   if (startResult.kind === 'NotFoundError') {
     // TODO: Show error to user
@@ -27,12 +30,9 @@ export async function activate({
     return
   }
 
+  subscriptions.push(startResult)
+
   qmlLintClient = startResult.value
-  // TODO: Enable the following and add to subscriptions.
-  // qmlLintClient.onNotification(
-  //   ErrorNotification,
-  //   ({ message }: ErrorNotification) => console.error(message),
-  // )
 }
 
 export async function deactivate() {
