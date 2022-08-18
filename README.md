@@ -2,13 +2,12 @@
 
 ## Next Release TODOs
 
-- [ ] `qmllint` integration
+- [x] `qmllint` integration
   - [x] `qmllint` language server
-  - [ ] Support ini file
+  - [x] Support `.qmllint.ini` file
 - [x] Show errors on notification
 - [x] Handle exceptions from Python scripts
   - [x] Drop support to install Python dependencies
-- [ ] Auto bump Python project version
 - [ ] Support multi-root projects
 - [ ] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts

@@ -97,5 +97,12 @@
     "Linters",
     "Formatters",
     "Other"
+  ],
+  "keywords": [
+    "multi-root ready",
+    "QML",
+    "PySide",
+    "PyQt",
+    "Qt"
   ]
 }
