@@ -1,5 +1,7 @@
 [run]
-omit = **/test_*.py
+omit =
+    **/test_*.py
+    scripts/qmllint.py
 
 [report]
 fail_under = 100

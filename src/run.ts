@@ -21,7 +21,7 @@ type RunResult = SuccessResult<string> | ExecError | StdErrError
 
 export type ExecError = {
   readonly kind: 'ExecError'
-  readonly error: ExecException
+  readonly error: Partial<ExecException>
   readonly stdout: string
   readonly stderr: string
 }

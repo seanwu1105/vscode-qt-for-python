@@ -1,7 +1,3 @@
-// TODO: 1. odd behavior when checking is QmlLintType!!!
-// TODO: 2. it seems that qmllint does not support whole file content
-// TODO: 3. make onNotification work
-
 import type { ExtensionContext } from 'vscode'
 import { window } from 'vscode'
 import type { LanguageClient } from 'vscode-languageclient/node'
@@ -37,8 +33,14 @@ export async function activate({
 
 function onNotification(n: QmlLintNotification) {
   switch (n.kind) {
-    case 'Error':
-      window.showErrorMessage(n.message)
+    case 'ParseError':
+      return window.showErrorMessage(n.message)
+    case 'ExecError':
+      return window.showErrorMessage(
+        `${n.stderr}\n${n.stdout}\n${n.error.message ?? ''}`,
+      )
+    case 'StdErrError':
+      return window.showErrorMessage(`${n.stderr}\n${n.stdout}`)
   }
 }
 

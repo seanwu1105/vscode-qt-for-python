@@ -7,6 +7,8 @@ import {
 
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
+import type { ErrorResult } from '../../result-types'
+import type { ExecError, StdErrError } from '../../run'
 import { toDiagnostic } from '../converters'
 import { lint } from '../lint'
 
@@ -32,28 +34,16 @@ export function startServer() {
       options: ['--json'],
     })
 
-    if (result.kind === 'StdErrError') {
-      const n: QmlLintNotification = { kind: 'Error', message: result.stderr }
-      return connection.sendNotification(QmlLintNotification, n)
-    }
-    if (result.kind === 'ParseError') {
-      const n: QmlLintNotification = { kind: 'Error', message: result.message }
-      return connection.sendNotification(QmlLintNotification, n)
-    }
-    if (result.kind === 'ExecError') {
-      const n: QmlLintNotification = {
-        kind: 'Error',
-        message: result.error.message,
-      }
-      return connection.sendNotification(QmlLintNotification, n)
-    }
+    if (result.kind === 'Success')
+      return result.value.files.forEach(file =>
+        connection.sendDiagnostics({
+          uri: pathToFileURL(file.filename).href,
+          diagnostics: file.warnings.map(w => toDiagnostic(w)),
+        }),
+      )
 
-    return result.value.files.forEach(file =>
-      connection.sendDiagnostics({
-        uri: pathToFileURL(file.filename).href,
-        diagnostics: file.warnings.map(w => toDiagnostic(w)),
-      }),
-    )
+    const notification: QmlLintNotification = result
+    return connection.sendNotification(QmlLintNotification, notification)
   }
 
   documents.listen(connection)
@@ -64,9 +54,4 @@ export function startServer() {
 export type InitializationOptions = { readonly qmlLintCommand: string[] }
 
 export const QmlLintNotification = 'QmlLintNotification'
-export type QmlLintNotification = ErrorNotification
-
-type ErrorNotification = {
-  readonly kind: 'Error'
-  readonly message: string
-}
+export type QmlLintNotification = ErrorResult<'Parse'> | ExecError | StdErrError

@@ -4,13 +4,7 @@ import os
 import subprocess
 import typing
 
-import scripts.qmllint
-
 from tests import ASSETS_DIR, SCRIPTS_DIR
-
-
-def test_qmllint_is_callable():
-    assert callable(scripts.qmllint.qmllint)
 
 
 def test_qmllint_version():

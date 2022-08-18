@@ -6,7 +6,9 @@
   - [x] `qmllint` language server
   - [ ] Support ini file
 - [x] Show errors on notification
-- [ ] Handle exceptions from Python scripts
+- [x] Handle exceptions from Python scripts
+  - [x] Drop support to install Python dependencies
+- [ ] Auto bump Python project version
 - [ ] Support multi-root projects
 - [ ] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts
