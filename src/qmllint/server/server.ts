@@ -1,3 +1,4 @@
+import type { Connection } from 'vscode-languageserver/node'
 import {
   createConnection,
   ProposedFeatures,
@@ -7,7 +8,7 @@ import {
 
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import type { ErrorResult } from '../../result-types'
+import type { ErrorResult, SuccessResult } from '../../result-types'
 import type { ExecError, StdErrError } from '../../run'
 import { toDiagnostic } from '../converters'
 import { lint } from '../lint'
@@ -28,22 +29,36 @@ export function startServer() {
   documents.onDidSave(({ document: { uri } }) => onDocumentChangedOnDisk(uri))
 
   async function onDocumentChangedOnDisk(uri: string) {
-    const result = await lint({
+    const uriToPathResult = uriToPath(uri)
+
+    if (uriToPathResult.kind === 'TypeError')
+      return sendQmlLintNotification(uriToPathResult, connection)
+
+    const lintResult = await lint({
       qmlLintCommand: initializationOptions.qmlLintCommand,
-      documentPath: fileURLToPath(uri),
+      documentPath: uriToPathResult.value,
       options: ['--json'],
     })
 
-    if (result.kind === 'Success')
-      return result.value.files.forEach(file =>
-        connection.sendDiagnostics({
-          uri: pathToFileURL(file.filename).href,
-          diagnostics: file.warnings.map(w => toDiagnostic(w)),
-        }),
-      )
+    if (lintResult.kind === 'Success') {
+      const promises = lintResult.value.files.map(file => {
+        const pathToUriResult = pathToUri(file.filename)
 
-    const notification: QmlLintNotification = result
-    return connection.sendNotification(QmlLintNotification, notification)
+        switch (pathToUriResult.kind) {
+          case 'TypeError':
+            return sendQmlLintNotification(pathToUriResult, connection)
+          case 'Success':
+            return connection.sendDiagnostics({
+              uri: pathToUriResult.value,
+              diagnostics: file.warnings.map(toDiagnostic),
+            })
+        }
+      })
+
+      return Promise.all(promises)
+    }
+
+    sendQmlLintNotification(lintResult, connection)
   }
 
   documents.listen(connection)
@@ -54,4 +69,35 @@ export function startServer() {
 export type InitializationOptions = { readonly qmlLintCommand: string[] }
 
 export const QmlLintNotification = 'QmlLintNotification'
-export type QmlLintNotification = ErrorResult<'Parse'> | ExecError | StdErrError
+export type QmlLintNotification =
+  | ErrorResult<'Parse'>
+  | ExecError
+  | StdErrError
+  | ErrorResult<'Type'>
+
+function uriToPath(uri: string): UriToPathResult {
+  try {
+    return { kind: 'Success', value: fileURLToPath(uri) }
+  } catch (e) {
+    return { kind: 'TypeError', message: `Unsupported URI: ${uri}` }
+  }
+}
+
+export type UriToPathResult = SuccessResult<string> | ErrorResult<'Type'>
+
+function pathToUri(path: string): PathToUriResult {
+  try {
+    return { kind: 'Success', value: pathToFileURL(path).href }
+  } catch (e) {
+    return { kind: 'TypeError', message: `Unsupported path: ${path}` }
+  }
+}
+
+export type PathToUriResult = SuccessResult<string> | ErrorResult<'Type'>
+
+async function sendQmlLintNotification(
+  notification: QmlLintNotification,
+  connection: Connection,
+) {
+  return connection.sendNotification(QmlLintNotification, notification)
+}

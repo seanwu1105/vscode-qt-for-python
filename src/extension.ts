@@ -34,6 +34,7 @@ export async function activate({
 function onNotification(n: QmlLintNotification) {
   switch (n.kind) {
     case 'ParseError':
+    case 'TypeError':
       return window.showErrorMessage(n.message)
     case 'ExecError':
       return window.showErrorMessage(

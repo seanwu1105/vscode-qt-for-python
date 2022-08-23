@@ -11,8 +11,10 @@
 - [ ] Support multi-root projects
 - [ ] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts
-- [ ] Support user-defined tool args
-- [ ] Support user-defined tool paths
+- [ ] Configurations
+- [ ] Ensures we use resource scope
+  - [ ] Support user-defined tool args
+  - [ ] Support user-defined tool paths
 - [ ] Resolve predefined variables in tool paths
 - [ ] Languages highlighting
 - [ ] Simple tools integration
