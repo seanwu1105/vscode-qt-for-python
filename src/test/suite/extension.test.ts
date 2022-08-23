@@ -9,9 +9,6 @@ suite('Extension Test Suite', () => {
   vscode.window.showInformationMessage('Start all tests.')
 
   test('Sample test', () => {
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    assert.strictEqual(-1, [1, 2, 3].indexOf(5))
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    assert.strictEqual(-1, [1, 2, 3].indexOf(0))
+    assert.strictEqual(true, true)
   })
 })

@@ -21,7 +21,7 @@ type RunArgs = { command: CommandArgs }
 
 export type CommandArgs = readonly string[]
 
-type RunResult = SuccessResult<string> | ExecError | StdErrError
+export type RunResult = SuccessResult<string> | ExecError | StdErrError
 
 export type ExecError = {
   readonly kind: 'ExecError'
