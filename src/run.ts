@@ -17,7 +17,7 @@ export async function run({ command }: RunArgs): Promise<RunResult> {
   })
 }
 
-type RunArgs = { command: CommandArgs }
+type RunArgs = { readonly command: CommandArgs }
 
 export type CommandArgs = readonly string[]
 

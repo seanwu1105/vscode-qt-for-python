@@ -1,3 +1,4 @@
+import * as path from 'node:path'
 import { extensions, workspace } from 'vscode'
 import type { ErrorResult, SuccessResult } from './result-types'
 import type { CommandArgs } from './run'
@@ -13,7 +14,7 @@ export async function resolveScriptCommand({
       kind: 'Success',
       value: [
         ...pythonInterpreterPathResult.value,
-        `${extensionPath}/python/scripts/${scriptName}.py`,
+        path.join(extensionPath, 'python', 'scripts', `${scriptName}.py`),
       ],
     }
   }
@@ -21,14 +22,16 @@ export async function resolveScriptCommand({
   return pythonInterpreterPathResult
 }
 
-type ResolveScriptCommandArgs = {
-  scriptName: ScriptName
-  extensionPath: string
+export type ResolveScriptCommandArgs = {
+  readonly scriptName: ScriptName
+  readonly extensionPath: string
 }
 
 type ScriptName = 'qmllint'
 
-type ResolveScriptCommandResult = SuccessResult<CommandArgs> | NotFoundError
+export type ResolveScriptCommandResult =
+  | SuccessResult<CommandArgs>
+  | NotFoundError
 
 export type NotFoundError = ErrorResult<'NotFound'>
 
@@ -44,11 +47,12 @@ async function getPythonInterpreterPath(): Promise<GetPythonInterpreterPathResul
   if (notNil(pythonExecCommand))
     return { kind: 'Success', value: pythonExecCommand }
 
+  // TODO: Support multi-root workspace.
   const pythonDefaultInterpreter = workspace
     .getConfiguration('python')
     .get<string>('defaultInterpreterPath')
 
-  if (pythonDefaultInterpreter)
+  if (notNil(pythonDefaultInterpreter) && pythonDefaultInterpreter.length !== 0)
     return { kind: 'Success', value: [pythonDefaultInterpreter] }
 
   return {
@@ -63,7 +67,7 @@ type GetPythonInterpreterPathResult =
   | ErrorResult<'NotFound'>
 
 // Excerpt from: https://github.com/microsoft/vscode-python/blob/344c912a1c15d07eb9b14bf749c7529a7fa0877b/src/client/apiTypes.ts#L15
-type PythonExtensionApi = {
+export type PythonExtensionApi = {
   readonly settings: {
     getExecutionDetails(): {
       readonly execCommand: CommandArgs | undefined

@@ -29,6 +29,7 @@
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.1",
     "@types/node": "16.x",
+    "@types/sinon": "^10.0.13",
     "@types/vscode": "^1.69.0",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
@@ -40,6 +41,7 @@
     "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "prettier": "2.7.1",
+    "sinon": "^14.0.0",
     "typescript": "^4.7.4"
   },
   "activationEvents": [
@@ -104,5 +106,11 @@
     "PySide",
     "PyQt",
     "Qt"
-  ]
+  ],
+  "__metadata": {
+    "id": "3e3d1520-4354-4dd2-8efc-92df8ed8c294",
+    "publisherDisplayName": "Shuang Wu",
+    "publisherId": "5bb6c785-d35f-4dc5-ad20-ca804ca3b6bb",
+    "isPreReleaseVersion": false
+  }
 }

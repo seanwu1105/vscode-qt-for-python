@@ -12,7 +12,7 @@
 - [x] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts
 - [ ] Configurations
-  - [ ] Support multi-root projects
+  - [ ] Support multi-root projects (includes Python configuration)
 - [ ] Ensures we use resource scope
   - [ ] Support user-defined tool args
   - [ ] Support user-defined tool paths
