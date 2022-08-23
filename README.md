@@ -4,14 +4,15 @@
 
 - [x] `qmllint` integration
   - [x] `qmllint` language server
+    - [x] Support multi-root projects
   - [x] Support `.qmllint.ini` file
 - [x] Show errors on notification
 - [x] Handle exceptions from Python scripts
   - [x] Drop support to install Python dependencies
-- [ ] Support multi-root projects
-- [ ] Support spaces in paths
+- [x] Support spaces in paths
 - [ ] Unit tests for ALL TypeScript scripts
 - [ ] Configurations
+  - [ ] Support multi-root projects
 - [ ] Ensures we use resource scope
   - [ ] Support user-defined tool args
   - [ ] Support user-defined tool paths

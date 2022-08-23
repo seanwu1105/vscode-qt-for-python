@@ -9,7 +9,7 @@ import {
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 import type { ErrorResult, SuccessResult } from '../../result-types'
-import type { ExecError, StdErrError } from '../../run'
+import type { CommandArgs, ExecError, StdErrError } from '../../run'
 import { toDiagnostic } from '../converters'
 import { lint } from '../lint'
 
@@ -66,7 +66,7 @@ export function startServer() {
   connection.listen()
 }
 
-export type InitializationOptions = { readonly qmlLintCommand: string[] }
+export type InitializationOptions = { readonly qmlLintCommand: CommandArgs }
 
 export const QmlLintNotification = 'QmlLintNotification'
 export type QmlLintNotification =

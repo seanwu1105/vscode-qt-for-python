@@ -5,17 +5,21 @@ import { notNil } from './utils'
 
 export async function run({ command }: RunArgs): Promise<RunResult> {
   return new Promise<RunResult>(resolve => {
-    exec(command.join(' '), (error, stdout, stderr) => {
-      if (notNil(error)) resolve({ kind: 'ExecError', error, stdout, stderr })
-      if (stderr.length !== 0) resolve({ kind: 'StdErrError', stdout, stderr })
-      resolve({ kind: 'Success', value: stdout })
-    })
+    exec(
+      command.map(s => (s.includes(' ') ? `"${s}"` : s)).join(' '),
+      (error, stdout, stderr) => {
+        if (notNil(error)) resolve({ kind: 'ExecError', error, stdout, stderr })
+        if (stderr.length !== 0)
+          resolve({ kind: 'StdErrError', stdout, stderr })
+        resolve({ kind: 'Success', value: stdout })
+      },
+    )
   })
 }
 
-type RunArgs = {
-  command: readonly string[]
-}
+type RunArgs = { command: CommandArgs }
+
+export type CommandArgs = readonly string[]
 
 type RunResult = SuccessResult<string> | ExecError | StdErrError
 

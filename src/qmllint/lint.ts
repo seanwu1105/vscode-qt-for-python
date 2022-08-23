@@ -1,5 +1,5 @@
 import type { ErrorResult, SuccessResult } from '../result-types'
-import type { ExecError, StdErrError } from '../run'
+import type { CommandArgs, ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import { notNil } from '../utils'
 
@@ -27,9 +27,9 @@ export async function lint({
 }
 
 type LintArgs = {
-  readonly qmlLintCommand: string[]
+  readonly qmlLintCommand: CommandArgs
   readonly documentPath: string
-  readonly options: string[]
+  readonly options: CommandArgs
 }
 
 export type LintResult =

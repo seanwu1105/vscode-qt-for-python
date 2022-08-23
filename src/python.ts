@@ -1,5 +1,6 @@
 import { extensions, workspace } from 'vscode'
 import type { ErrorResult, SuccessResult } from './result-types'
+import type { CommandArgs } from './run'
 import { notNil } from './utils'
 
 export async function resolveScriptCommand({
@@ -27,7 +28,7 @@ type ResolveScriptCommandArgs = {
 
 type ScriptName = 'qmllint'
 
-type ResolveScriptCommandResult = SuccessResult<string[]> | NotFoundError
+type ResolveScriptCommandResult = SuccessResult<CommandArgs> | NotFoundError
 
 export type NotFoundError = ErrorResult<'NotFound'>
 
@@ -58,14 +59,14 @@ async function getPythonInterpreterPath(): Promise<GetPythonInterpreterPathResul
 }
 
 type GetPythonInterpreterPathResult =
-  | SuccessResult<string[]>
+  | SuccessResult<CommandArgs>
   | ErrorResult<'NotFound'>
 
 // Excerpt from: https://github.com/microsoft/vscode-python/blob/344c912a1c15d07eb9b14bf749c7529a7fa0877b/src/client/apiTypes.ts#L15
 type PythonExtensionApi = {
   readonly settings: {
     getExecutionDetails(): {
-      readonly execCommand: string[] | undefined
+      readonly execCommand: CommandArgs | undefined
     }
   }
 }
