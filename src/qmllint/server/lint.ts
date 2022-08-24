@@ -1,7 +1,7 @@
-import type { ErrorResult, SuccessResult } from '../result-types'
-import type { CommandArgs, ExecError, StdErrError } from '../run'
-import { run } from '../run'
-import { notNil } from '../utils'
+import type { ErrorResult, SuccessResult } from '../../result-types'
+import type { CommandArgs, ExecError, StdErrError } from '../../run'
+import { run } from '../../run'
+import { notNil } from '../../utils'
 
 export async function lint({
   qmlLintCommand,

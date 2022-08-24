@@ -36,9 +36,7 @@ export async function startClient({
     scriptName: 'qmllint',
     extensionPath,
   })
-  if (qmlLintCommandResult.kind === 'NotFoundError') {
-    return qmlLintCommandResult
-  }
+  if (qmlLintCommandResult.kind === 'NotFoundError') return qmlLintCommandResult
 
   const initializationOptions: InitializationOptions = {
     qmlLintCommand: qmlLintCommandResult.value,

@@ -10,8 +10,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { TextDocument } from 'vscode-languageserver-textdocument'
 import type { ErrorResult, SuccessResult } from '../../result-types'
 import type { CommandArgs, ExecError, StdErrError } from '../../run'
-import { toDiagnostic } from '../converters'
-import { lint } from '../lint'
+import { toDiagnostic } from './converters'
+import { lint } from './lint'
 
 export function startServer() {
   let initializationOptions: InitializationOptions

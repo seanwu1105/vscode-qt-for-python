@@ -1,6 +1,6 @@
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
-import { notNil } from '../utils'
+import { notNil } from '../../utils'
 import type { QmlLintWarning } from './lint'
 
 export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
