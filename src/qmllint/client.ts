@@ -10,7 +10,7 @@ import { resolveScriptCommand } from '../python'
 import type { ErrorResult, SuccessResult } from '../result-types'
 import type { QmlLintNotification } from './server/notifications'
 import { QmlLintNotificationType } from './server/notifications'
-import { QmlScriptCommandRequestType } from './server/requests'
+import { QmlLintCommandRequestType } from './server/requests'
 
 export async function startClient({
   asAbsolutePath,
@@ -41,9 +41,22 @@ export async function startClient({
   const disposables = [
     client,
     client.onNotification(QmlLintNotificationType, onNotification),
-    client.onRequest(QmlScriptCommandRequestType, ({ resource }) =>
-      resolveScriptCommand({ scriptName: 'qmllint', extensionPath, resource }),
-    ),
+    client.onRequest(QmlLintCommandRequestType, async ({ resource }) => {
+      const resolveScriptCommandResult = await resolveScriptCommand({
+        scriptName: 'qmllint',
+        extensionPath,
+        resource,
+      })
+      if (resolveScriptCommandResult.kind === 'NotFoundError')
+        return resolveScriptCommandResult
+      return {
+        kind: 'Success',
+        value: {
+          command: resolveScriptCommandResult.value,
+          options: ['--json'],
+        },
+      } as const
+    }),
   ]
 
   await client.start()

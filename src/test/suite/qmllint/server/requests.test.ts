@@ -3,7 +3,7 @@ import { requestQmlLintCommand } from '../../../../qmllint/server/requests'
 import { notNil } from '../../../../utils'
 
 suite('qmllint/requests', () => {
-  suite('QmlScriptCommandRequest', () => {
+  suite('QmlLintCommandRequest', () => {
     test('should be defined', () => {
       assert.ok(notNil(requestQmlLintCommand))
     })

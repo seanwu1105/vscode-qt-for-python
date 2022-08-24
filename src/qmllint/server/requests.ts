@@ -2,27 +2,34 @@ import type { Connection } from 'vscode-languageserver'
 import { ConfigurationRequest, RequestType } from 'vscode-languageserver'
 import type { DocumentUri } from 'vscode-languageserver-textdocument'
 import { CONFIGURATION_NAMESPACE } from '../../constants'
-import type { ResolveScriptCommandResult } from '../../python'
 import type { ErrorResult, SuccessResult } from '../../result-types'
+import type { CommandArgs } from '../../run'
 
 export async function requestQmlLintCommand({
   resource,
   connection,
 }: RequestArgs) {
-  return connection.sendRequest(QmlScriptCommandRequestType, { resource })
+  return connection.sendRequest(QmlLintCommandRequestType, { resource })
 }
 
-export const QmlScriptCommandRequestType = new RequestType<
-  QmlScriptCommandRequest,
-  QmlScriptCommandResponse,
+export const QmlLintCommandRequestType = new RequestType<
+  QmlLintCommandRequest,
+  QmlLintCommandResponse,
   unknown
->('QmlScriptCommandRequest')
+>('QmlLintCommandRequest')
 
-type QmlScriptCommandRequest = {
+type QmlLintCommandRequest = {
   readonly resource: DocumentUri
 }
 
-type QmlScriptCommandResponse = ResolveScriptCommandResult
+type QmlLintCommandResponse =
+  | SuccessResult<QmlLintCommand>
+  | ErrorResult<'NotFound'>
+
+type QmlLintCommand = {
+  readonly command: CommandArgs
+  readonly options: CommandArgs
+}
 
 export async function requestIsEnabled({
   resource,
