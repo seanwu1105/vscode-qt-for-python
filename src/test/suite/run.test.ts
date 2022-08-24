@@ -4,9 +4,9 @@ import type { RunResult } from '../../run'
 import { run } from '../../run'
 
 suite('run', () => {
-  suite('when execute non-exist program', () => {
-    let result: RunResult
+  let result: RunResult
 
+  suite('when execute non-exist program', () => {
     setup(async () => (result = await run({ command: ['non-exist'] })))
 
     test('should return ExecError', async () =>
@@ -16,8 +16,6 @@ suite('run', () => {
   suite(
     'when execute cat command to read exist file with spaces in filename',
     () => {
-      let result: RunResult
-
       setup(async () => {
         const filePath = path.join(
           '.',

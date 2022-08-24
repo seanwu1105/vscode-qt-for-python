@@ -26,7 +26,7 @@ export async function lint({
   return runResult
 }
 
-type LintArgs = {
+export type LintArgs = {
   readonly qmlLintCommand: CommandArgs
   readonly documentPath: string
   readonly options: CommandArgs
@@ -62,7 +62,7 @@ type ParseQmlLintRunReturnValueResult =
   | SuccessResult<QmlLintResult>
   | ErrorResult<'Parse'>
 
-type QmlLintResult = {
+export type QmlLintResult = {
   readonly files: readonly QmlLintFileResult[]
 }
 

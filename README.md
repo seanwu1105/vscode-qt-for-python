@@ -16,6 +16,7 @@
 - [ ] Ensures we use resource scope
   - [ ] Support user-defined tool args
   - [ ] Support user-defined tool paths
+- [ ] Build e2e tests
 - [ ] Resolve predefined variables in tool paths
 - [ ] Languages highlighting
 - [ ] Simple tools integration

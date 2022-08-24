@@ -17,6 +17,8 @@ suite('python', () => {
       extensionPath: 'xyz',
     }
 
+    let command: ResolveScriptCommandResult
+
     suite('when getting Python interpreter path is successful', () => {
       const mockPythonExecCommand = ['python']
 
@@ -38,8 +40,6 @@ suite('python', () => {
       teardown(() => sinon.restore())
 
       suite('when getting path from Python extension execCommand', () => {
-        let command: ResolveScriptCommandResult
-
         setup(async () => (command = await resolveScriptCommand(args)))
 
         test('should get success result', async () => {
@@ -64,8 +64,6 @@ suite('python', () => {
         'when getting path from Python extension defaultInterpreterPath',
         () => {
           const mockDefaultInterpreterPath = 'python'
-
-          let command: ResolveScriptCommandResult
 
           setup(async () => {
             sinon.replace(workspace, 'getConfiguration', () => ({
@@ -98,8 +96,6 @@ suite('python', () => {
     })
 
     suite('when getting Python interpreter path is failed', async () => {
-      let command: ResolveScriptCommandResult
-
       setup(async () => {
         const mockPythonExtensionApi: PythonExtensionApi = {
           settings: { getExecutionDetails: () => ({ execCommand: undefined }) },
