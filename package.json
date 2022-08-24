@@ -64,7 +64,18 @@
           "qml"
         ]
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Qt for Python",
+      "properties": {
+        "qtForPython.qmllint.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Enable the qmllint integration.",
+          "scope": "resource"
+        }
+      }
+    }
   },
   "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
   "icon": "assets/images/icon.png",

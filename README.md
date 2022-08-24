@@ -11,14 +11,17 @@
   - [x] Drop support to install Python dependencies
 - [x] Support spaces in paths
 - [x] Unit tests for ALL TypeScript scripts
+- [ ] Resolve predefined variables in tool paths
 - [ ] Configurations
-  - [ ] Support multi-root projects
+  - [x] Enable/disable `qmllint` integration
+  - [ ] Set qmllint path
+  - [ ] Set qmllint args
+  - [x] Support multi-root projects
     - [x] includes Python configuration
 - [ ] Ensures we use resource scope
   - [ ] Support user-defined tool args
   - [ ] Support user-defined tool paths
 - [ ] Build e2e tests
-- [ ] Resolve predefined variables in tool paths
 - [ ] Languages highlighting
 - [ ] Simple tools integration
 - [ ] Continuous compilation

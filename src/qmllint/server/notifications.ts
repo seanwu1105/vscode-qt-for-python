@@ -7,14 +7,20 @@ export type QmlLintNotification =
   | ErrorResult<'Parse'>
   | ErrorResult<'Type'>
   | ErrorResult<'NotFound'>
+  | ErrorResult<'Unexpected'>
   | ExecError
   | StdErrError
 
-export async function sendQmlLintNotification(
-  notification: QmlLintNotification,
-  connection: Connection,
-) {
+export async function sendQmlLintNotification({
+  notification,
+  connection,
+}: SendQmlLintNotificationArgs) {
   return connection.sendNotification(QmlLintNotificationType, notification)
+}
+
+export type SendQmlLintNotificationArgs = {
+  readonly notification: QmlLintNotification
+  readonly connection: Connection
 }
 
 export const QmlLintNotificationType =

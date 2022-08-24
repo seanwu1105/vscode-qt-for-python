@@ -36,6 +36,7 @@ function onNotification(n: QmlLintNotification) {
     case 'ParseError':
     case 'TypeError':
     case 'NotFoundError':
+    case 'UnexpectedError':
       return window.showErrorMessage(n.message)
     case 'ExecError':
       return window.showErrorMessage(
