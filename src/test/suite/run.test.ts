@@ -1,5 +1,6 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
+import * as process from 'node:process'
 import type { RunResult } from '../../run'
 import { run } from '../../run'
 
@@ -17,14 +18,20 @@ suite('run', () => {
     'when execute cat command to read exist file with spaces in filename',
     () => {
       setup(async () => {
-        const filePath = path.join(
-          '.',
+        const filePath = path.resolve(
+          __dirname,
+          '..',
+          '..',
+          '..',
           'src',
           'test',
           'assets',
           'filename with spaces.txt',
         )
-        result = await run({ command: ['cat', filePath] })
+
+        if (process.platform === 'win32')
+          result = await run({ command: ['type', filePath] })
+        else result = await run({ command: ['cat', filePath] })
       })
 
       test('should return Success with contents', async () => {
