@@ -6,11 +6,11 @@ import type {
   ServerOptions,
 } from 'vscode-languageclient/node'
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node'
-import type { NotFoundError } from '../python'
 import { resolveScriptCommand } from '../python'
-import type { SuccessResult } from '../result-types'
-import type { InitializationOptions } from './server/server'
-import { QmlLintNotification } from './server/server'
+import type { ErrorResult, SuccessResult } from '../result-types'
+import type { QmlLintNotification } from './server/notifications'
+import { QmlLintNotificationType } from './server/notifications'
+import { QmlScriptCommandRequestType } from './server/requests'
 
 export async function startClient({
   asAbsolutePath,
@@ -32,26 +32,18 @@ export async function startClient({
     },
   }
 
-  const qmlLintCommandResult = await resolveScriptCommand({
-    scriptName: 'qmllint',
-    extensionPath,
-  })
-  if (qmlLintCommandResult.kind === 'NotFoundError') return qmlLintCommandResult
-
-  const initializationOptions: InitializationOptions = {
-    qmlLintCommand: qmlLintCommandResult.value,
-  }
-
   const clientOptions: LanguageClientOptions = {
     documentSelector: [{ scheme: 'file', language: 'qml' }],
-    initializationOptions,
   }
 
   const client = new LanguageClient('qmllint', serverOptions, clientOptions)
 
   const disposables = [
     client,
-    client.onNotification(QmlLintNotification, onNotification),
+    client.onNotification(QmlLintNotificationType, onNotification),
+    client.onRequest(QmlScriptCommandRequestType, ({ resource }) =>
+      resolveScriptCommand({ scriptName: 'qmllint', extensionPath, resource }),
+    ),
   ]
 
   await client.start()
@@ -72,7 +64,7 @@ type StartClientArgs = Pick<
 
 type StartClientResult =
   | (SuccessResult<LanguageClient> & Disposable)
-  | NotFoundError
+  | ErrorResult<'NotFound'>
 
 export async function stopClient(client: LanguageClient) {
   return client.stop()

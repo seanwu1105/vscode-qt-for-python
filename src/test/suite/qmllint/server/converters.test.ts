@@ -1,9 +1,15 @@
 import * as assert from 'node:assert'
+import * as path from 'node:path'
+import { Uri } from 'vscode'
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
-import { toDiagnostic } from '../../../../qmllint/server/converters'
+import {
+  pathToUri,
+  toDiagnostic,
+  uriToPath,
+} from '../../../../qmllint/server/converters'
 import type { QmlLintWarning } from '../../../../qmllint/server/lint'
-suite('converters', () => {
+suite('qmllint/converters', () => {
   suite('toDiagnostic', () => {
     suite('when QML Lint warning is critical type', () => {
       const qmlLintWarning: QmlLintWarning = {
@@ -77,6 +83,32 @@ suite('converters', () => {
         }
 
         assert.deepStrictEqual(toDiagnostic(qmlLintWarning), expectedDiagnostic)
+      })
+    })
+  })
+
+  suite('uriToPath', () => {
+    suite('when URI is valid', () => {
+      const uri = Uri.parse('file:///path/to/file.qml')
+
+      test('should return path', () => {
+        assert.deepStrictEqual(uriToPath(uri.toString()), {
+          kind: 'Success',
+          value: path.join('/', 'path', 'to', 'file.qml'),
+        })
+      })
+    })
+  })
+
+  suite('pathToUri', () => {
+    suite('when path is valid', () => {
+      const p = path.join('path', 'to', 'file.qml')
+
+      test('should return URI', () => {
+        assert.deepStrictEqual(pathToUri(p), {
+          kind: 'Success',
+          value: 'file:///path/to/file.qml',
+        })
       })
     })
   })

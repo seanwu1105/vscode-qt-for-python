@@ -6,98 +6,77 @@ import {
   TextDocumentSyncKind,
 } from 'vscode-languageserver/node'
 
-import { fileURLToPath, pathToFileURL } from 'node:url'
+import type { DocumentUri } from 'vscode-languageserver-textdocument'
 import { TextDocument } from 'vscode-languageserver-textdocument'
-import type { ErrorResult, SuccessResult } from '../../result-types'
-import type { CommandArgs, ExecError, StdErrError } from '../../run'
-import { toDiagnostic } from './converters'
+import { pathToUri, toDiagnostic, uriToPath } from './converters'
 import { lint } from './lint'
+import { sendQmlLintNotification } from './notifications'
+import { sendQmlLintCommandRequest } from './requests'
 
 export function startServer() {
-  let initializationOptions: InitializationOptions
-
   const connection = createConnection(ProposedFeatures.all)
 
   const documents = new TextDocuments(TextDocument)
 
-  connection.onInitialize(params => {
-    initializationOptions = params.initializationOptions
+  connection.onInitialize(() => {
     return { capabilities: { textDocumentSync: TextDocumentSyncKind.Full } }
   })
 
-  documents.onDidOpen(({ document: { uri } }) => onDocumentChangedOnDisk(uri))
-  documents.onDidSave(({ document: { uri } }) => onDocumentChangedOnDisk(uri))
+  documents.onDidOpen(({ document: { uri } }) =>
+    onResourceChanged({ uri, connection }),
+  )
 
-  async function onDocumentChangedOnDisk(uri: string) {
-    const uriToPathResult = uriToPath(uri)
-
-    if (uriToPathResult.kind === 'TypeError')
-      return sendQmlLintNotification(uriToPathResult, connection)
-
-    const lintResult = await lint({
-      qmlLintCommand: initializationOptions.qmlLintCommand,
-      documentPath: uriToPathResult.value,
-      options: ['--json'],
-    })
-
-    if (lintResult.kind === 'Success') {
-      const promises = lintResult.value.files.map(file => {
-        const pathToUriResult = pathToUri(file.filename)
-
-        switch (pathToUriResult.kind) {
-          case 'TypeError':
-            return sendQmlLintNotification(pathToUriResult, connection)
-          case 'Success':
-            return connection.sendDiagnostics({
-              uri: pathToUriResult.value,
-              diagnostics: file.warnings.map(toDiagnostic),
-            })
-        }
-      })
-
-      return Promise.all(promises)
-    }
-
-    sendQmlLintNotification(lintResult, connection)
-  }
+  documents.onDidSave(({ document: { uri } }) =>
+    onResourceChanged({ uri, connection }),
+  )
 
   documents.listen(connection)
 
   connection.listen()
 }
 
-export type InitializationOptions = { readonly qmlLintCommand: CommandArgs }
+async function onResourceChanged({ uri, connection }: OnResourceChangedArgs) {
+  const uriToPathResult = uriToPath(uri)
 
-export const QmlLintNotification = 'QmlLintNotification'
-export type QmlLintNotification =
-  | ErrorResult<'Parse'>
-  | ExecError
-  | StdErrError
-  | ErrorResult<'Type'>
+  if (uriToPathResult.kind === 'TypeError')
+    return sendQmlLintNotification(uriToPathResult, connection)
 
-function uriToPath(uri: string): UriToPathResult {
-  try {
-    return { kind: 'Success', value: fileURLToPath(uri) }
-  } catch (e) {
-    return { kind: 'TypeError', message: `Unsupported URI: ${uri}` }
+  const qmlLintCommandResult = await sendQmlLintCommandRequest({
+    resource: uri,
+    connection,
+  })
+
+  if (qmlLintCommandResult.kind === 'NotFoundError')
+    return sendQmlLintNotification(qmlLintCommandResult, connection)
+
+  const lintResult = await lint({
+    qmlLintCommand: qmlLintCommandResult.value,
+    documentPath: uriToPathResult.value,
+    options: ['--json'],
+  })
+
+  if (lintResult.kind === 'Success') {
+    const promises = lintResult.value.files.map(file => {
+      const pathToUriResult = pathToUri(file.filename)
+
+      switch (pathToUriResult.kind) {
+        case 'TypeError':
+          return sendQmlLintNotification(pathToUriResult, connection)
+        case 'Success':
+          return connection.sendDiagnostics({
+            uri: pathToUriResult.value,
+            diagnostics: file.warnings.map(toDiagnostic),
+          })
+      }
+    })
+
+    return Promise.all(promises)
   }
+
+  sendQmlLintNotification(lintResult, connection)
 }
 
-export type UriToPathResult = SuccessResult<string> | ErrorResult<'Type'>
-
-function pathToUri(path: string): PathToUriResult {
-  try {
-    return { kind: 'Success', value: pathToFileURL(path).href }
-  } catch (e) {
-    return { kind: 'TypeError', message: `Unsupported path: ${path}` }
-  }
-}
-
-export type PathToUriResult = SuccessResult<string> | ErrorResult<'Type'>
-
-async function sendQmlLintNotification(
-  notification: QmlLintNotification,
-  connection: Connection,
-) {
-  return connection.sendNotification(QmlLintNotification, notification)
+type OnResourceChangedArgs = {
+  readonly uri: DocumentUri
+  readonly connection: Connection
 }

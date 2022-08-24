@@ -15,6 +15,7 @@ suite('python', () => {
     const args: ResolveScriptCommandArgs = {
       scriptName: 'qmllint',
       extensionPath: 'xyz',
+      resource: 'file:///abc',
     }
 
     let command: ResolveScriptCommandResult

@@ -5,7 +5,7 @@ import {
   startClient as startQmlLintClient,
   stopClient as stopQmlLintClient,
 } from './qmllint/client'
-import type { QmlLintNotification } from './qmllint/server/server'
+import type { QmlLintNotification } from './qmllint/server/notifications'
 import { notNil } from './utils'
 
 let qmlLintClient: LanguageClient | undefined = undefined
@@ -35,6 +35,7 @@ function onNotification(n: QmlLintNotification) {
   switch (n.kind) {
     case 'ParseError':
     case 'TypeError':
+    case 'NotFoundError':
       return window.showErrorMessage(n.message)
     case 'ExecError':
       return window.showErrorMessage(

@@ -4,9 +4,9 @@ import { notNil } from '../../utils'
 
 suite('extension', () => {
   suite('activate', () => {
-    test('should be defined', () => assert.equal(notNil(activate), true))
+    test('should be defined', () => assert.ok(notNil(activate)))
   })
   suite('deactivate', () => {
-    test('should be defined', () => assert.equal(notNil(deactivate), true))
+    test('should be defined', () => assert.ok(notNil(deactivate)))
   })
 })

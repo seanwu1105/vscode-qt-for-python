@@ -1,5 +1,7 @@
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
+import { URI } from 'vscode-uri'
+import type { ErrorResult, SuccessResult } from '../../result-types'
 import { notNil } from '../../utils'
 import type { QmlLintWarning } from './lint'
 
@@ -35,3 +37,23 @@ export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
     source: 'qmllint',
   }
 }
+
+export function uriToPath(uri: string): UriToPathResult {
+  try {
+    return { kind: 'Success', value: URI.parse(uri).fsPath }
+  } catch (e) {
+    return { kind: 'TypeError', message: `Unsupported URI: ${uri}` }
+  }
+}
+
+export type UriToPathResult = SuccessResult<string> | ErrorResult<'Type'>
+
+export function pathToUri(path: string): PathToUriResult {
+  try {
+    return { kind: 'Success', value: URI.file(path).toString() }
+  } catch (e) {
+    return { kind: 'TypeError', message: `Unsupported path: ${path}` }
+  }
+}
+
+export type PathToUriResult = SuccessResult<string> | ErrorResult<'Type'>

@@ -10,9 +10,10 @@
 - [x] Handle exceptions from Python scripts
   - [x] Drop support to install Python dependencies
 - [x] Support spaces in paths
-- [ ] Unit tests for ALL TypeScript scripts
+- [x] Unit tests for ALL TypeScript scripts
 - [ ] Configurations
-  - [ ] Support multi-root projects (includes Python configuration)
+  - [ ] Support multi-root projects
+    - [x] includes Python configuration
 - [ ] Ensures we use resource scope
   - [ ] Support user-defined tool args
   - [ ] Support user-defined tool paths

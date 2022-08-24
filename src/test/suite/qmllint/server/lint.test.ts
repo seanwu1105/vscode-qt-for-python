@@ -8,7 +8,7 @@ import type {
 import { lint } from '../../../../qmllint/server/lint'
 import * as Run from '../../../../run'
 
-suite('lint', () => {
+suite('qmllint/lint', () => {
   const args: LintArgs = {
     qmlLintCommand: ['qmllint'],
     documentPath: 'myDocumentPath',
