@@ -8,6 +8,4 @@ suite('qmllint/requests', () => {
       assert.ok(notNil(requestQmlLintCommand))
     })
   })
-
-  // TODO: Add configuration request test
 })

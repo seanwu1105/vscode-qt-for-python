@@ -53,7 +53,6 @@ async function getPythonInterpreterPath(
   if (notNil(pythonExecCommand))
     return { kind: 'Success', value: pythonExecCommand }
 
-  // TODO: Support multi-root workspace.
   const pythonDefaultInterpreter = workspace
     .getConfiguration('python', resource)
     .get<string>('defaultInterpreterPath')
