@@ -46,8 +46,8 @@ suite('predefined variable resolver', () => {
 
   test('workspaceFolder', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${workspaceFolder} ${workspaceFolder}'),
-      `${MOCK_WORKSPACE_FOLDER_PATH} ${MOCK_WORKSPACE_FOLDER_PATH}`,
+      path.normalize(resolvePredefinedVariables('${workspaceFolder}')),
+      `${MOCK_WORKSPACE_FOLDER_PATH}`,
     ))
 
   test('workspaceFolderBasename', () =>
@@ -60,22 +60,22 @@ suite('predefined variable resolver', () => {
 
   test('file', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${file} ${file}'),
-      `${MOCK_FILE_PATH} ${MOCK_FILE_PATH}`,
+      path.normalize(resolvePredefinedVariables('${file}')),
+      `${MOCK_FILE_PATH}`,
     ))
 
   test('fileWorkspaceFolder', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables(
-        '${fileWorkspaceFolder} ${fileWorkspaceFolder}',
-      ),
-      `${MOCK_WORKSPACE_FOLDER_PATH} ${MOCK_WORKSPACE_FOLDER_PATH}`,
+      resolvePredefinedVariables('${fileWorkspaceFolder}'),
+      path.normalize(`${MOCK_WORKSPACE_FOLDER_PATH}`),
     ))
 
   test('relativeFile', () =>
     assert.deepStrictEqual(
       resolvePredefinedVariables('${relativeFile} ${relativeFile}'),
-      `folder/file.ext folder/file.ext`,
+      `${path.normalize('folder/file.ext')} ${path.normalize(
+        'folder/file.ext',
+      )}`,
     ))
 
   test('relativeFileDirname', () =>
@@ -102,8 +102,8 @@ suite('predefined variable resolver', () => {
 
   test('fileDirname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileDirname} ${fileDirname}'),
-      `/home/your-username/your-project/folder /home/your-username/your-project/folder`,
+      path.normalize(resolvePredefinedVariables('${fileDirname}')),
+      `${path.normalize('/home/your-username/your-project/folder')}`,
     ))
 
   test('fileExtname', () =>
