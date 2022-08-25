@@ -1,8 +1,8 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { Uri } from 'vscode'
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
+import { URI } from 'vscode-uri'
 import {
   pathToUri,
   toDiagnostic,
@@ -89,7 +89,7 @@ suite('qmllint/converters', () => {
 
   suite('uriToPath', () => {
     suite('when URI is valid', () => {
-      const uri = Uri.parse('file:///path/to/file.qml')
+      const uri = URI.parse('file:///path/to/file.qml')
 
       test('should return path', () => {
         assert.deepStrictEqual(uriToPath(uri.toString()), {

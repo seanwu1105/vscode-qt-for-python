@@ -19,7 +19,7 @@ suite('predefined variable resolver', () => {
       () =>
         ({
           document: {
-            uri: URI.parse(MOCK_FILE_PATH),
+            uri: URI.file(MOCK_FILE_PATH),
             getText: () => MOCK_SELECTED_TEXT,
           },
           selection: { active: { line: MOCK_SELECTED_LINE } },
@@ -31,7 +31,7 @@ suite('predefined variable resolver', () => {
       'getWorkspaceFolder',
       () =>
         ({
-          uri: URI.parse(MOCK_WORKSPACE_FOLDER_PATH),
+          uri: URI.file(MOCK_WORKSPACE_FOLDER_PATH),
         } as WorkspaceFolder),
     )
   })

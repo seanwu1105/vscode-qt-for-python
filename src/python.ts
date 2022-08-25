@@ -1,6 +1,8 @@
 import * as path from 'node:path'
-import { extensions, Uri, workspace } from 'vscode'
+import type { Uri } from 'vscode'
+import { extensions, workspace } from 'vscode'
 import type { DocumentUri } from 'vscode-languageclient'
+import { URI } from 'vscode-uri'
 import type { SupportedTool } from './configurations'
 import type { ErrorResult, SuccessResult } from './result-types'
 import type { CommandArgs } from './run'
@@ -12,7 +14,7 @@ export async function resolveScriptCommand({
   resource,
 }: ResolveScriptCommandArgs): Promise<ResolveScriptCommandResult> {
   const pythonInterpreterPathResult = await getPythonInterpreterPath(
-    Uri.parse(resource),
+    URI.parse(resource),
   )
   if (pythonInterpreterPathResult.kind === 'Success') {
     return {
