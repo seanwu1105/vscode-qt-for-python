@@ -12,6 +12,5 @@
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.pylintArgs": ["--rcfile=python/.pylintrc"],
-  "python.linting.mypyEnabled": true,
-  "qtForPython.qmllint.enabled": true
+  "python.linting.mypyEnabled": true
 }

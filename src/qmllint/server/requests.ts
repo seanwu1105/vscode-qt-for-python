@@ -22,7 +22,7 @@ type QmlLintCommandRequest = {
   readonly resource: DocumentUri
 }
 
-type QmlLintCommandResponse =
+export type QmlLintCommandResponse =
   | SuccessResult<QmlLintCommand>
   | ErrorResult<'NotFound'>
 

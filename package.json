@@ -73,6 +73,21 @@
           "default": true,
           "markdownDescription": "Enable the qmllint integration.",
           "scope": "resource"
+        },
+        "qtForPython.qmllint.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to `qmllint` executable. Set to empty string to automatically resolve from the installed Python package.",
+          "scope": "resource"
+        },
+        "qtForPython.qmllint.options": {
+          "type": "array",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "The options passed to `qmllint` executable.",
+          "scope": "resource"
         }
       }
     }

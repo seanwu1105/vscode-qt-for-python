@@ -12,10 +12,10 @@
 - [x] Support spaces in paths
 - [x] Unit tests for ALL TypeScript scripts
 - [ ] Resolve predefined variables in tool paths
-- [ ] Configurations
+- [x] Configurations
   - [x] Enable/disable `qmllint` integration
-  - [ ] Set qmllint path
-  - [ ] Set qmllint args
+  - [x] Set qmllint path
+  - [x] Set qmllint args
   - [x] Support multi-root projects
     - [x] includes Python configuration
 - [ ] Ensures we use resource scope

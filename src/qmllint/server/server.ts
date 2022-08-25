@@ -39,11 +39,13 @@ async function lintQml({ uri, connection }: LintQmlArgs) {
     resource: uri,
     connection,
   })
+
   if (requestIsEnabledResult.kind !== 'Success')
     return sendQmlLintNotification({
       notification: requestIsEnabledResult,
       connection,
     })
+
   if (!requestIsEnabledResult.value)
     return connection.sendDiagnostics({
       uri,
@@ -69,10 +71,14 @@ async function lintQml({ uri, connection }: LintQmlArgs) {
       connection,
     })
 
+  const options = qmlLintCommandResult.value.options.includes('--json')
+    ? qmlLintCommandResult.value.options
+    : [...qmlLintCommandResult.value.options, '--json']
+
   const lintResult = await lint({
     qmlLintCommand: qmlLintCommandResult.value.command,
     documentPath: uriToPathResult.value,
-    options: qmlLintCommandResult.value.options,
+    options,
   })
 
   if (lintResult.kind === 'Success') {
