@@ -18,10 +18,10 @@
   - [x] Set qmllint args
   - [x] Support multi-root projects
     - [x] includes Python configuration
-- [ ] Ensures we use resource scope
-  - [ ] Support user-defined tool args
-  - [ ] Support user-defined tool paths
-- [ ] Build e2e tests
+- [x] Ensure we use resource scope
+  - [x] Support user-defined tool args
+  - [x] Support user-defined tool paths
+- [ ] Build e2e tests (close #8)
 - [ ] Languages highlighting
 - [ ] Simple tools integration
 - [ ] Continuous compilation
