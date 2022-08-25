@@ -11,7 +11,7 @@
   - [x] Drop support to install Python dependencies
 - [x] Support spaces in paths
 - [x] Unit tests for ALL TypeScript scripts
-- [ ] Resolve predefined variables in tool paths
+- [x] Resolve predefined variables in tool paths
 - [x] Configurations
   - [x] Enable/disable `qmllint` integration
   - [x] Set qmllint path

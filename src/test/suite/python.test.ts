@@ -13,7 +13,7 @@ import { MOCK_CONFIGURATION, MOCK_EXTENSION } from '../mocks/extension'
 suite('python', () => {
   suite('resolveScriptCommand', () => {
     const args: ResolveScriptCommandArgs = {
-      scriptName: 'qmllint',
+      tool: 'qmllint',
       extensionPath: 'xyz',
       resource: 'file:///abc',
     }
@@ -52,7 +52,7 @@ suite('python', () => {
                 args.extensionPath,
                 'python',
                 'scripts',
-                `${args.scriptName}.py`,
+                `${args.tool}.py`,
               ),
             ],
           }
@@ -85,7 +85,7 @@ suite('python', () => {
                   args.extensionPath,
                   'python',
                   'scripts',
-                  `${args.scriptName}.py`,
+                  `${args.tool}.py`,
                 ),
               ],
             }

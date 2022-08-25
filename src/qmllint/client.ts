@@ -1,6 +1,5 @@
 import * as path from 'node:path'
 import type { ExtensionContext } from 'vscode'
-import { workspace } from 'vscode'
 import type {
   Disposable,
   DocumentUri,
@@ -8,11 +7,9 @@ import type {
   ServerOptions,
 } from 'vscode-languageclient/node'
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node'
-import { URI } from 'vscode-uri'
-import { CONFIGURATION_NAMESPACE } from '../constants'
+import { getOptionsFromConfig, getPathFromConfig } from '../configurations'
 import { resolveScriptCommand } from '../python'
 import type { ErrorResult, SuccessResult } from '../result-types'
-import { notNil } from '../utils'
 import type { QmlLintNotification } from './server/notifications'
 import { QmlLintNotificationType } from './server/notifications'
 import type { QmlLintCommandResponse } from './server/requests'
@@ -76,19 +73,11 @@ async function resolveQmlLintCommand({
   extensionPath,
   resource,
 }: ResolveQmlLintCommandArgs): Promise<QmlLintCommandResponse> {
-  const qmlLintOptions =
-    workspace
-      .getConfiguration(
-        `${CONFIGURATION_NAMESPACE}.qmllint`,
-        URI.parse(resource),
-      )
-      .get<readonly string[]>('options') ?? []
+  const qmlLintOptions = getOptionsFromConfig({ tool: 'qmllint', resource })
 
-  const qmlLintPath = workspace
-    .getConfiguration(`${CONFIGURATION_NAMESPACE}.qmllint`, URI.parse(resource))
-    .get<string>('path')
+  const qmlLintPath = getPathFromConfig({ tool: 'qmllint', resource })
 
-  if (notNil(qmlLintPath) && qmlLintPath.length !== 0) {
+  if (qmlLintPath.length !== 0)
     return {
       kind: 'Success',
       value: {
@@ -96,10 +85,9 @@ async function resolveQmlLintCommand({
         options: qmlLintOptions,
       },
     }
-  }
 
   const resolveScriptCommandResult = await resolveScriptCommand({
-    scriptName: 'qmllint',
+    tool: 'qmllint',
     extensionPath,
     resource,
   })

@@ -1,12 +1,13 @@
 import * as path from 'node:path'
 import { extensions, Uri, workspace } from 'vscode'
 import type { DocumentUri } from 'vscode-languageclient'
+import type { SupportedTool } from './configurations'
 import type { ErrorResult, SuccessResult } from './result-types'
 import type { CommandArgs } from './run'
 import { notNil } from './utils'
 
 export async function resolveScriptCommand({
-  scriptName,
+  tool,
   extensionPath,
   resource,
 }: ResolveScriptCommandArgs): Promise<ResolveScriptCommandResult> {
@@ -18,7 +19,7 @@ export async function resolveScriptCommand({
       kind: 'Success',
       value: [
         ...pythonInterpreterPathResult.value,
-        path.join(extensionPath, 'python', 'scripts', `${scriptName}.py`),
+        path.join(extensionPath, 'python', 'scripts', `${tool}.py`),
       ],
     }
   }
@@ -27,12 +28,10 @@ export async function resolveScriptCommand({
 }
 
 export type ResolveScriptCommandArgs = {
-  readonly scriptName: ScriptName
+  readonly tool: SupportedTool
   readonly extensionPath: string
   readonly resource: DocumentUri
 }
-
-type ScriptName = 'qmllint'
 
 export type ResolveScriptCommandResult =
   | SuccessResult<CommandArgs>
