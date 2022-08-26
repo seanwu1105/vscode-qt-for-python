@@ -1,33 +1,37 @@
+import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { commands, extensions, window, workspace } from 'vscode'
+import type { Diagnostic } from 'vscode'
+import { commands, extensions, languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
+import { notNil } from '../../../utils'
 
 const E2E_TIMEOUT = 1000000
 
-suite('qmllint/e2e/diagnostics', () => {
+suite('qmllint/e2e', () => {
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
 
-    removeAllWorkspaceFolders()
-
-    await sleep()
+    await removeAllWorkspaceFolders()
 
     await commands.executeCommand(
       'workbench.extensions.installExtension',
       'ms-python.python',
     )
 
-    workspace.updateWorkspaceFolders(0, 0, {
-      uri: URI.file(path.resolve(__dirname, '..', '..', '..', '..', 'python')),
-    })
+    await openTestWorkspace()
+  })
 
-    await sleep()
+  setup(async function () {
+    this.timeout(E2E_TIMEOUT)
+
+    const extension = extensions.getExtension('seanwu.vscode-qt-for-python')
+    assert.ok(notNil(extension))
+
+    await extension.activate()
   })
 
   suiteTeardown(async function () {
     this.timeout(E2E_TIMEOUT)
-
-    removeAllWorkspaceFolders()
 
     await commands.executeCommand(
       'workbench.extensions.uninstallExtension',
@@ -37,40 +41,78 @@ suite('qmllint/e2e/diagnostics', () => {
     await sleep()
   })
 
-  test('todo', async () => {
-    try {
-      await extensions.getExtension('seanwu.vscode-qt-for-python')?.activate()
-      const document = await workspace.openTextDocument(
-        URI.file(
-          path.resolve(
-            __dirname,
-            '..',
-            '..',
-            '..',
-            '..',
-            'python',
-            'tests',
-            'assets',
-            'missing_import.qml',
-          ),
-        ),
-      )
-      await window.showTextDocument(document)
+  suite('missing_import.qml', () => {
+    let diagnostics: readonly Diagnostic[]
+
+    suiteSetup(async function () {
+      this.timeout(E2E_TIMEOUT)
+
+      const document = await openAndShowTestFile('missing_import.qml')
       await sleep()
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e)
-    }
+      diagnostics = languages.getDiagnostics(document.uri)
+    })
+
+    test('should contain diagnostics', async () =>
+      assert.ok(diagnostics.length > 0)).timeout(E2E_TIMEOUT)
+  }).timeout(E2E_TIMEOUT)
+
+  suite('pass.qml', () => {
+    let diagnostics: readonly Diagnostic[]
+
+    suiteSetup(async function () {
+      this.timeout(E2E_TIMEOUT)
+
+      const document = await openAndShowTestFile('pass.qml')
+      await sleep()
+      diagnostics = languages.getDiagnostics(document.uri)
+    })
+
+    test('should not contain diagnostic', async () =>
+      assert.ok(diagnostics.length === 0)).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-async function sleep(ms = 2000) {
-  return new Promise(resolve => setTimeout(resolve, ms))
+async function openTestWorkspace() {
+  const result = workspace.updateWorkspaceFolders(0, 0, {
+    uri: URI.file(path.resolve(__dirname, '..', '..', '..', '..', 'python')),
+  })
+
+  await sleep()
+
+  return result
 }
 
-function removeAllWorkspaceFolders() {
-  return workspace.updateWorkspaceFolders(
+async function openAndShowTestFile(filename: string) {
+  const document = await workspace.openTextDocument(
+    URI.file(
+      path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        '..',
+        'python',
+        'tests',
+        'assets',
+        filename,
+      ),
+    ),
+  )
+  await window.showTextDocument(document)
+  return document
+}
+
+async function removeAllWorkspaceFolders() {
+  const result = workspace.updateWorkspaceFolders(
     0,
     workspace.workspaceFolders ? workspace.workspaceFolders.length : 0,
   )
+
+  await sleep()
+
+  return result
+}
+
+async function sleep(ms = 2000) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
