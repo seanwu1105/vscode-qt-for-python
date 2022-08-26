@@ -65,6 +65,17 @@
           "qml"
         ],
         "configuration": "./languages/qml.json"
+      },
+      {
+        "id": "qmldir",
+        "filenames": [
+          "qmldir"
+        ],
+        "aliases": [
+          "QML Directory",
+          "qmldir"
+        ],
+        "configuration": "./languages/qmldir.json"
       }
     ],
     "configuration": {
@@ -98,12 +109,21 @@
         "language": "qml",
         "scopeName": "source.qml",
         "path": "./syntaxes/qml.tmLanguage.json"
+      },
+      {
+        "language": "qmldir",
+        "scopeName": "source.qmldir",
+        "path": "./syntaxes/qmldir.tmLanguage.json"
       }
     ],
     "snippets": [
       {
         "language": "qml",
         "path": "./snippets/qml.json"
+      },
+      {
+        "language": "qmldir",
+        "path": "./snippets/qmldir.json"
       }
     ]
   },

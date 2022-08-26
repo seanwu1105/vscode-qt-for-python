@@ -24,7 +24,7 @@
 - [x] Build e2e tests (close #8)
 - [ ] Languages features
   - [x] `qml`
-  - [ ] `qmldir`
+  - [x] `qmldir`
   - [ ] `qss`
   - [ ] `qrc`
   - [ ] `ui`
