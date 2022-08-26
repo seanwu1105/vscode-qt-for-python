@@ -7,9 +7,9 @@ import type { ErrorResult, SuccessResult } from '../../types'
 
 export async function requestQmlLintCommand({
   resource,
-  connection,
+  sendRequest,
 }: RequestArgs) {
-  return connection.sendRequest(QmlLintCommandRequestType, { resource })
+  return sendRequest(QmlLintCommandRequestType, { resource })
 }
 
 export const QmlLintCommandRequestType = new RequestType<
@@ -33,10 +33,10 @@ type QmlLintCommand = {
 
 export async function requestIsEnabled({
   resource,
-  connection,
+  sendRequest,
 }: RequestArgs): Promise<RequestIsEnabledResult> {
   const configSection = `${CONFIGURATION_NAMESPACE}.qmllint.enabled`
-  const response = await connection.sendRequest(ConfigurationRequest.type, {
+  const response = await sendRequest(ConfigurationRequest.type, {
     items: [{ scopeUri: resource, section: configSection }],
   })
   if (response.length === 0)
@@ -54,7 +54,7 @@ export async function requestIsEnabled({
 
 type RequestArgs = {
   readonly resource: DocumentUri
-  readonly connection: Connection
+  readonly sendRequest: Connection['sendRequest']
 }
 
 type RequestIsEnabledResult =

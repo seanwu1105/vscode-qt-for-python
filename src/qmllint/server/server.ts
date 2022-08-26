@@ -37,7 +37,7 @@ export function startServer() {
 async function lintQml({ uri, connection }: LintQmlArgs) {
   const requestIsEnabledResult = await requestIsEnabled({
     resource: uri,
-    connection,
+    sendRequest: connection.sendRequest,
   })
 
   if (requestIsEnabledResult.kind !== 'Success')
@@ -54,7 +54,7 @@ async function lintQml({ uri, connection }: LintQmlArgs) {
 
   const qmlLintCommandResult = await requestQmlLintCommand({
     resource: uri,
-    connection,
+    sendRequest: connection.sendRequest,
   })
 
   const uriToPathResult = uriToPath(uri)
