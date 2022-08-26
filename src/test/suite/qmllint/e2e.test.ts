@@ -1,15 +1,16 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import type { Diagnostic } from 'vscode'
+import type { TextDocument } from 'vscode'
 import { commands, extensions, languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { notNil } from '../../../utils'
+import { sleep, waitFor } from '../../utils'
 
 const E2E_TIMEOUT = 1000000
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 20000 : 1000
 
 suite('qmllint/e2e', () => {
+  let document: TextDocument
+
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
 
@@ -36,33 +37,29 @@ suite('qmllint/e2e', () => {
   })
 
   suite('missing_import.qml', () => {
-    let diagnostics: readonly Diagnostic[]
-
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestFile('missing_import.qml')
-      await sleep()
-      diagnostics = languages.getDiagnostics(document.uri)
+      document = await openAndShowTestFile('missing_import.qml')
     })
 
     test('should contain diagnostics', async () =>
-      assert.ok(diagnostics.length > 0)).timeout(E2E_TIMEOUT)
+      waitFor(() =>
+        assert.ok(languages.getDiagnostics(document.uri).length > 0),
+      )).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 
   suite('pass.qml', () => {
-    let diagnostics: readonly Diagnostic[]
-
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestFile('pass.qml')
-      await sleep()
-      diagnostics = languages.getDiagnostics(document.uri)
+      document = await openAndShowTestFile('pass.qml')
     })
 
     test('should not contain diagnostic', async () =>
-      assert.ok(diagnostics.length === 0)).timeout(E2E_TIMEOUT)
+      waitFor(() =>
+        assert.ok(languages.getDiagnostics(document.uri).length === 0),
+      )).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
@@ -84,8 +81,4 @@ async function openAndShowTestFile(filename: string) {
   )
   await window.showTextDocument(document)
   return document
-}
-
-async function sleep(ms = DEFAULT_SLEEP_TIME) {
-  return new Promise(resolve => setTimeout(resolve, ms))
 }
