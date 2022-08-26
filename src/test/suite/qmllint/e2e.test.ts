@@ -6,7 +6,8 @@ import { URI } from 'vscode-uri'
 import { notNil } from '../../../utils'
 
 const E2E_TIMEOUT = 1000000
-const DEFAULT_SLEEP_TIME = 2000
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 20000 : 500
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {
