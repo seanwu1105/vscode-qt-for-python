@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [2.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.0.0...v2.1.0) (2022-08-26)
+
+
+### Features
+
+* **qrc:** assign qrc file to xml language ([e252249](https://github.com/seanwu1105/vscode-qt-for-python/commit/e2522494e5d1215c72c4a851f23a9b249a49fd48))
+
 ## [2.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v1.3.7...v2.0.0) (2022-08-26)
 
 
