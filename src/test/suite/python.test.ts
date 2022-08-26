@@ -117,6 +117,8 @@ suite('python', () => {
         command = await resolveScriptCommand(args)
       })
 
+      teardown(() => sinon.restore())
+
       test('should get error result', () =>
         assert.deepStrictEqual(command.kind, 'NotFoundError'))
     })

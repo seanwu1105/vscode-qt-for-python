@@ -47,7 +47,7 @@ export async function requestIsEnabled({
   if (typeof response[0] !== 'boolean')
     return {
       kind: 'TypeError',
-      message: `Configuration ${configSection} is not a boolean.`,
+      message: `Configuration ${configSection} is not a boolean: ${response[0]}`,
     }
   return { kind: 'Success', value: response[0] }
 }
