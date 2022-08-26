@@ -76,6 +76,13 @@
           "qmldir"
         ],
         "configuration": "./languages/qmldir.json"
+      },
+      {
+        "id": "xml",
+        "firstLine": "^<\\?xml\\s+.*\\?>\\s*",
+        "extensions": [
+          ".qrc"
+        ]
       }
     ],
     "configuration": {
