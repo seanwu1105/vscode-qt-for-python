@@ -63,7 +63,8 @@
         "aliases": [
           "QML",
           "qml"
-        ]
+        ],
+        "configuration": "./languages/qml.json"
       }
     ],
     "configuration": {
@@ -91,7 +92,20 @@
           "scope": "resource"
         }
       }
-    }
+    },
+    "grammars": [
+      {
+        "language": "qml",
+        "scopeName": "source.qml",
+        "path": "./syntaxes/qml.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "qml",
+        "path": "./snippets/qml.json"
+      }
+    ]
   },
   "homepage": "https://github.com/seanwu1105/vscode-qt-for-python",
   "icon": "assets/images/icon.png",

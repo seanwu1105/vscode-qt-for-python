@@ -21,8 +21,16 @@
 - [x] Ensure we use resource scope
   - [x] Support user-defined tool args
   - [x] Support user-defined tool paths
-- [ ] Build e2e tests (close #8)
-- [ ] Languages highlighting
+- [x] Build e2e tests (close #8)
+- [ ] Languages features
+  - [x] `qml`
+  - [ ] `qmldir`
+  - [ ] `qss`
+  - [ ] `qrc`
+  - [ ] `ui`
+  - [ ] ~~`qt.ts`~~
+  - [ ] ~~`pro.user`~~
+  - [ ] ~~qmake `pro`~~
 - [ ] Simple tools integration
 - [ ] Continuous compilation
 
