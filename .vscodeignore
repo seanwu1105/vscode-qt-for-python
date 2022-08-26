@@ -137,7 +137,7 @@ web_modules/
 
 # Next.js build output
 .next
-out
+# out # This should be included on releasing.
 
 # Nuxt.js build / generate output
 .nuxt
@@ -404,7 +404,7 @@ compile_commands.json
 *_qmlcache.qrc
 
 ### VisualStudioCode ###
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -457,5 +457,5 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,node,python,qt
 
 # Python Scripts
-python/*
+python
 !python/scripts/
