@@ -6,19 +6,23 @@ import { URI } from 'vscode-uri'
 import { notNil } from '../../../utils'
 
 const E2E_TIMEOUT = 1000000
+const DEFAULT_SLEEP_TIME = 2000
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
 
-    await removeAllWorkspaceFolders()
+    await sleep() // wait for extension to load Extension Gallery
 
     await commands.executeCommand(
       'workbench.extensions.installExtension',
       'ms-python.python',
     )
 
-    await openTestWorkspace()
+    await commands.executeCommand(
+      'vscode.openFolder',
+      URI.file(path.resolve(__dirname, '..', '..', '..', '..', 'python')),
+    )
   })
 
   setup(async function () {
@@ -28,17 +32,6 @@ suite('qmllint/e2e', () => {
     assert.ok(notNil(extension))
 
     await extension.activate()
-  })
-
-  suiteTeardown(async function () {
-    this.timeout(E2E_TIMEOUT)
-
-    await commands.executeCommand(
-      'workbench.extensions.uninstallExtension',
-      'ms-python.python',
-    )
-
-    await sleep()
   })
 
   suite('missing_import.qml', () => {
@@ -72,16 +65,6 @@ suite('qmllint/e2e', () => {
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-async function openTestWorkspace() {
-  const result = workspace.updateWorkspaceFolders(0, 0, {
-    uri: URI.file(path.resolve(__dirname, '..', '..', '..', '..', 'python')),
-  })
-
-  await sleep()
-
-  return result
-}
-
 async function openAndShowTestFile(filename: string) {
   const document = await workspace.openTextDocument(
     URI.file(
@@ -102,17 +85,6 @@ async function openAndShowTestFile(filename: string) {
   return document
 }
 
-async function removeAllWorkspaceFolders() {
-  const result = workspace.updateWorkspaceFolders(
-    0,
-    workspace.workspaceFolders ? workspace.workspaceFolders.length : 0,
-  )
-
-  await sleep()
-
-  return result
-}
-
-async function sleep(ms = 2000) {
+async function sleep(ms = DEFAULT_SLEEP_TIME) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
