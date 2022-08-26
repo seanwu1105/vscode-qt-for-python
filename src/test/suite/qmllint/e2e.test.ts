@@ -7,7 +7,7 @@ import { notNil } from '../../../utils'
 
 const E2E_TIMEOUT = 1000000
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 20000 : 500
+const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 20000 : 1000
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {
