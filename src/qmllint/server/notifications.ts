@@ -1,7 +1,7 @@
 import type { Connection } from 'vscode-languageserver'
 import { NotificationType } from 'vscode-languageserver'
-import type { ErrorResult } from '../../result-types'
 import type { ExecError, StdErrError } from '../../run'
+import type { ErrorResult } from '../../types'
 
 export type QmlLintNotification =
   | ErrorResult<'Parse'>

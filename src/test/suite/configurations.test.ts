@@ -3,8 +3,8 @@ import * as os from 'node:os'
 import * as path from 'node:path'
 import * as sinon from 'sinon'
 import { workspace } from 'vscode'
-import { getOptionsFromConfig, getPathFromConfig } from '../configurations'
-import { MOCK_CONFIGURATION } from './mocks/extension'
+import { getOptionsFromConfig, getPathFromConfig } from '../../configurations'
+import { MOCK_CONFIGURATION } from '../mocks/extension'
 
 suite('configurations', () => {
   suite('getPathFromConfig', () => {

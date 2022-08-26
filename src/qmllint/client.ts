@@ -9,7 +9,7 @@ import type {
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node'
 import { getOptionsFromConfig, getPathFromConfig } from '../configurations'
 import { resolveScriptCommand } from '../python'
-import type { ErrorResult, SuccessResult } from '../result-types'
+import type { ErrorResult, SuccessResult } from '../types'
 import type { QmlLintNotification } from './server/notifications'
 import { QmlLintNotificationType } from './server/notifications'
 import type { QmlLintCommandResponse } from './server/requests'

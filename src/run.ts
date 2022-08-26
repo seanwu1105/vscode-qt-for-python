@@ -1,6 +1,8 @@
+// Should NOT depend on vscode
+
 import type { ExecException } from 'node:child_process'
 import { exec } from 'node:child_process'
-import type { SuccessResult } from './result-types'
+import type { SuccessResult } from './types'
 import { notNil } from './utils'
 
 export async function run({ command }: RunArgs): Promise<RunResult> {

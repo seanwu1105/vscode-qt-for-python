@@ -1,7 +1,7 @@
 import type { Diagnostic } from 'vscode-languageserver/node'
 import { DiagnosticSeverity } from 'vscode-languageserver/node'
 import { URI } from 'vscode-uri'
-import type { ErrorResult, SuccessResult } from '../../result-types'
+import type { ErrorResult, SuccessResult } from '../../types'
 import { notNil } from '../../utils'
 import type { QmlLintWarning } from './lint'
 

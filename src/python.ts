@@ -3,9 +3,8 @@ import type { Uri } from 'vscode'
 import { extensions, workspace } from 'vscode'
 import type { DocumentUri } from 'vscode-languageclient'
 import { URI } from 'vscode-uri'
-import type { SupportedTool } from './configurations'
-import type { ErrorResult, SuccessResult } from './result-types'
 import type { CommandArgs } from './run'
+import type { ErrorResult, SuccessResult, SupportedTool } from './types'
 import { notNil } from './utils'
 
 export async function resolveScriptCommand({

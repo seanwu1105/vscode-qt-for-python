@@ -1,9 +1,9 @@
 import type { Connection } from 'vscode-languageserver'
 import { ConfigurationRequest, RequestType } from 'vscode-languageserver'
 import type { DocumentUri } from 'vscode-languageserver-textdocument'
-import { CONFIGURATION_NAMESPACE } from '../../configurations'
-import type { ErrorResult, SuccessResult } from '../../result-types'
+import { CONFIGURATION_NAMESPACE } from '../../constants'
 import type { CommandArgs } from '../../run'
+import type { ErrorResult, SuccessResult } from '../../types'
 
 export async function requestQmlLintCommand({
   resource,

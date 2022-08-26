@@ -1,7 +1,9 @@
 import { workspace } from 'vscode'
 import type { DocumentUri } from 'vscode-languageclient'
 import { URI } from 'vscode-uri'
+import { CONFIGURATION_NAMESPACE } from './constants'
 import { resolvePredefinedVariables } from './predefined-variable-resolver'
+import type { SupportedTool } from './types'
 
 export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
   return resolvePredefinedVariables(
@@ -29,6 +31,3 @@ type GetPathFromConfig = {
   readonly tool: SupportedTool
   readonly resource: DocumentUri
 }
-
-export const CONFIGURATION_NAMESPACE = 'qtForPython'
-export type SupportedTool = 'qmllint'
