@@ -138,7 +138,7 @@ def invoke_qmllint_py(args: list[str]):
 
 
 def get_assets_path(filename: str):
-    return os.path.join(ASSETS_DIR, filename)
+    return os.path.join(ASSETS_DIR, "qml", filename)
 
 
 def parse_json(string: str):

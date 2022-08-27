@@ -32,13 +32,18 @@
   - [ ] ~~`pro.user`~~
   - [ ] ~~qmake `pro`~~
 - [ ] Simple tools integration
-  - [ ] rcc
-  - [ ] uic
-  - [ ] ~~lupdate~~
-  - [ ] designer
+  - [ ] pyside6-rcc
+  - [ ] pyside6-uic
+  - [ ] pyside6-designer
+  - [ ] pyside6-project
+  - [ ] i18n tools (optional)
 - [ ] Continuous compilation
-  - [ ] rcc
   - [ ] uic
+  - [ ] rcc (optional)
+  - [ ] i18n tools (optional)
+- [ ] Support PyQt6
+- [ ] Support PySide2
+- [ ] Support PyQt5
 
 [![build](https://github.com/seanwu1105/vscode-qt-for-python/workflows/build/badge.svg)](https://github.com/seanwu1105/vscode-qt-for-python/actions?query=workflow:build)
 [![version](https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)

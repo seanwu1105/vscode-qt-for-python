@@ -77,6 +77,7 @@ async function openAndShowTestFile(filename: string) {
         'python',
         'tests',
         'assets',
+        'qml',
         filename,
       ),
     ),
