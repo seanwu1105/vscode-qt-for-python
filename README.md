@@ -32,15 +32,15 @@
   - [ ] ~~`pro.user`~~
   - [ ] ~~qmake `pro`~~
 - [ ] Simple tools integration
-  - [ ] pyside6-rcc
+  - [x] pyside6-rcc
   - [ ] pyside6-uic
   - [ ] pyside6-designer
   - [ ] pyside6-project
-  - [ ] i18n tools (optional)
+  - [ ] ~~i18n tools~~
 - [ ] Continuous compilation
   - [ ] uic
-  - [ ] rcc (optional)
-  - [ ] i18n tools (optional)
+  - [ ] ~~rcc~~
+  - [ ] ~~i18n tools~~
 - [ ] Support PyQt6
 - [ ] Support PySide2
 - [ ] Support PyQt5

@@ -2,7 +2,7 @@ import type { Connection } from 'vscode-languageserver'
 import { ConfigurationRequest, RequestType } from 'vscode-languageserver'
 import type { DocumentUri } from 'vscode-languageserver-textdocument'
 import { EXTENSION_NAMESPACE } from '../../constants'
-import type { CommandArgs } from '../../run'
+import type { ToolCommand } from '../../tool-utils'
 import type { ErrorResult, SuccessResult } from '../../types'
 
 export async function requestQmlLintCommand({
@@ -23,13 +23,8 @@ type QmlLintCommandRequest = {
 }
 
 export type QmlLintCommandResponse =
-  | SuccessResult<QmlLintCommand>
+  | SuccessResult<ToolCommand>
   | ErrorResult<'NotFound'>
-
-type QmlLintCommand = {
-  readonly command: CommandArgs
-  readonly options: CommandArgs
-}
 
 export async function requestIsEnabled({
   resource,

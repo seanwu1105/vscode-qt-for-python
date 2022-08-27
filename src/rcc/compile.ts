@@ -1,8 +1,8 @@
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
-import { resolveScriptCommand } from '../python'
 import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
+import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileResource(
@@ -15,16 +15,21 @@ export async function compileResource(
 
   const qrcFile = targetDocumentUriResult.value
 
-  const resolveScriptCommandResult = await resolveScriptCommand({
+  const getToolCommandResult = await getToolCommand({
     tool: 'rcc',
     extensionPath,
     resource: qrcFile.toString(),
   })
 
-  if (resolveScriptCommandResult.kind === 'NotFoundError')
-    return resolveScriptCommandResult
+  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
 
-  return run({ command: [...resolveScriptCommandResult.value, qrcFile.fsPath] })
+  return run({
+    command: [
+      ...getToolCommandResult.value.command,
+      ...getToolCommandResult.value.options,
+      qrcFile.fsPath,
+    ],
+  })
 }
 
 type CompileResourceResult =

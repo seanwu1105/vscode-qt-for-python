@@ -2,17 +2,14 @@ import * as path from 'node:path'
 import type { ExtensionContext } from 'vscode'
 import type {
   Disposable,
-  DocumentUri,
   LanguageClientOptions,
   ServerOptions,
 } from 'vscode-languageclient/node'
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node'
-import { getOptionsFromConfig, getPathFromConfig } from '../configurations'
-import { resolveScriptCommand } from '../python'
+import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 import type { QmlLintNotification } from './server/notifications'
 import { QmlLintNotificationType } from './server/notifications'
-import type { QmlLintCommandResponse } from './server/requests'
 import { QmlLintCommandRequestType } from './server/requests'
 
 export async function startClient({
@@ -45,7 +42,7 @@ export async function startClient({
     client,
     client.onNotification(QmlLintNotificationType, onNotification),
     client.onRequest(QmlLintCommandRequestType, async ({ resource }) =>
-      resolveQmlLintCommand({ extensionPath, resource }),
+      getToolCommand({ tool: 'qmllint', extensionPath, resource }),
     ),
   ]
 
@@ -68,46 +65,6 @@ type StartClientArgs = Pick<
 type StartClientResult =
   | (SuccessResult<LanguageClient> & Disposable)
   | ErrorResult<'NotFound'>
-
-async function resolveQmlLintCommand({
-  extensionPath,
-  resource,
-}: ResolveQmlLintCommandArgs): Promise<QmlLintCommandResponse> {
-  const qmlLintOptions = getOptionsFromConfig({ tool: 'qmllint', resource })
-
-  const qmlLintPath = getPathFromConfig({ tool: 'qmllint', resource })
-
-  if (qmlLintPath.length !== 0)
-    return {
-      kind: 'Success',
-      value: {
-        command: [qmlLintPath],
-        options: qmlLintOptions,
-      },
-    }
-
-  const resolveScriptCommandResult = await resolveScriptCommand({
-    tool: 'qmllint',
-    extensionPath,
-    resource,
-  })
-
-  if (resolveScriptCommandResult.kind === 'NotFoundError')
-    return resolveScriptCommandResult
-
-  return {
-    kind: 'Success',
-    value: {
-      command: resolveScriptCommandResult.value,
-      options: qmlLintOptions,
-    },
-  }
-}
-
-type ResolveQmlLintCommandArgs = {
-  readonly extensionPath: string
-  readonly resource: DocumentUri
-}
 
 export async function stopClient(client: LanguageClient) {
   return client.stop()
