@@ -7,6 +7,7 @@ import { notNil } from '../../../utils'
 import { sleep } from '../../utils'
 
 const E2E_TIMEOUT = 1000000
+const SERVER_RESPONSE_SLEEP_TIME = 60000
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {
@@ -41,7 +42,7 @@ suite('qmllint/e2e', () => {
       this.timeout(E2E_TIMEOUT)
 
       const document = await openAndShowTestFile('missing_import.qml')
-      await sleep()
+      await sleep(SERVER_RESPONSE_SLEEP_TIME)
       diagnostics = languages.getDiagnostics(document.uri)
     })
 
@@ -56,7 +57,7 @@ suite('qmllint/e2e', () => {
       this.timeout(E2E_TIMEOUT)
 
       const document = await openAndShowTestFile('pass.qml')
-      await sleep()
+      await sleep(SERVER_RESPONSE_SLEEP_TIME)
       diagnostics = languages.getDiagnostics(document.uri)
     })
 
