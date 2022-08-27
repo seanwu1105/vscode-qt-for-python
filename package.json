@@ -51,7 +51,8 @@
     "ms-python.python"
   ],
   "activationEvents": [
-    "onLanguage:qml"
+    "onLanguage:qml",
+    "onCommand:qtForPython.compileResource"
   ],
   "contributes": {
     "languages": [
@@ -85,6 +86,43 @@
         ]
       }
     ],
+    "commands": [
+      {
+        "command": "qtForPython.compileResource",
+        "title": "Compile Resource File",
+        "category": "Qt for Python"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "qtForPython.compileResource",
+          "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        }
+      ]
+    },
     "configuration": {
       "title": "Qt for Python",
       "properties": {

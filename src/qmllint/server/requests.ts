@@ -1,7 +1,7 @@
 import type { Connection } from 'vscode-languageserver'
 import { ConfigurationRequest, RequestType } from 'vscode-languageserver'
 import type { DocumentUri } from 'vscode-languageserver-textdocument'
-import { CONFIGURATION_NAMESPACE } from '../../constants'
+import { EXTENSION_NAMESPACE } from '../../constants'
 import type { CommandArgs } from '../../run'
 import type { ErrorResult, SuccessResult } from '../../types'
 
@@ -35,7 +35,7 @@ export async function requestIsEnabled({
   resource,
   sendRequest,
 }: RequestArgs): Promise<RequestIsEnabledResult> {
-  const configSection = `${CONFIGURATION_NAMESPACE}.qmllint.enabled`
+  const configSection = `${EXTENSION_NAMESPACE}.qmllint.enabled`
   const response = await sendRequest(ConfigurationRequest.type, {
     items: [{ scopeUri: resource, section: configSection }],
   })
