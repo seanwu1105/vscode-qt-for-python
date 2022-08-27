@@ -27,8 +27,7 @@ function registerCommands(context: ExtensionContext) {
         `${EXTENSION_NAMESPACE}.${command.name}`,
         async (...args) => {
           try {
-            const result = await command.callback(context, ...args)
-            return onResultReceived(result)
+            return onResultReceived(await command.callback(context, ...args))
           } catch (e) {
             return onResultReceived({
               kind: 'UnexpectedError',

@@ -110,12 +110,12 @@ type LintQmlArgs = {
   readonly connection: Connection
 }
 
-function withErrorHandler<R>(
-  f: () => R,
+async function withErrorHandler<R>(
+  f: () => Promise<R>,
   connection: Connection,
-): R | Promise<void> {
+): Promise<R | Promise<void>> {
   try {
-    return f()
+    return await f()
   } catch (e) {
     return sendQmlLintNotification({
       notification: {

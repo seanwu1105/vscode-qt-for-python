@@ -4,6 +4,7 @@ import type { DocumentUri } from 'vscode-languageserver-textdocument'
 import { EXTENSION_NAMESPACE } from '../../constants'
 import type { ToolCommand } from '../../tool-utils'
 import type { ErrorResult, SuccessResult } from '../../types'
+import { isNil } from '../../utils'
 
 export async function requestQmlLintCommand({
   resource,
@@ -34,7 +35,7 @@ export async function requestIsEnabled({
   const response = await sendRequest(ConfigurationRequest.type, {
     items: [{ scopeUri: resource, section: configSection }],
   })
-  if (response.length === 0)
+  if (isNil(response) || response.length === 0)
     return {
       kind: 'NotFoundError',
       message: `Cannot find configuration: ${configSection}`,

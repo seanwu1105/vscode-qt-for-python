@@ -1,39 +1,19 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
 import type { Diagnostic } from 'vscode'
-import { commands, extensions, languages, window, workspace } from 'vscode'
+import { languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
-import { notNil } from '../../../utils'
-import { sleep } from '../../utils'
-
-const E2E_TIMEOUT = 1000000
+import {
+  E2E_TIMEOUT,
+  setupE2EEnvironment,
+  sleep,
+  TEST_ASSETS_PATH,
+} from '../utils'
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
-
-    await sleep() // wait for extension to load Extension Gallery
-
-    await commands.executeCommand(
-      'workbench.extensions.installExtension',
-      'ms-python.python',
-    )
-
-    await sleep() // wait for extension to get registered
-
-    const extension = extensions.getExtension('ms-python.python')
-    assert.ok(notNil(extension))
-
-    await extension.activate()
-  })
-
-  setup(async function () {
-    this.timeout(E2E_TIMEOUT)
-
-    const extension = extensions.getExtension('seanwu.vscode-qt-for-python')
-    assert.ok(notNil(extension))
-
-    await extension.activate()
+    await setupE2EEnvironment()
   })
 
   suite('missing_import.qml', () => {
@@ -42,7 +22,7 @@ suite('qmllint/e2e', () => {
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestFile('missing_import.qml')
+      const document = await openAndShowTestQmlFile('missing_import.qml')
       await sleep()
       diagnostics = languages.getDiagnostics(document.uri)
     })
@@ -57,7 +37,7 @@ suite('qmllint/e2e', () => {
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestFile('pass.qml')
+      const document = await openAndShowTestQmlFile('pass.qml')
       await sleep()
       diagnostics = languages.getDiagnostics(document.uri)
     })
@@ -67,11 +47,9 @@ suite('qmllint/e2e', () => {
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-async function openAndShowTestFile(filename: string) {
+async function openAndShowTestQmlFile(filename: string) {
   const document = await workspace.openTextDocument(
-    URI.file(
-      path.resolve(__dirname, '../../../../python/tests/assets/qml', filename),
-    ),
+    URI.file(path.resolve(TEST_ASSETS_PATH, 'qml', filename)),
   )
   await window.showTextDocument(document)
   return document

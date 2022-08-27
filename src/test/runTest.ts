@@ -12,12 +12,11 @@ async function main() {
     // Passed to --extensionTestsPath
     const extensionTestsPath = path.resolve(__dirname, './suite/index')
 
-    const testWorkspace = path.resolve(__dirname, '../../python')
     // Download VS Code, unzip it and run the integration test
     await runTests({
       extensionDevelopmentPath,
       extensionTestsPath,
-      launchArgs: [testWorkspace],
+      launchArgs: [path.resolve(__dirname, '../../python')],
     })
   } catch (err) {
     // eslint-disable-next-line no-console
