@@ -19,11 +19,12 @@ suite('qmllint/e2e', () => {
       'ms-python.python',
     )
 
-    // TODO: Open the folder at the start
-    await commands.executeCommand(
-      'vscode.openFolder',
-      URI.file(path.resolve(__dirname, '..', '..', '..', '..', 'python')),
-    )
+    await sleep() // wait for extension to get registered
+
+    const extension = extensions.getExtension('ms-python.python')
+    assert.ok(notNil(extension))
+
+    await extension.activate()
   })
 
   setup(async function () {
@@ -69,18 +70,7 @@ suite('qmllint/e2e', () => {
 async function openAndShowTestFile(filename: string) {
   const document = await workspace.openTextDocument(
     URI.file(
-      path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        '..',
-        'python',
-        'tests',
-        'assets',
-        'qml',
-        filename,
-      ),
+      path.resolve(__dirname, '../../../../python/tests/assets/qml', filename),
     ),
   )
   await window.showTextDocument(document)
