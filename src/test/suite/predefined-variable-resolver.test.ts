@@ -1,158 +1,167 @@
-// TODO: e2e test
-
 import * as assert from 'node:assert'
 import * as os from 'node:os'
 import * as path from 'node:path'
-import * as sinon from 'sinon'
-import type { TextEditor, WorkspaceFolder } from 'vscode'
-import { env, window, workspace } from 'vscode'
+import type { TextDocument, TextEditor } from 'vscode'
+import { env, Selection, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { resolvePredefinedVariables } from '../../predefined-variable-resolver'
+import { notNil } from '../../utils'
+import {
+  E2E_TIMEOUT,
+  setupE2EEnvironment,
+  TEST_ASSETS_PATH,
+  TEST_WORKSPACE_PATH,
+} from './utils'
 
 suite('predefined variable resolver', () => {
-  setup(() => {
-    sinon.replaceGetter(env, 'appRoot', () => MOCK_APP_ROOT)
+  const testFilePath = path.resolve(
+    TEST_ASSETS_PATH,
+    'predefined-variable-resolver-test.txt',
+  )
 
-    sinon.replaceGetter(
-      window,
-      'activeTextEditor',
-      () =>
-        ({
-          document: {
-            uri: URI.file(MOCK_FILE_PATH),
-            getText: () => MOCK_SELECTED_TEXT,
-          },
-          selection: { active: { line: MOCK_SELECTED_LINE } },
-        } as TextEditor),
-    )
+  let document: TextDocument
 
-    sinon.replace(
-      workspace,
-      'getWorkspaceFolder',
-      () =>
-        ({
-          uri: URI.file(MOCK_WORKSPACE_FOLDER_PATH),
-        } as WorkspaceFolder),
-    )
+  suiteSetup(async function () {
+    this.timeout(E2E_TIMEOUT)
+    await setupE2EEnvironment()
   })
 
-  teardown(() => sinon.restore())
+  setup(async function () {
+    this.timeout(E2E_TIMEOUT)
+
+    document = await workspace.openTextDocument(URI.file(testFilePath))
+    await window.showTextDocument(document)
+  })
+
+  test('should replace all', () =>
+    test('userHome', () =>
+      assert.deepStrictEqual(
+        resolvePredefinedVariables('${userHome} ${userHome}'),
+        `${os.homedir()} ${os.homedir()}`,
+      )))
 
   test('userHome', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${userHome} ${userHome}'),
-      `${os.homedir()} ${os.homedir()}`,
+      resolvePredefinedVariables('${userHome}'),
+      os.homedir(),
     ))
 
   test('workspaceFolder', () =>
     assert.deepStrictEqual(
       resolvePredefinedVariables('${workspaceFolder}'),
-      `${MOCK_WORKSPACE_FOLDER_PATH}`,
+      TEST_WORKSPACE_PATH,
     ))
 
   test('workspaceFolderBasename', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables(
-        '${workspaceFolderBasename} ${workspaceFolderBasename}',
-      ),
-      `your-project your-project`,
+      resolvePredefinedVariables('${workspaceFolderBasename}'),
+      `${path.basename(TEST_WORKSPACE_PATH)}`,
     ))
 
   test('file', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${file}'),
-      `${MOCK_FILE_PATH}`,
-    ))
+    assert.deepStrictEqual(resolvePredefinedVariables('${file}'), testFilePath))
 
   test('fileWorkspaceFolder', () =>
     assert.deepStrictEqual(
       resolvePredefinedVariables('${fileWorkspaceFolder}'),
-      `${MOCK_WORKSPACE_FOLDER_PATH}`,
+      TEST_WORKSPACE_PATH,
     ))
 
   test('relativeFile', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${relativeFile} ${relativeFile}'),
-      `${path.normalize('folder/file.ext')} ${path.normalize(
-        'folder/file.ext',
-      )}`,
+      resolvePredefinedVariables('${relativeFile}'),
+      path.relative(TEST_WORKSPACE_PATH, testFilePath),
     ))
 
   test('relativeFileDirname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables(
-        '${relativeFileDirname} ${relativeFileDirname}',
-      ),
-      `folder folder`,
+      resolvePredefinedVariables('${relativeFileDirname}'),
+      path.dirname(path.relative(TEST_WORKSPACE_PATH, testFilePath)),
     ))
 
   test('fileBasename', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileBasename} ${fileBasename}'),
-      `file.ext file.ext`,
+      resolvePredefinedVariables('${fileBasename}'),
+      path.basename(testFilePath),
     ))
 
   test('fileBasenameNoExtension', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables(
-        '${fileBasenameNoExtension} ${fileBasenameNoExtension}',
-      ),
-      `file file`,
+      resolvePredefinedVariables('${fileBasenameNoExtension}'),
+      path.parse(testFilePath).name,
     ))
 
   test('fileDirname', () =>
     assert.deepStrictEqual(
       resolvePredefinedVariables('${fileDirname}'),
-      `${path.normalize('/home/your-username/your-project/folder')}`,
+      path.dirname(testFilePath),
     ))
 
   test('fileExtname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileExtname} ${fileExtname}'),
-      `.ext .ext`,
+      resolvePredefinedVariables('${fileExtname}'),
+      path.parse(testFilePath).ext,
     ))
 
-  test('lineNumber', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${lineNumber} ${lineNumber}'),
-      `${MOCK_SELECTED_LINE + 1} ${MOCK_SELECTED_LINE + 1}`,
-    ))
+  suite('lineNumber', () => {
+    let editor: TextEditor
 
-  test('selectedText', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${selectedText} ${selectedText}'),
-      `${MOCK_SELECTED_TEXT} ${MOCK_SELECTED_TEXT}`,
-    ))
+    setup(() => {
+      assert.ok(notNil(window.activeTextEditor))
+      editor = window.activeTextEditor
+    })
+
+    test('should get cursor line number', () => {
+      const expectedLineNumber = 3
+
+      editor.selection = new Selection(
+        expectedLineNumber - 1,
+        0,
+        expectedLineNumber - 1,
+        0,
+      )
+
+      assert.deepStrictEqual(
+        resolvePredefinedVariables('${lineNumber}'),
+        `${expectedLineNumber}`,
+      )
+    }).timeout(E2E_TIMEOUT)
+  }).timeout(E2E_TIMEOUT)
+
+  suite('selectedText', () => {
+    let editor: TextEditor
+
+    setup(() => {
+      assert.ok(notNil(window.activeTextEditor))
+      editor = window.activeTextEditor
+    })
+
+    test('should get selected text', () => {
+      const endCharacter = 11
+      editor.selection = new Selection(1, 0, 1, endCharacter)
+
+      assert.deepStrictEqual(
+        resolvePredefinedVariables('${selectedText}'),
+        `second line`,
+      )
+    })
+  })
 
   test('execPath', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${execPath} ${execPath}'),
-      `${MOCK_APP_ROOT} ${MOCK_APP_ROOT}`,
+      resolvePredefinedVariables('${execPath}'),
+      env.appRoot,
     ))
 
   test('pathSeparator', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${pathSeparator} ${pathSeparator}'),
-      `${path.sep} ${path.sep}`,
+      resolvePredefinedVariables('${pathSeparator}'),
+      path.sep,
     ))
 
   test('env:HOME', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${env:HOME} ${env:HOME}'),
-      `${process.env['HOME']} ${process.env['HOME']}`,
+      resolvePredefinedVariables('${env:HOME}'),
+      process.env['HOME'],
     ))
 })
-
-const MOCK_APP_ROOT = path.join('mock', 'app', 'root')
-
-const MOCK_FILE_PATH = path.normalize(
-  '/home/your-username/your-project/folder/file.ext',
-)
-
-const MOCK_SELECTED_LINE = 9
-
-const MOCK_SELECTED_TEXT = 'selected text'
-
-const MOCK_WORKSPACE_FOLDER_PATH = path.normalize(
-  '/home/your-username/your-project',
-)

@@ -8,7 +8,7 @@ const { name, publisher } = require('../../../package.json')
 
 export const E2E_TIMEOUT = 1000000
 
-const TEST_WORKSPACE_PATH = path.resolve(__dirname, '../../../python')
+export const TEST_WORKSPACE_PATH = path.resolve(__dirname, '../../../python')
 
 export const TEST_ASSETS_PATH = path.resolve(
   TEST_WORKSPACE_PATH,
