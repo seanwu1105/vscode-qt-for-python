@@ -85,14 +85,19 @@ function onResultReceived(
     case 'TypeError':
     case 'NotFoundError':
     case 'UnexpectedError':
-      return window.showErrorMessage(result.message)
+      return showError(result.message)
     case 'ExecError':
-      return window.showErrorMessage(
+      return showError(
         `${result.stderr}\n${result.stdout}\n${result.error.message ?? ''}`,
       )
     case 'StdErrError':
-      return window.showErrorMessage(`${result.stderr}\n${result.stdout}`)
+      return showError(`${result.stderr}\n${result.stdout}`)
   }
+}
+
+async function showError(message: string) {
+  outputChannel.appendLine(message)
+  return window.showErrorMessage(message)
 }
 
 export async function deactivate() {

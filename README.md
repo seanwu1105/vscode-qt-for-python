@@ -31,11 +31,11 @@
   - [ ] ~~`qt.ts`~~
   - [ ] ~~`pro.user`~~
   - [ ] ~~qmake `pro`~~
-- [ ] Simple tools integration
+- [x] Simple tools integration
   - [x] pyside6-rcc
   - [x] pyside6-uic
   - [x] pyside6-designer
-  - [ ] pyside6-project
+  - [ ] ~~pyside6-project~~ (see https://bugreports.qt.io/browse/PYSIDE-2045)
   - [ ] ~~i18n tools~~
 - [ ] Continuous compilation
   - [ ] uic
