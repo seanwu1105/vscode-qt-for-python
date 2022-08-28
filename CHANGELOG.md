@@ -6,6 +6,15 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [2.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.2.0...v2.3.0) (2022-08-28)
+
+
+### Features
+
+* **qss:** support QSS syntax highlighting ([7999e44](https://github.com/seanwu1105/vscode-qt-for-python/commit/7999e4446783066a9903246a43c56bad0f3a45de))
+* support PyQt6, PySide2 and PyQt5 ([5d41b39](https://github.com/seanwu1105/vscode-qt-for-python/commit/5d41b390692114fa641bcf246bf18fe177741744))
+* **uic:** add live execution support ([a757644](https://github.com/seanwu1105/vscode-qt-for-python/commit/a7576443e72d2761f292715d50bb08139e02f86b))
+
 ## [2.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.1.0...v2.2.0) (2022-08-28)
 
 
