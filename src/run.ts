@@ -5,10 +5,11 @@ import { exec } from 'node:child_process'
 import type { SuccessResult } from './types'
 import { notNil } from './utils'
 
-export async function run({ command }: RunArgs): Promise<RunResult> {
+export async function run({ command, cwd }: RunArgs): Promise<RunResult> {
   return new Promise<RunResult>(resolve => {
     exec(
       command.map(s => (s.includes(' ') ? `"${s}"` : s)).join(' '),
+      { cwd },
       (error, stdout, stderr) => {
         if (notNil(error)) resolve({ kind: 'ExecError', error, stdout, stderr })
         if (stderr.length !== 0)
@@ -19,7 +20,7 @@ export async function run({ command }: RunArgs): Promise<RunResult> {
   })
 }
 
-type RunArgs = { readonly command: CommandArgs }
+type RunArgs = { readonly command: CommandArgs; readonly cwd?: string }
 
 export type CommandArgs = readonly string[]
 

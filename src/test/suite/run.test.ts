@@ -20,13 +20,7 @@ suite('run', () => {
       setup(async () => {
         const filePath = path.resolve(
           __dirname,
-          '..',
-          '..',
-          '..',
-          'src',
-          'test',
-          'assets',
-          'filename with spaces.txt',
+          '../../../src/test/assets/filename with spaces.txt',
         )
 
         if (process.platform === 'win32')

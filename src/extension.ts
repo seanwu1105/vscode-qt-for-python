@@ -72,7 +72,8 @@ function onResultReceived(
     | ErrorResult<'Unexpected'>
     | ErrorResult<'NotFound'>
     | ErrorResult<'Type'>
-    | ErrorResult<'Parse'>,
+    | ErrorResult<'Parse'>
+    | ErrorResult<'IO'>,
 ) {
   const indent = 2
   switch (result.kind) {

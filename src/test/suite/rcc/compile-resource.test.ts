@@ -6,7 +6,7 @@ import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../../../constants'
 import { E2E_TIMEOUT, setupE2EEnvironment, TEST_ASSETS_PATH } from '../utils'
 
-suite('rcc/e2e', () => {
+suite('compile-resource/e2e', () => {
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
     await setupE2EEnvironment()

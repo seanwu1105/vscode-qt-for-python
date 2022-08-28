@@ -1,9 +1,11 @@
 import type { ExtensionContext, Uri } from 'vscode'
 import { window } from 'vscode'
 import { URI } from 'vscode-uri'
-import { compileResource } from './rcc/compile'
+import { createUi } from './designer/create-ui'
+import { editUi } from './designer/edit-ui'
+import { compileResource } from './rcc/compile-resource'
 import type { ErrorResult, SuccessResult } from './types'
-import { compileUi } from './uic/compile'
+import { compileUi } from './uic/compile-ui'
 import { isNil } from './utils'
 
 export const COMMANDS = [
@@ -14,6 +16,14 @@ export const COMMANDS = [
   {
     name: 'compileUi',
     callback: compileUi,
+  },
+  {
+    name: 'createUi',
+    callback: createUi,
+  },
+  {
+    name: 'editUi',
+    callback: editUi,
   },
 ] as const
 

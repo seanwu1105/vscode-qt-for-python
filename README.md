@@ -27,14 +27,14 @@
   - [x] `qmldir`
   - [ ] `qss`
   - [x] `qrc`
-  - [ ] `ui`
+  - [x] `ui`
   - [ ] ~~`qt.ts`~~
   - [ ] ~~`pro.user`~~
   - [ ] ~~qmake `pro`~~
 - [ ] Simple tools integration
   - [x] pyside6-rcc
   - [x] pyside6-uic
-  - [ ] pyside6-designer
+  - [x] pyside6-designer
   - [ ] pyside6-project
   - [ ] ~~i18n tools~~
 - [ ] Continuous compilation

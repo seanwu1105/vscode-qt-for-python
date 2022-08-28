@@ -53,7 +53,9 @@
   "activationEvents": [
     "onLanguage:qml",
     "onCommand:qtForPython.compileResource",
-    "onCommand:qtForPython.compileUi"
+    "onCommand:qtForPython.compileUi",
+    "onCommand:qtForPython.createUi",
+    "onCommand:qtForPython.editUi"
   ],
   "contributes": {
     "languages": [
@@ -98,6 +100,16 @@
         "command": "qtForPython.compileUi",
         "title": "Compile Qt UI File",
         "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.createUi",
+        "title": "Create Qt UI File",
+        "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.editUi",
+        "title": "Edit Qt UI File",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -109,6 +121,16 @@
         },
         {
           "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.createUi",
+          "when": "explorerResourceIsFolder == true",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
         }
@@ -123,6 +145,16 @@
           "command": "qtForPython.compileUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.createUi",
+          "when": "explorerResourceIsFolder == true",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/title": [
@@ -133,6 +165,16 @@
         },
         {
           "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.createUi",
+          "when": "explorerResourceIsFolder == true",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
         }
@@ -147,6 +189,16 @@
           "command": "qtForPython.compileUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.createUi",
+          "when": "explorerResourceIsFolder == true",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ]
     },
@@ -156,13 +208,13 @@
         "qtForPython.qmllint.enabled": {
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Enable the qmllint integration.",
+          "markdownDescription": "Enable the Qt `qmllint` integration.",
           "scope": "resource"
         },
         "qtForPython.qmllint.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `qmllint` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The path to Qt `qmllint` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.qmllint.options": {
@@ -171,13 +223,13 @@
             "type": "string"
           },
           "default": [],
-          "markdownDescription": "The options passed to `qmllint` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The options passed to Qt `qmllint` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.rcc.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `rcc` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The path to Qt `rcc` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.rcc.options": {
@@ -189,13 +241,13 @@
             "-o",
             "${resourceDirname}${pathSeparator}rc_${resourceBasenameNoExtension}.py"
           ],
-          "markdownDescription": "The options passed to `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The options passed to Qt `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.uic.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `uic` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The path to Qt `uic` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.uic.options": {
@@ -207,7 +259,22 @@
             "-o",
             "${resourceDirname}${pathSeparator}ui_${resourceBasenameNoExtension}.py"
           ],
-          "markdownDescription": "The options passed to `uic` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "markdownDescription": "The options passed to Qt `uic` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.designer.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to Qt `designer` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.designer.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "The options passed to Qt `designer` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }
