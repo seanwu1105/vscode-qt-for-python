@@ -8,6 +8,16 @@ to structure this file.
 
 ## [2.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.2.0...v2.3.0) (2022-08-28)
 
+### ⚠ BREAKING CHANGES
+
+- Drop support for Qt i18n tools, such as `lupdate`, `lrelease`, as they are not
+  used frequently
+  - Use other Python i18n frameworks instead, such as [`python-i18n`](https://github.com/danhper/python-i18n)
+  - If you still think it is useful, please open an issue to let me know
+- Drop syntax support for qmake `pro` and `pro.user` file as they are out of
+  scope of Qt for Python
+- Drop support for continuous compilation of `rcc` as it is not used frequently
+  - If you still think it is useful, please open an issue to let me know
 
 ### Features
 
