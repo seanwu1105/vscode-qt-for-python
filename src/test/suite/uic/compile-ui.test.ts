@@ -30,7 +30,7 @@ suite('compile-ui/e2e', () => {
       setup(async function () {
         this.timeout(E2E_TIMEOUT)
 
-        removeGeneratedRcFile(sampleFilenameNoExt)
+        removeGeneratedFile(sampleFilenameNoExt)
 
         const document = await workspace.openTextDocument(
           URI.file(
@@ -40,7 +40,10 @@ suite('compile-ui/e2e', () => {
         await window.showTextDocument(document)
       })
 
-      teardown(() => removeGeneratedRcFile(sampleFilenameNoExt))
+      teardown(function () {
+        this.timeout(E2E_TIMEOUT)
+        removeGeneratedFile(sampleFilenameNoExt)
+      })
 
       test('should run command', async () => {
         await commands.executeCommand(`${EXTENSION_NAMESPACE}.compileUi`)
@@ -54,12 +57,12 @@ suite('compile-ui/e2e', () => {
             ),
           ),
         )
-      })
+      }).timeout(E2E_TIMEOUT)
     })
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-function removeGeneratedRcFile(sampleFilenameNoExt: string) {
+function removeGeneratedFile(sampleFilenameNoExt: string) {
   return fs.rmSync(
     path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
     { force: true, recursive: true },

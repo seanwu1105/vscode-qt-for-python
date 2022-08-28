@@ -24,16 +24,20 @@ suite('uic-live-execution/e2e', () => {
     await setupE2EEnvironment()
   })
 
-  setup(async () => {
+  setup(async function () {
+    this.timeout(E2E_TIMEOUT)
+
     originalFullText = fs.readFileSync(uiFilePath, { encoding: 'utf-8' })
 
-    removeGeneratedRcFile(sampleFilenameNoExt)
+    removeGeneratedFile(sampleFilenameNoExt)
   })
 
-  teardown(() => {
+  teardown(function () {
+    this.timeout(E2E_TIMEOUT)
+
     fs.writeFileSync(uiFilePath, originalFullText, { encoding: 'utf-8' })
 
-    removeGeneratedRcFile(sampleFilenameNoExt)
+    removeGeneratedFile(sampleFilenameNoExt)
   })
 
   test('should recompile UI file changed', async () => {
@@ -52,7 +56,7 @@ suite('uic-live-execution/e2e', () => {
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-function removeGeneratedRcFile(sampleFilenameNoExt: string) {
+function removeGeneratedFile(sampleFilenameNoExt: string) {
   return fs.rmSync(
     path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
     { force: true, recursive: true },
