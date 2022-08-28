@@ -1,6 +1,6 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { commands, extensions } from 'vscode'
+import { extensions } from 'vscode'
 import { notNil } from '../../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -16,7 +16,7 @@ export const TEST_ASSETS_PATH = path.resolve(
 )
 
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 30000 : 1000
+const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 10000 : 1000
 
 export async function sleep(ms = DEFAULT_SLEEP_TIME) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -24,13 +24,6 @@ export async function sleep(ms = DEFAULT_SLEEP_TIME) {
 
 export async function setupE2EEnvironment() {
   await sleep() // wait for extension to load Extension Gallery
-
-  await commands.executeCommand(
-    'workbench.extensions.installExtension',
-    'ms-python.python',
-  )
-
-  await sleep() // wait for extension to get registered
 
   const pythonExtension = extensions.getExtension('ms-python.python')
   assert.ok(notNil(pythonExtension))

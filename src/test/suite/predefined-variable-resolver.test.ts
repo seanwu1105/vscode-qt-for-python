@@ -11,7 +11,7 @@ import {
   setupE2EEnvironment,
   TEST_ASSETS_PATH,
   TEST_WORKSPACE_PATH,
-} from './utils'
+} from './test-utils'
 
 suite('predefined variable resolver', () => {
   const testFilePath = path.resolve(

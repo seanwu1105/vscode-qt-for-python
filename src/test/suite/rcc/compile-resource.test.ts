@@ -4,7 +4,11 @@ import * as path from 'node:path'
 import { commands, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../../../constants'
-import { E2E_TIMEOUT, setupE2EEnvironment, TEST_ASSETS_PATH } from '../utils'
+import {
+  E2E_TIMEOUT,
+  setupE2EEnvironment,
+  TEST_ASSETS_PATH,
+} from '../test-utils'
 
 suite('compile-resource/e2e', () => {
   suiteSetup(async function () {

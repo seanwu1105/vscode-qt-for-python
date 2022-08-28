@@ -8,7 +8,7 @@ import {
   setupE2EEnvironment,
   sleep,
   TEST_ASSETS_PATH,
-} from '../utils'
+} from '../test-utils'
 
 suite('qmllint/e2e', () => {
   suiteSetup(async function () {

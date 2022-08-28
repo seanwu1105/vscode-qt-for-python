@@ -6,7 +6,7 @@ import {
   setupE2EEnvironment,
   sleep,
   TEST_ASSETS_PATH,
-} from '../utils'
+} from '../test-utils'
 
 suite('uic-live-execution/e2e', () => {
   const sampleFilenameNoExt = 'sample'
