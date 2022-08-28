@@ -1,10 +1,14 @@
-// Follow the spec in Visual Studio Code docs:
+// Follow the spec in Visual Studio Code docs with some modifications:
 // https://code.visualstudio.com/docs/editor/variables-reference#_predefined-variables
 
 import * as os from 'node:os'
 import * as path from 'node:path'
 import { env, window, workspace } from 'vscode'
 import { notNil } from './utils'
+
+// TODO: Add resource, resourceWorkspaceFolder, relativeResource,
+//       relativeResourceDirname, resourceBasename, resourceBasenameNoExtension,
+//       resourceDirname, resourceExtname
 
 export function resolvePredefinedVariables(s: string) {
   const resolvedPredefinedVariables = Object.entries(

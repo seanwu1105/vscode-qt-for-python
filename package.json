@@ -52,7 +52,8 @@
   ],
   "activationEvents": [
     "onLanguage:qml",
-    "onCommand:qtForPython.compileResource"
+    "onCommand:qtForPython.compileResource",
+    "onCommand:qtForPython.compileUi"
   ],
   "contributes": {
     "languages": [
@@ -82,14 +83,20 @@
         "id": "xml",
         "firstLine": "^<\\?xml\\s+.*\\?>\\s*",
         "extensions": [
-          ".qrc"
+          ".qrc",
+          ".ui"
         ]
       }
     ],
     "commands": [
       {
         "command": "qtForPython.compileResource",
-        "title": "Compile Resource File",
+        "title": "Compile Qt Resource File",
+        "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.compileUi",
+        "title": "Compile Qt UI File",
         "category": "Qt for Python"
       }
     ],
@@ -99,12 +106,22 @@
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "explorer/context": [
         {
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
         }
       ],
@@ -113,12 +130,22 @@
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
         {
           "command": "qtForPython.compileResource",
           "when": "resourceExtname == .qrc && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileUi",
+          "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
         }
       ]
@@ -163,6 +190,24 @@
             "${fileDirname}${pathSeparator}rc_${fileBasenameNoExtension}.py"
           ],
           "markdownDescription": "The options passed to `rcc` executable.",
+          "scope": "resource"
+        },
+        "qtForPython.uic.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to `uic` executable. Set to empty string to automatically resolve from the installed Python package.",
+          "scope": "resource"
+        },
+        "qtForPython.uic.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "-o",
+            "${fileDirname}${pathSeparator}ui_${fileBasenameNoExtension}.py"
+          ],
+          "markdownDescription": "The options passed to `uic` executable.",
           "scope": "resource"
         }
       }

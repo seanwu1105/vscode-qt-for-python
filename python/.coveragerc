@@ -3,6 +3,7 @@ omit =
     **/test_*.py
     scripts/qmllint.py
     scripts/rcc.py
+    scripts/uic.py
 
 [report]
 fail_under = 100

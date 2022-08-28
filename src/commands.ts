@@ -3,12 +3,17 @@ import { window } from 'vscode'
 import { URI } from 'vscode-uri'
 import { compileResource } from './rcc/compile'
 import type { ErrorResult, SuccessResult } from './types'
+import { compileUi } from './uic/compile'
 import { isNil } from './utils'
 
 export const COMMANDS = [
   {
     name: 'compileResource',
     callback: compileResource,
+  },
+  {
+    name: 'compileUi',
+    callback: compileUi,
   },
 ] as const
 

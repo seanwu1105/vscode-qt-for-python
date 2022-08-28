@@ -33,7 +33,7 @@
   - [ ] ~~qmake `pro`~~
 - [ ] Simple tools integration
   - [x] pyside6-rcc
-  - [ ] pyside6-uic
+  - [x] pyside6-uic
   - [ ] pyside6-designer
   - [ ] pyside6-project
   - [ ] ~~i18n tools~~
