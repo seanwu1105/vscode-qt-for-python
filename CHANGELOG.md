@@ -6,6 +6,18 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [2.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.1.0...v2.2.0) (2022-08-28)
+
+
+### Features
+
+* **designer:** support Qt designer features ([50e46fe](https://github.com/seanwu1105/vscode-qt-for-python/commit/50e46fe7ce80eeedf8d5ce9d6a48a60210eeaf4d))
+* **rcc:** add configurations for rcc path and options ([bb6e01a](https://github.com/seanwu1105/vscode-qt-for-python/commit/bb6e01ac637dd881a41bc01946344099e9d21554))
+* **rcc:** add rcc command ([a3a611a](https://github.com/seanwu1105/vscode-qt-for-python/commit/a3a611ad49d44940ee8d8cdbadadf3325e01b23c))
+* **rcc:** add rcc compile function ([338f4e2](https://github.com/seanwu1105/vscode-qt-for-python/commit/338f4e2319135832db8e77841bc177c0e1d834ae))
+* support resource-related predefined variables ([98b6a37](https://github.com/seanwu1105/vscode-qt-for-python/commit/98b6a37efd64f4b20cc90a6d7424566d1c4fec00))
+* **uic:** add uic support ([9c17e9d](https://github.com/seanwu1105/vscode-qt-for-python/commit/9c17e9db60497bfcb1ea03b90f9b24f41093bb2f))
+
 ## [2.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.0.0...v2.1.0) (2022-08-26)
 
 
