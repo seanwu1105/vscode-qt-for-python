@@ -162,7 +162,7 @@
         "qtForPython.qmllint.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `qmllint` executable. Set to empty string to automatically resolve from the installed Python package.",
+          "markdownDescription": "The path to `qmllint` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.qmllint.options": {
@@ -171,13 +171,13 @@
             "type": "string"
           },
           "default": [],
-          "markdownDescription": "The options passed to `qmllint` executable.",
+          "markdownDescription": "The options passed to `qmllint` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.rcc.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `rcc` executable. Set to empty string to automatically resolve from the installed Python package.",
+          "markdownDescription": "The path to `rcc` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.rcc.options": {
@@ -189,13 +189,13 @@
             "-o",
             "${resourceDirname}${pathSeparator}rc_${resourceBasenameNoExtension}.py"
           ],
-          "markdownDescription": "The options passed to `rcc` executable.",
+          "markdownDescription": "The options passed to `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.uic.path": {
           "type": "string",
           "default": "",
-          "markdownDescription": "The path to `uic` executable. Set to empty string to automatically resolve from the installed Python package.",
+          "markdownDescription": "The path to `uic` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
         "qtForPython.uic.options": {
@@ -207,7 +207,7 @@
             "-o",
             "${resourceDirname}${pathSeparator}ui_${resourceBasenameNoExtension}.py"
           ],
-          "markdownDescription": "The options passed to `uic` executable.",
+          "markdownDescription": "The options passed to `uic` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }
