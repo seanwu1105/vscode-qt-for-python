@@ -22,10 +22,10 @@
   - [x] Support user-defined tool args
   - [x] Support user-defined tool paths
 - [x] Build e2e tests (close #8)
-- [ ] Languages features
+- [x] Languages features
   - [x] `qml`
   - [x] `qmldir`
-  - [ ] `qss`
+  - [x] `qss`
   - [x] `qrc`
   - [x] `ui`
   - [ ] ~~`qt.ts`~~

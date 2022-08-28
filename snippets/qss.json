@@ -1,0 +1,43 @@
+{
+  "RGB": {
+    "prefix": "rgb",
+    "body": ["rgb(${1:r}, ${2:g}, ${3:b})$0"],
+    "description": "RGB Color"
+  },
+  "RGBA": {
+    "prefix": "rgba",
+    "body": ["rgba(${1:r}, ${2:g}, ${3:b}, ${4:alpha})$0"],
+    "description": "RGBA Color"
+  },
+  "HSV": {
+    "prefix": "hsv",
+    "body": ["hsv(${1:h}, ${2:s}, ${3:v})$0"],
+    "description": "HSV Color"
+  },
+  "HSVA": {
+    "prefix": "hsva",
+    "body": ["hsva(${1:h}, ${2:s}, ${3:v}, ${4:alpha})$0"],
+    "description": "HSVA Color"
+  },
+  "Linear Gradient": {
+    "prefix": "qlineargradient",
+    "body": [
+      "qlineargradient(x1:${1:x1}, y1:${2:y1}, x2:${3:x2}, y2:${4:y2}, stop:${5:stop}, stop:${6:stop}, stop:${7:stop})$0"
+    ],
+    "description": "Linear Gradient"
+  },
+  "Radial Gradient": {
+    "prefix": "qradialgradient",
+    "body": [
+      "qradialgradient(cx:${1:cx}, cy:${2:cy}, radius:${3:radius}, fx:${4:fx}, fy:${5:fy}, stop:${6:stop}, stop:${7:stop})$0"
+    ],
+    "description": "Radial Gradient"
+  },
+  "Conical Gradient": {
+    "prefix": "qconicalgradient",
+    "body": [
+      "qconicalgradient(cx:${1:cx}, cy:${2:cy}, angle:${3:angle}, stop:${4:stop}, stop:${5:stop})$0"
+    ],
+    "description": "Conical Gradient"
+  }
+}

@@ -1,0 +1,5 @@
+QTextEdit, QListView {
+    background-color: white;
+    background-image: url(draft.png);
+    background-attachment: scroll;
+}

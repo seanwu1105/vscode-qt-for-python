@@ -83,6 +83,17 @@
         "configuration": "./languages/qmldir.json"
       },
       {
+        "id": "qss",
+        "extensions": [
+          ".qss"
+        ],
+        "aliases": [
+          "QSS",
+          "qss"
+        ],
+        "configuration": "./languages/qss.json"
+      },
+      {
         "id": "xml",
         "firstLine": "^<\\?xml\\s+.*\\?>\\s*",
         "extensions": [
@@ -295,6 +306,11 @@
         "language": "qmldir",
         "scopeName": "source.qmldir",
         "path": "./syntaxes/qmldir.tmLanguage.json"
+      },
+      {
+        "language": "qss",
+        "scopeName": "source.qss",
+        "path": "./syntaxes/qss.tmLanguage.json"
       }
     ],
     "snippets": [
@@ -305,6 +321,10 @@
       {
         "language": "qmldir",
         "path": "./snippets/qmldir.json"
+      },
+      {
+        "language": "qss",
+        "path": "./snippets/qss.json"
       }
     ]
   },
