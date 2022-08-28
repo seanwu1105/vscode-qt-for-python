@@ -5,7 +5,7 @@ from tests import ASSETS_DIR, SCRIPTS_DIR
 
 
 def test_uic_version():
-    result = invoke_uic_py(["-v"])
+    result = invoke_uic_py(["--version"])
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
 

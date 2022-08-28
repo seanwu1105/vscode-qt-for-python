@@ -41,9 +41,9 @@
   - [x] uic
   - [ ] ~~rcc~~
   - [ ] ~~i18n tools~~
-- [ ] Support PyQt6
-- [ ] Support PySide2
-- [ ] Support PyQt5
+- [x] Support PyQt6 (only for uic)
+- [x] Support PySide2 (only for designer, uic, rcc)
+- [x] Support PyQt5 (only for uic, rcc)
 
 [![build](https://github.com/seanwu1105/vscode-qt-for-python/workflows/build/badge.svg)](https://github.com/seanwu1105/vscode-qt-for-python/actions?query=workflow:build)
 [![version](https://img.shields.io/visual-studio-marketplace/v/seanwu.vscode-qt-for-python.svg)](https://marketplace.visualstudio.com/items?itemName=seanwu.vscode-qt-for-python)
