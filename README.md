@@ -15,7 +15,7 @@ All features support multi-root workspace project.
 ### QML
 
 - Syntax highlighting (`qml` and `qmldir` files)
-- Linting (requires PySide6)
+- Linting (requires PySide6 >= 6.3)
 - Support `.qmllint.ini` configuration file
 
 ### Qt UI Files
