@@ -33,73 +33,70 @@ suite('predefined variable resolver', () => {
     await window.showTextDocument(document)
   })
 
+  function resolve(str: string) {
+    return resolvePredefinedVariables({ str, resource: document.uri })
+  }
+
   test('should replace all', () =>
     test('userHome', () =>
       assert.deepStrictEqual(
-        resolvePredefinedVariables('${userHome} ${userHome}'),
+        resolve('${userHome} ${userHome}'),
         `${os.homedir()} ${os.homedir()}`,
       )))
 
   test('userHome', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${userHome}'),
-      os.homedir(),
-    ))
+    assert.deepStrictEqual(resolve('${userHome}'), os.homedir()))
 
   test('workspaceFolder', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${workspaceFolder}'),
-      TEST_WORKSPACE_PATH,
-    ))
+    assert.deepStrictEqual(resolve('${workspaceFolder}'), TEST_WORKSPACE_PATH))
 
   test('workspaceFolderBasename', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${workspaceFolderBasename}'),
+      resolve('${workspaceFolderBasename}'),
       `${path.basename(TEST_WORKSPACE_PATH)}`,
     ))
 
-  test('file', () =>
-    assert.deepStrictEqual(resolvePredefinedVariables('${file}'), testFilePath))
+  test('file', () => assert.deepStrictEqual(resolve('${file}'), testFilePath))
 
   test('fileWorkspaceFolder', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileWorkspaceFolder}'),
+      resolve('${fileWorkspaceFolder}'),
       TEST_WORKSPACE_PATH,
     ))
 
   test('relativeFile', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${relativeFile}'),
+      resolve('${relativeFile}'),
       path.relative(TEST_WORKSPACE_PATH, testFilePath),
     ))
 
   test('relativeFileDirname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${relativeFileDirname}'),
+      resolve('${relativeFileDirname}'),
       path.dirname(path.relative(TEST_WORKSPACE_PATH, testFilePath)),
     ))
 
   test('fileBasename', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileBasename}'),
+      resolve('${fileBasename}'),
       path.basename(testFilePath),
     ))
 
   test('fileBasenameNoExtension', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileBasenameNoExtension}'),
+      resolve('${fileBasenameNoExtension}'),
       path.parse(testFilePath).name,
     ))
 
   test('fileDirname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileDirname}'),
+      resolve('${fileDirname}'),
       path.dirname(testFilePath),
     ))
 
   test('fileExtname', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${fileExtname}'),
+      resolve('${fileExtname}'),
       path.parse(testFilePath).ext,
     ))
 
@@ -121,10 +118,7 @@ suite('predefined variable resolver', () => {
         0,
       )
 
-      assert.deepStrictEqual(
-        resolvePredefinedVariables('${lineNumber}'),
-        `${expectedLineNumber}`,
-      )
+      assert.deepStrictEqual(resolve('${lineNumber}'), `${expectedLineNumber}`)
     }).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 
@@ -140,28 +134,61 @@ suite('predefined variable resolver', () => {
       const endCharacter = 11
       editor.selection = new Selection(1, 0, 1, endCharacter)
 
-      assert.deepStrictEqual(
-        resolvePredefinedVariables('${selectedText}'),
-        `second line`,
-      )
+      assert.deepStrictEqual(resolve('${selectedText}'), `second line`)
     })
   })
 
   test('execPath', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${execPath}'),
-      env.appRoot,
-    ))
+    assert.deepStrictEqual(resolve('${execPath}'), env.appRoot))
 
   test('pathSeparator', () =>
+    assert.deepStrictEqual(resolve('${pathSeparator}'), path.sep))
+
+  test('resource', () =>
+    assert.deepStrictEqual(resolve('${resource}'), document.uri.fsPath))
+
+  test('resourceWorkspaceFolder', () =>
     assert.deepStrictEqual(
-      resolvePredefinedVariables('${pathSeparator}'),
-      path.sep,
+      resolve('${resourceWorkspaceFolder}'),
+      TEST_WORKSPACE_PATH,
+    ))
+
+  test('relativeResource', () =>
+    assert.deepStrictEqual(
+      resolve('${relativeResource}'),
+      path.relative(TEST_WORKSPACE_PATH, document.uri.fsPath),
+    ))
+
+  test('relativeResourceDirname', () =>
+    assert.deepStrictEqual(
+      resolve('${relativeResourceDirname}'),
+      path.dirname(path.relative(TEST_WORKSPACE_PATH, document.uri.fsPath)),
+    ))
+
+  test('resourceBasename', () =>
+    assert.deepStrictEqual(
+      resolve('${resourceBasename}'),
+      path.basename(document.uri.fsPath),
+    ))
+
+  test('resourceBasenameNoExtension', () =>
+    assert.deepStrictEqual(
+      resolve('${resourceBasenameNoExtension}'),
+      path.parse(document.uri.fsPath).name,
+    ))
+
+  test('resourceDirname', () =>
+    assert.deepStrictEqual(
+      resolve('${resourceDirname}'),
+      path.dirname(document.uri.fsPath),
+    ))
+
+  test('resourceExtname', () =>
+    assert.deepStrictEqual(
+      resolve('${resourceExtname}'),
+      path.parse(document.uri.fsPath).ext,
     ))
 
   test('env:HOME', () =>
-    assert.deepStrictEqual(
-      resolvePredefinedVariables('${env:HOME}'),
-      process.env['HOME'],
-    ))
+    assert.deepStrictEqual(resolve('${env:HOME}'), process.env['HOME']))
 })

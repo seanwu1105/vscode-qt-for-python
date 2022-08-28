@@ -6,11 +6,13 @@ import { resolvePredefinedVariables } from './predefined-variable-resolver'
 import type { SupportedTool } from './types'
 
 export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
-  return resolvePredefinedVariables(
-    workspace
-      .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
-      .get<string>('path') ?? '',
-  )
+  return resolvePredefinedVariables({
+    str:
+      workspace
+        .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
+        .get<string>('path') ?? '',
+    resource: URI.parse(resource),
+  })
 }
 
 export function getOptionsFromConfig({ tool, resource }: GetPathFromConfig) {
@@ -18,7 +20,9 @@ export function getOptionsFromConfig({ tool, resource }: GetPathFromConfig) {
     workspace
       .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
       .get<readonly string[]>('options') ?? []
-  ).map(resolvePredefinedVariables)
+  ).map(str =>
+    resolvePredefinedVariables({ str, resource: URI.parse(resource) }),
+  )
 }
 
 type GetPathFromConfig = {

@@ -66,7 +66,7 @@ path of Qt tools in configurations.
 
 ### Predefined Variables
 
-TODO
+TODO (should mention additionally added variables)
 
 > The example of predefined variables can be found
 > [here](https://code.visualstudio.com/docs/editor/variables-reference).

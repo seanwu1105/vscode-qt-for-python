@@ -4,19 +4,19 @@
 import * as os from 'node:os'
 import * as path from 'node:path'
 import { env, window, workspace } from 'vscode'
+import type { URI } from 'vscode-uri'
 import { notNil } from './utils'
 
-// TODO: Add resource, resourceWorkspaceFolder, relativeResource,
-//       relativeResourceDirname, resourceBasename, resourceBasenameNoExtension,
-//       resourceDirname, resourceExtname
-
-export function resolvePredefinedVariables(s: string) {
+export function resolvePredefinedVariables({
+  str,
+  resource,
+}: ResolvePredefinedVariablesArgs) {
   const resolvedPredefinedVariables = Object.entries(
-    predefinedVariables,
+    getResolver(resource),
   ).reduce((acc, cur) => {
     const [key, value] = cur
     return acc.replaceAll(`$\{${key}}`, value())
-  }, s)
+  }, str)
 
   return Object.entries(process.env).reduce((acc, cur) => {
     const [key, value] = cur
@@ -24,56 +24,90 @@ export function resolvePredefinedVariables(s: string) {
   }, resolvedPredefinedVariables)
 }
 
-const predefinedVariables = {
-  userHome: () => os.homedir(),
+type ResolvePredefinedVariablesArgs = {
+  readonly str: string
+  readonly resource: URI
+}
 
-  workspaceFolder: () => {
-    const fileUri = window.activeTextEditor?.document.uri
-    if (notNil(fileUri))
-      return workspace.getWorkspaceFolder(fileUri)?.uri.fsPath ?? ''
-    return ''
-  },
+function getResolver(resource: URI) {
+  return {
+    userHome: () => os.homedir(),
 
-  workspaceFolderBasename: () =>
-    path.basename(predefinedVariables.workspaceFolder()),
+    workspaceFolder: () => {
+      const fileUri = window.activeTextEditor?.document.uri
+      if (notNil(fileUri))
+        return workspace.getWorkspaceFolder(fileUri)?.uri.fsPath ?? ''
+      return ''
+    },
 
-  file: () => window.activeTextEditor?.document.uri.fsPath ?? '',
+    workspaceFolderBasename: () =>
+      path.basename(getResolver(resource).workspaceFolder()),
 
-  fileWorkspaceFolder: () => predefinedVariables.workspaceFolder(),
+    file: () => window.activeTextEditor?.document.uri.fsPath ?? '',
 
-  relativeFile: () =>
-    path.relative(
-      predefinedVariables.workspaceFolder(),
-      predefinedVariables.file(),
-    ),
+    fileWorkspaceFolder: () => getResolver(resource).workspaceFolder(),
 
-  relativeFileDirname: () => path.dirname(predefinedVariables.relativeFile()),
+    relativeFile: () =>
+      path.relative(
+        getResolver(resource).workspaceFolder(),
+        getResolver(resource).file(),
+      ),
 
-  fileBasename: () => path.basename(predefinedVariables.file()),
+    relativeFileDirname: () =>
+      path.dirname(getResolver(resource).relativeFile()),
 
-  fileBasenameNoExtension: () =>
-    path.parse(predefinedVariables.fileBasename()).name,
+    fileBasename: () => path.basename(getResolver(resource).file()),
 
-  fileDirname: () => path.dirname(predefinedVariables.file()),
+    fileBasenameNoExtension: () =>
+      path.parse(getResolver(resource).fileBasename()).name,
 
-  fileExtname: () => path.parse(predefinedVariables.fileBasename()).ext,
+    fileDirname: () => path.dirname(getResolver(resource).file()),
 
-  // Not support: cwd
+    fileExtname: () => path.parse(getResolver(resource).fileBasename()).ext,
 
-  lineNumber: () => {
-    const lineIndex = window.activeTextEditor?.selection.active.line
-    if (notNil(lineIndex)) return `${lineIndex + 1}`
-    return ''
-  },
+    // Not support: cwd
 
-  selectedText: () =>
-    window.activeTextEditor?.document.getText(
-      window.activeTextEditor.selection,
-    ) ?? '',
+    lineNumber: () => {
+      const lineIndex = window.activeTextEditor?.selection.active.line
+      if (notNil(lineIndex)) return `${lineIndex + 1}`
+      return ''
+    },
 
-  execPath: () => env.appRoot,
+    selectedText: () =>
+      window.activeTextEditor?.document.getText(
+        window.activeTextEditor.selection,
+      ) ?? '',
 
-  // Not support: defaultBuildTask
+    execPath: () => env.appRoot,
 
-  pathSeparator: () => path.sep,
+    // Not support: defaultBuildTask
+
+    pathSeparator: () => path.sep,
+
+    // -- Additional Variables --
+
+    resource: () => resource.fsPath,
+
+    resourceWorkspaceFolder: () =>
+      workspace.getWorkspaceFolder(resource)?.uri.fsPath ?? '',
+
+    relativeResource: () =>
+      path.relative(
+        getResolver(resource).resourceWorkspaceFolder(),
+        getResolver(resource).resource(),
+      ),
+
+    relativeResourceDirname: () =>
+      path.dirname(getResolver(resource).relativeResource()),
+
+    resourceBasename: () => path.basename(getResolver(resource).resource()),
+
+    resourceBasenameNoExtension: () =>
+      path.parse(getResolver(resource).resourceBasename()).name,
+
+    resourceDirname: () => path.dirname(getResolver(resource).resource()),
+
+    resourceExtname: () =>
+      path.parse(getResolver(resource).resourceBasename()).ext,
+  }
 }
