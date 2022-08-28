@@ -52,6 +52,7 @@
   ],
   "activationEvents": [
     "onLanguage:qml",
+    "workspaceContains:**/*.ui",
     "onCommand:qtForPython.compileResource",
     "onCommand:qtForPython.compileUi",
     "onCommand:qtForPython.createUi",
@@ -243,6 +244,11 @@
           ],
           "markdownDescription": "The options passed to Qt `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
+        },
+        "qtForPython.uic.liveExecution": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Automatically recompile Qt UI files when any `*.ui` file has changed or created."
         },
         "qtForPython.uic.path": {
           "type": "string",

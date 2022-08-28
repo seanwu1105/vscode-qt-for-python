@@ -36,7 +36,11 @@ export async function startClient({
     documentSelector: [{ scheme: 'file', language: 'qml' }],
   }
 
-  const client = new LanguageClient('qmllint', serverOptions, clientOptions)
+  const client = new LanguageClient(
+    'qmllint Language Server',
+    serverOptions,
+    clientOptions,
+  )
 
   const disposables = [
     client,

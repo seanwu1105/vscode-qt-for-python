@@ -9,6 +9,7 @@ import {
 } from './qmllint/client'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
+import { registerUicLiveExecution } from './uic/uic-live-execution'
 import { notNil } from './utils'
 
 let outputChannel: ReturnType<typeof window.createOutputChannel>
@@ -16,18 +17,24 @@ let qmlLintClient: LanguageClient | undefined = undefined
 
 export async function activate(context: ExtensionContext) {
   outputChannel = window.createOutputChannel('Qt for Python')
+
   registerCommands(context)
+
+  registerUicLiveExecution({ context, onResultReceived })
+
   await activateQmlLintFeatures(context)
 }
 
-function registerCommands(context: ExtensionContext) {
+function registerCommands({ extensionPath, subscriptions }: ExtensionContext) {
   return COMMANDS.map(command =>
-    context.subscriptions.push(
+    subscriptions.push(
       commands.registerCommand(
         `${EXTENSION_NAMESPACE}.${command.name}`,
         async (...args) => {
           try {
-            return onResultReceived(await command.callback(context, ...args))
+            return onResultReceived(
+              await command.callback({ extensionPath }, ...args),
+            )
           } catch (e) {
             return onResultReceived({
               kind: 'UnexpectedError',

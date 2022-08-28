@@ -37,8 +37,8 @@
   - [x] pyside6-designer
   - [ ] ~~pyside6-project~~ (see https://bugreports.qt.io/browse/PYSIDE-2045)
   - [ ] ~~i18n tools~~
-- [ ] Continuous compilation
-  - [ ] uic
+- [x] Continuous compilation
+  - [x] uic
   - [ ] ~~rcc~~
   - [ ] ~~i18n tools~~
 - [ ] Support PyQt6
