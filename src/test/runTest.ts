@@ -24,10 +24,9 @@ async function main() {
 
     assert.ok(cli !== undefined)
 
-    cp.spawnSync(cli, [...args, '--install-extension', 'ms-python.python'], {
-      encoding: 'utf-8',
-      stdio: 'inherit',
-    })
+    const command = [cli, ...args, '--install-extension', 'ms-python.python']
+
+    cp.execSync(command.map(s => (s.includes(' ') ? `"${s}"` : s)).join(' '))
 
     // Download VS Code, unzip it and run the integration test
     await runTests({

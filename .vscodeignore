@@ -137,7 +137,7 @@ web_modules/
 
 # Next.js build output
 .next
-# out # This should be included on releasing.
+# out # extension entry point
 
 # Nuxt.js build / generate output
 .nuxt
@@ -405,11 +405,11 @@ compile_commands.json
 
 ### VisualStudioCode ###
 .vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+# !.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
@@ -456,6 +456,18 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,visualstudiocode,node,python,qt
 
-# Python Scripts
+.github
+.husky
+.vscode
 python
 !python/scripts/
+src
+.commitlintrc.json
+.eslintrc.json
+.gitignore
+.lintstagedrc.json
+.prettierignore
+.prettierrc.json
+.tool-versions
+clean.js
+tsconfig.json
