@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [3.0.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v3.0.0...v3.0.1) (2022-08-29)
+
+
+### Bug Fixes
+
+* bundle dependencies into release ([35ea0d9](https://github.com/seanwu1105/vscode-qt-for-python/commit/35ea0d90ef1885993fe7efc777f4e763e6f23944))
+
 ## [3.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v2.3.0...v3.0.0) (2022-08-28)
 
 
