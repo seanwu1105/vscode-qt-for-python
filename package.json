@@ -379,11 +379,5 @@
     "PySide",
     "PyQt",
     "Qt"
-  ],
-  "__metadata": {
-    "id": "3e3d1520-4354-4dd2-8efc-92df8ed8c294",
-    "publisherDisplayName": "Shuang Wu",
-    "publisherId": "5bb6c785-d35f-4dc5-ad20-ca804ca3b6bb",
-    "isPreReleaseVersion": false
-  }
+  ]
 }
