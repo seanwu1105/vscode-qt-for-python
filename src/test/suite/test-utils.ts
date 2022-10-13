@@ -15,11 +15,11 @@ export const TEST_ASSETS_PATH = path.resolve(
   'tests/assets',
 )
 
-const DEFAULT_E2E_WAIT_TIME = 60000
+const DEFAULT_CI_WAIT_TIME = 120000
 const DEFAULT_WAIT_TIME = 1000
 
 export async function sleep(
-  ms = process.env['CI'] === 'true' ? DEFAULT_E2E_WAIT_TIME : DEFAULT_WAIT_TIME,
+  ms = process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
 ) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -47,7 +47,7 @@ export async function waitFor<T>(
 ): Promise<T> {
   const defaultOptions: Required<WaitForOptions> = {
     timeout:
-      process.env['CI'] === 'true' ? DEFAULT_E2E_WAIT_TIME : DEFAULT_WAIT_TIME,
+      process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
     interval: 100,
   }
 
@@ -59,5 +59,7 @@ export async function waitFor<T>(
       await sleep(options?.interval ?? defaultOptions.interval)
     }
   }
-  throw new Error('Timeout')
+  throw new Error(
+    `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
+  )
 }
