@@ -1,13 +1,13 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import type { Diagnostic } from 'vscode'
+import type { Diagnostic, TextDocument } from 'vscode'
 import { languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import {
   E2E_TIMEOUT,
   setupE2EEnvironment,
-  sleep,
   TEST_ASSETS_PATH,
+  waitFor,
 } from '../test-utils'
 
 suite('qmllint/e2e', () => {
@@ -18,32 +18,36 @@ suite('qmllint/e2e', () => {
 
   suite('missing_import.qml', () => {
     let diagnostics: readonly Diagnostic[]
+    let document: TextDocument
 
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestQmlFile('missing_import.qml')
-      await sleep()
-      diagnostics = languages.getDiagnostics(document.uri)
+      document = await openAndShowTestQmlFile('missing_import.qml')
     })
 
     test('should contain diagnostics', async () =>
-      assert.ok(diagnostics.length > 0)).timeout(E2E_TIMEOUT)
+      waitFor(() => {
+        diagnostics = languages.getDiagnostics(document.uri)
+        assert.ok(diagnostics.length > 0)
+      })).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 
   suite('pass.qml', () => {
     let diagnostics: readonly Diagnostic[]
+    let document: TextDocument
 
     suiteSetup(async function () {
       this.timeout(E2E_TIMEOUT)
 
-      const document = await openAndShowTestQmlFile('pass.qml')
-      await sleep()
-      diagnostics = languages.getDiagnostics(document.uri)
+      document = await openAndShowTestQmlFile('pass.qml')
     })
 
     test('should not contain diagnostic', async () =>
-      assert.ok(diagnostics.length === 0)).timeout(E2E_TIMEOUT)
+      waitFor(() => {
+        diagnostics = languages.getDiagnostics(document.uri)
+        assert.ok(diagnostics.length === 0)
+      })).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 

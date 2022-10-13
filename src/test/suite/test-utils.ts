@@ -15,10 +15,12 @@ export const TEST_ASSETS_PATH = path.resolve(
   'tests/assets',
 )
 
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const DEFAULT_SLEEP_TIME = process.env['CI'] === 'true' ? 60000 : 1000
+const DEFAULT_CI_WAIT_TIME = 120000
+const DEFAULT_WAIT_TIME = 1000
 
-export async function sleep(ms = DEFAULT_SLEEP_TIME) {
+export async function sleep(
+  ms = process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
+) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -32,4 +34,32 @@ export async function setupE2EEnvironment() {
   const extension = extensions.getExtension(`${publisher}.${name}`)
   assert.ok(notNil(extension))
   if (!extension.isActive) await extension.activate()
+}
+
+type WaitForOptions = {
+  readonly timeout?: number
+  readonly interval?: number
+}
+
+export async function waitFor<T>(
+  callback: () => T | Promise<T>,
+  options?: WaitForOptions,
+): Promise<T> {
+  const defaultOptions: Required<WaitForOptions> = {
+    timeout:
+      process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
+    interval: 100,
+  }
+
+  const start = Date.now()
+  while (Date.now() - start < (options?.timeout ?? defaultOptions.timeout)) {
+    try {
+      return await callback()
+    } catch (e) {
+      await sleep(options?.interval ?? defaultOptions.interval)
+    }
+  }
+  throw new Error(
+    `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
+  )
 }
