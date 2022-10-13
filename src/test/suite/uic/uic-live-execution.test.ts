@@ -4,8 +4,8 @@ import * as path from 'node:path'
 import {
   E2E_TIMEOUT,
   setupE2EEnvironment,
-  sleep,
   TEST_ASSETS_PATH,
+  waitFor,
 } from '../test-utils'
 
 suite('uic-live-execution/e2e', () => {
@@ -46,11 +46,11 @@ suite('uic-live-execution/e2e', () => {
       originalFullText.replace(/My Window Title/gi, 'My New Window Title'),
     )
 
-    await sleep() // wait for file watcher to trigger
-
-    assert.ok(
-      fs.existsSync(
-        path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+    await waitFor(() =>
+      assert.ok(
+        fs.existsSync(
+          path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+        ),
       ),
     )
   }).timeout(E2E_TIMEOUT)
