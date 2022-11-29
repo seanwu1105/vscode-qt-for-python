@@ -120,7 +120,7 @@ def test_qmllint_multiline_string_qml():
 
 
 def lint_qml(filename: str, debug=False):
-    result = invoke_qmllint_py([get_assets_path(filename)])
+    result = invoke_qmllint_py(["--json", "-", get_assets_path(filename)])
     if debug:
         print(f"\nreturncode:")
         print(result.returncode)
@@ -131,7 +131,7 @@ def lint_qml(filename: str, debug=False):
 
 def invoke_qmllint_py(args: list[str]):
     return subprocess.run(
-        ["poetry", "run", "python", "qmllint.py", "--json", *args],
+        ["poetry", "run", "python", "qmllint.py", *args],
         cwd=SCRIPTS_DIR,
         capture_output=True,
     )

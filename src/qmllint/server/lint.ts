@@ -2,14 +2,27 @@ import type { CommandArgs, ExecError, StdErrError } from '../../run'
 import { run } from '../../run'
 import type { ErrorResult, SuccessResult } from '../../types'
 import { notNil } from '../../utils'
+import type { Version } from './get-version'
+import { getVersion } from './get-version'
 
 export async function lint({
   qmlLintCommand,
   documentPath,
   options,
 }: LintArgs): Promise<LintResult> {
+  const getVersionResult = await getVersion({ qmlLintCommand })
+
+  if (getVersionResult.kind !== 'Success') return getVersionResult
+
+  const jsonOption = getJsonOption(getVersionResult.value)
+
+  const optionsWithJson = [
+    ...removeDuplicatedJsonOption(options),
+    ...jsonOption,
+  ]
+
   const runResult = await run({
-    command: [...qmlLintCommand, ...options, documentPath],
+    command: [...qmlLintCommand, ...optionsWithJson, documentPath],
   })
 
   if (runResult.kind === 'Success')
@@ -37,6 +50,24 @@ export type LintResult =
   | ErrorResult<'Parse'>
   | ExecError
   | StdErrError
+
+function removeDuplicatedJsonOption(options: CommandArgs) {
+  let cleanedOptions = options
+  for (let i = 0; i < options.length; i++)
+    if (options[i] === '--json' && options[i + 1] === '-')
+      cleanedOptions = [...options.slice(0, i), ...options.slice(i + 1)]
+
+  return cleanedOptions.filter(option => option !== '--json')
+}
+
+function getJsonOption(version: Version) {
+  if (compareVersion(version, '6.4.1') < 0) return ['--json']
+  return ['--json', '-']
+}
+
+function compareVersion(a: Version, b: Version) {
+  return a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })
+}
 
 function parseQmlLintRunReturnValue(
   value: string,

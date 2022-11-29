@@ -1,5 +1,6 @@
 import * as assert from 'node:assert'
 import * as sinon from 'sinon'
+import * as GetVersion from '../../../../qmllint/server/get-version'
 import type {
   LintArgs,
   LintResult,
@@ -24,7 +25,18 @@ suite('qmllint/lint', () => {
     ],
   }
 
+  const mockGetVersionResult: GetVersion.GetVersionResult = {
+    kind: 'Success',
+    value: '6.4.1',
+  }
+
   let result: LintResult
+
+  setup(() =>
+    sinon.replace(GetVersion, 'getVersion', async () => mockGetVersionResult),
+  )
+
+  teardown(() => sinon.restore())
 
   suite('when linting success', () => {
     suite('when lint result is parsable', () => {

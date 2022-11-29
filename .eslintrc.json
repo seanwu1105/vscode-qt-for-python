@@ -36,7 +36,7 @@
         "no-magic-numbers": "off", // must disable the base rule as it can report incorrect errors
         "@typescript-eslint/no-magic-numbers": [
           "error",
-          { "ignore": [0, 1], "ignoreDefaultValues": true }
+          { "ignore": [0, 1, -1], "ignoreDefaultValues": true }
         ],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-explicit-any": "off",

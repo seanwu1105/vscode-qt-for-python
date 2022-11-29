@@ -71,14 +71,10 @@ async function lintQml({ uri, connection }: LintQmlArgs) {
       connection,
     })
 
-  const options = qmlLintCommandResult.value.options.includes('--json')
-    ? qmlLintCommandResult.value.options
-    : [...qmlLintCommandResult.value.options, '--json']
-
   const lintResult = await lint({
     qmlLintCommand: qmlLintCommandResult.value.command,
     documentPath: uriToPathResult.value,
-    options,
+    options: qmlLintCommandResult.value.options,
   })
 
   if (lintResult.kind === 'Success') {
