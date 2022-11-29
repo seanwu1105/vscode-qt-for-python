@@ -6,10 +6,10 @@ authors = ["Shuang Wu <seanwu1105@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.10"
-PySide6 = "^6.3.1"
-PyQt6 = "^6.3.1"
-PySide2 = "^5.15.2"
-PyQt5 = "^5.15.7"
+pyqt5 = "^5.15.7"
+pyqt6 = "^6.3.1"
+pyside2 = "^5.15.2.1"
+pyside6 = "^6.4.1"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.14.5"
