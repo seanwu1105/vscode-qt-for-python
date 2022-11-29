@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [3.0.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v3.0.1...v3.0.2) (2022-11-29)
+
+
+### Bug Fixes
+
+* support qmllint with PySide 6.4.1 ([dc2f427](https://github.com/seanwu1105/vscode-qt-for-python/commit/dc2f42716a0793e34b0386316880c72527b93f9d)), closes [#255](https://github.com/seanwu1105/vscode-qt-for-python/issues/255)
+
 ## [3.0.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v3.0.0...v3.0.1) (2022-08-29)
 
 
