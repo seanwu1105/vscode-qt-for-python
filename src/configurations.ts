@@ -15,6 +15,7 @@ export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
   })
 }
 
+// TODO: Split string with spaces.
 export function getOptionsFromConfig({ tool, resource }: GetPathFromConfig) {
   return (
     workspace
