@@ -3,6 +3,7 @@ import type { DocumentUri } from 'vscode-languageclient'
 import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
 import { resolvePredefinedVariables } from './predefined-variable-resolver'
+import type { CommandArgs } from './run'
 import type { SupportedTool } from './types'
 
 export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
@@ -15,15 +16,20 @@ export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
   })
 }
 
-// TODO: Split string with spaces.
-export function getOptionsFromConfig({ tool, resource }: GetPathFromConfig) {
+export function getOptionsFromConfig({
+  tool,
+  resource,
+}: GetPathFromConfig): CommandArgs {
   return (
     workspace
       .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
       .get<readonly string[]>('options') ?? []
-  ).map(str =>
-    resolvePredefinedVariables({ str, resource: URI.parse(resource) }),
   )
+    .map(str => str.split(' '))
+    .flat()
+    .map(str =>
+      resolvePredefinedVariables({ str, resource: URI.parse(resource) }),
+    )
 }
 
 type GetPathFromConfig = {
