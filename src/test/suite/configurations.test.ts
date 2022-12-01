@@ -37,7 +37,7 @@ suite('configurations', () => {
     test('should return the options from the configuration with predefined variables resolved', () =>
       assert.deepStrictEqual(
         getOptionsFromConfig({ tool: 'qmllint', resource: 'my-resource-uri' }),
-        ['--option1', `--option2 ${process.env['HOME']}`],
+        ['--option1', '--option2', `${process.env['HOME']}`],
       ))
   })
 })
