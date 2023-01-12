@@ -1,6 +1,7 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { extensions } from 'vscode'
+import type { TextDocument } from 'vscode'
+import { commands, extensions, window } from 'vscode'
 import { notNil } from '../../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -62,4 +63,9 @@ export async function waitFor<T>(
   throw new Error(
     `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
   )
+}
+
+export async function manuallySaveDocument(document: TextDocument) {
+  await window.showTextDocument(document)
+  await commands.executeCommand('workbench.action.files.save')
 }

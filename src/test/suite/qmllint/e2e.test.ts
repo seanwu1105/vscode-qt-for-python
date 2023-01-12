@@ -5,6 +5,7 @@ import { languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import {
   E2E_TIMEOUT,
+  manuallySaveDocument,
   setupE2EEnvironment,
   TEST_ASSETS_PATH,
   waitFor,
@@ -26,10 +27,16 @@ suite('qmllint/e2e', () => {
       document = await openAndShowTestQmlFile('missing_import.qml')
     })
 
-    test('should contain diagnostics', async () =>
-      waitFor(() => {
+    test('shouasync async ld contain diagnostics', async () =>
+      waitFor(async () => {
         diagnostics = languages.getDiagnostics(document.uri)
-        assert.ok(diagnostics.length > 0)
+        try {
+          assert.ok(diagnostics.length > 0)
+        } catch (e) {
+          // Trigger the linter again to wait for Python interpreter discovering.
+          await manuallySaveDocument(document)
+          throw e
+        }
       })).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 
@@ -44,9 +51,15 @@ suite('qmllint/e2e', () => {
     })
 
     test('should not contain diagnostic', async () =>
-      waitFor(() => {
+      waitFor(async () => {
         diagnostics = languages.getDiagnostics(document.uri)
-        assert.ok(diagnostics.length === 0)
+        try {
+          assert.ok(diagnostics.length === 0)
+        } catch (e) {
+          // Trigger the linter again to wait for Python interpreter discovering.
+          await manuallySaveDocument(document)
+          throw e
+        }
       })).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
