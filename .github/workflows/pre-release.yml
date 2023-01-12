@@ -30,6 +30,7 @@ jobs:
         with:
           release-type: node
           default-branch: next
+          prerelease: true
 
       - name: Install dependencies
         if: steps.release.outputs.release_created
