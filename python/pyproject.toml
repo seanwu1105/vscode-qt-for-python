@@ -16,7 +16,7 @@ pylint = "^2.14.5"
 mypy = "^0.971"
 black = "^22.6.0"
 pytest = "^7.1.2"
-pytest-cov = "^3.0.0"
+pytest-cov = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
