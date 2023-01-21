@@ -1,28 +1,30 @@
-import type { ExtensionContext } from 'vscode'
+import type { ExtensionContext, OutputChannel } from 'vscode'
 import { commands, window } from 'vscode'
-import type { LanguageClient } from 'vscode-languageclient/node'
 import { COMMANDS } from './commands'
 import { EXTENSION_NAMESPACE } from './constants'
-import {
-  startClient as startQmlLintClient,
-  stopClient as stopQmlLintClient,
-} from './qmllint/client'
+import { registerQmlLint } from './qmllint/register'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution } from './uic/uic-live-execution'
-import { notNil } from './utils'
 
-let outputChannel: ReturnType<typeof window.createOutputChannel>
-let qmlLintClient: LanguageClient | undefined = undefined
+let outputChannel: OutputChannel
 
 export async function activate(context: ExtensionContext) {
   outputChannel = window.createOutputChannel('Qt for Python')
 
   registerCommands(context)
 
-  registerUicLiveExecution({ context, onResultReceived })
+  registerUicLiveExecution({
+    subscriptions: context.subscriptions,
+    extensionPath: context.extensionPath,
+    onResultReceived,
+  })
 
-  await activateQmlLintFeatures(context)
+  registerQmlLint({
+    subscriptions: context.subscriptions,
+    extensionPath: context.extensionPath,
+    onResult: onResultReceived,
+  })
 }
 
 function registerCommands({ extensionPath, subscriptions }: ExtensionContext) {
@@ -45,30 +47,6 @@ function registerCommands({ extensionPath, subscriptions }: ExtensionContext) {
       ),
     ),
   )
-}
-
-async function activateQmlLintFeatures({
-  asAbsolutePath,
-  extensionPath,
-  subscriptions,
-}: Pick<
-  ExtensionContext,
-  'asAbsolutePath' | 'extensionPath' | 'subscriptions'
->) {
-  const startResult = await startQmlLintClient({
-    asAbsolutePath,
-    extensionPath,
-    onNotification: onResultReceived,
-  })
-
-  if (startResult.kind === 'NotFoundError') {
-    window.showErrorMessage(startResult.message)
-    return
-  }
-
-  subscriptions.push(startResult)
-
-  qmlLintClient = startResult.value
 }
 
 function onResultReceived(
@@ -105,8 +83,4 @@ function onResultReceived(
 async function showError(message: string) {
   outputChannel.appendLine(message)
   return window.showErrorMessage(message)
-}
-
-export async function deactivate() {
-  if (notNil(qmlLintClient)) await stopQmlLintClient(qmlLintClient)
 }

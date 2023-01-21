@@ -1,7 +1,6 @@
 import * as path from 'node:path'
 import type { Uri } from 'vscode'
 import { extensions, workspace } from 'vscode'
-import type { DocumentUri } from 'vscode-languageclient'
 import { URI } from 'vscode-uri'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
@@ -31,7 +30,7 @@ export async function resolveScriptCommand({
 export type ResolveScriptCommandArgs = {
   readonly tool: SupportedTool
   readonly extensionPath: string
-  readonly resource: DocumentUri
+  readonly resource: string
 }
 
 export type ResolveScriptCommandResult =

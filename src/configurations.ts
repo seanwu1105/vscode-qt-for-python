@@ -1,5 +1,4 @@
 import { workspace } from 'vscode'
-import type { DocumentUri } from 'vscode-languageclient'
 import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
 import { resolvePredefinedVariables } from './predefined-variable-resolver'
@@ -16,10 +15,15 @@ export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
   })
 }
 
+type GetPathFromConfig = {
+  readonly tool: SupportedTool
+  readonly resource: string
+}
+
 export function getOptionsFromConfig({
   tool,
   resource,
-}: GetPathFromConfig): CommandArgs {
+}: GetOptionsFromConfig): CommandArgs {
   return (
     workspace
       .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
@@ -32,7 +36,7 @@ export function getOptionsFromConfig({
     )
 }
 
-type GetPathFromConfig = {
+type GetOptionsFromConfig = {
   readonly tool: SupportedTool
-  readonly resource: DocumentUri
+  readonly resource: string
 }

@@ -6,7 +6,8 @@ import type { ErrorResult, SuccessResult } from '../types'
 import { compileUi } from './compile-ui'
 
 export function registerUicLiveExecution({
-  context: { extensionPath, subscriptions },
+  extensionPath,
+  subscriptions,
   onResultReceived,
 }: RegisterUicLiveExecutionArgs) {
   const watcher = workspace.createFileSystemWatcher('**/*.ui')
@@ -23,8 +24,10 @@ export function registerUicLiveExecution({
   subscriptions.push(watcher)
 }
 
-type RegisterUicLiveExecutionArgs = {
-  readonly context: ExtensionContext
+type RegisterUicLiveExecutionArgs = Pick<
+  ExtensionContext,
+  'subscriptions' | 'extensionPath'
+> & {
   readonly onResultReceived: (result: OnUiFileUpdatedResult) => void
 }
 
