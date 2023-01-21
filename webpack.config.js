@@ -42,29 +42,4 @@ const extensionConfig = {
   },
 }
 
-/** @type WebpackConfig */
-const qmlLintServerConfig = {
-  target: 'node',
-  mode: 'none',
-
-  entry: './src/qmllint/server/main.ts',
-  output: {
-    path: path.resolve(__dirname, 'out/qmllint/server'),
-    filename: 'main.js',
-    libraryTarget: 'commonjs2',
-  },
-  resolve: { extensions: ['.ts', '.js'] },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        exclude: /node_modules/,
-        use: [{ loader: 'ts-loader' }],
-      },
-    ],
-  },
-  devtool: 'nosources-source-map',
-  infrastructureLogging: { level: 'log' },
-}
-
-module.exports = [extensionConfig, qmlLintServerConfig]
+module.exports = [extensionConfig]
