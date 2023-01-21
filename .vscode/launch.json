@@ -12,20 +12,6 @@
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
       "outFiles": ["${workspaceFolder}/out/**/*.js"],
       "preLaunchTask": "${defaultBuildTask}"
-    },
-    {
-      "name": "Attach to QML Lint Server",
-      "type": "node",
-      "request": "attach",
-      "port": 6009,
-      "restart": true,
-      "outFiles": ["${workspaceFolder}/out/**/*.js"]
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Run Extension with Servers",
-      "configurations": ["Run Extension", "Attach to QML Lint Server"]
     }
   ]
 }
