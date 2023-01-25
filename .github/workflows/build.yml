@@ -50,7 +50,7 @@ jobs:
         run: npm ci
 
       - name: Package extension
-        run: npx vsce package
+        run: npx @vscode/vsce package
 
   ts-lint:
     runs-on: ubuntu-latest

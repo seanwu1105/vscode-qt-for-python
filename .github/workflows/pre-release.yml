@@ -38,11 +38,11 @@ jobs:
 
       - name: Package VSIX
         if: steps.release.outputs.release_created
-        run: npx vsce package --pre-release
+        run: npx @vscode/vsce package --pre-release
 
       - name: Publish on Visual Studio Code Extension Marketplace
         if: steps.release.outputs.release_created
-        run: npx vsce publish --pre-release
+        run: npx @vscode/vsce publish --pre-release
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
 
