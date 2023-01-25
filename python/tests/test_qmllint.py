@@ -4,6 +4,8 @@ import os
 import subprocess
 import typing
 
+import jsonschema
+import pytest
 from tests import ASSETS_DIR, SCRIPTS_DIR
 
 
@@ -13,12 +15,14 @@ def test_qmllint_version():
     assert len(result.stdout.decode("utf-8")) > 0
 
 
-def test_qmllint_pass_qml():
+def test_qmllint_passed(schema):
     filename = "pass.qml"
     result = lint_qml(filename)
     assert result.returncode == 0
 
     parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
+    jsonschema.validate(instance=parsed, schema=schema)
+
     assert len(parsed["files"]) == 1
 
     file = parsed["files"][0]
@@ -27,96 +31,40 @@ def test_qmllint_pass_qml():
     assert file["warnings"] == []
 
 
-def test_qmllint_missing_import_qml():
-    filename = "missing_import.qml"
-    result = lint_qml(filename)
-    assert result.returncode != 0
+def test_qmllint_informed(schema):
+    filenames = ["multiline_string.qml"]
 
-    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
-    assert len(parsed["files"]) == 1
+    for filename in filenames:
+        result = lint_qml(filename)
+        assert result.returncode == 0
 
-    file = parsed["files"][0]
-    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
-    assert file["success"] == False
-    assert len(file["warnings"]) > 0
+        parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
+        jsonschema.validate(instance=parsed, schema=schema)
 
-    for warning in file["warnings"]:
-        assert type(warning["charOffset"]) in (int, type(None))
-        assert type(warning["column"]) in (int, type(None))
-        assert type(warning["length"]) in (int, type(None))
-        assert type(warning["line"]) in (int, type(None))
-        assert type(warning["message"]) == str
-        assert type(warning["suggestions"]) == list
-        assert warning["type"] == "warning"
+        assert len(parsed["files"]) == 1
+
+        file = parsed["files"][0]
+        assert os.path.abspath(file["filename"]) == get_assets_path(filename)
+        assert file["success"] == True
+        assert len(file["warnings"]) > 0
 
 
-def test_qmllint_unknown_import_qml():
-    filename = "unknown_import.qml"
-    result = lint_qml(filename)
-    assert result.returncode != 0
+def test_qmllint_failed(schema):
+    filenames = ["missing_import.qml", "syntax_error.qml", "unknown_import.qml"]
 
-    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
-    assert len(parsed["files"]) == 1
+    for filename in filenames:
+        result = lint_qml(filename)
+        assert result.returncode != 0
 
-    file = parsed["files"][0]
-    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
-    assert file["success"] == False
-    assert len(file["warnings"]) > 0
+        parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
+        jsonschema.validate(instance=parsed, schema=schema)
 
-    for warning in file["warnings"]:
-        assert type(warning["charOffset"]) in (int, type(None))
-        assert type(warning["column"]) in (int, type(None))
-        assert type(warning["length"]) in (int, type(None))
-        assert type(warning["line"]) in (int, type(None))
-        assert type(warning["message"]) == str
-        assert type(warning["suggestions"]) == list
-        assert warning["type"] == "warning"
+        assert len(parsed["files"]) == 1
 
-
-def test_qmllint_syntax_error_qml():
-    filename = "syntax_error.qml"
-    result = lint_qml(filename)
-    assert result.returncode != 0
-
-    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
-    assert len(parsed["files"]) == 1
-
-    file = parsed["files"][0]
-    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
-    assert file["success"] == False
-    assert len(file["warnings"]) > 0
-
-    for warning in file["warnings"]:
-        assert type(warning["charOffset"]) in (int, type(None))
-        assert type(warning["column"]) in (int, type(None))
-        assert type(warning["length"]) in (int, type(None))
-        assert type(warning["line"]) in (int, type(None))
-        assert type(warning["message"]) == str
-        assert type(warning["suggestions"]) == list
-        assert warning["type"] == "critical"
-
-
-def test_qmllint_multiline_string_qml():
-    filename = "multiline_string.qml"
-    result = lint_qml(filename)
-    assert result.returncode == 0
-
-    parsed: QmlLintResult = parse_json(result.stdout.decode("utf-8"))
-    assert len(parsed["files"]) == 1
-
-    file = parsed["files"][0]
-    assert os.path.abspath(file["filename"]) == get_assets_path(filename)
-    assert file["success"] == True
-    assert len(file["warnings"]) == 1
-
-    for warning in file["warnings"]:
-        assert type(warning["charOffset"]) in (int, type(None))
-        assert type(warning["column"]) in (int, type(None))
-        assert type(warning["length"]) in (int, type(None))
-        assert type(warning["line"]) in (int, type(None))
-        assert type(warning["message"]) == str
-        assert type(warning["suggestions"]) == list
-        assert warning["type"] == "info"
+        file = parsed["files"][0]
+        assert os.path.abspath(file["filename"]) == get_assets_path(filename)
+        assert file["success"] == False
+        assert len(file["warnings"]) > 0
 
 
 def lint_qml(filename: str, debug=False):
@@ -137,32 +85,26 @@ def invoke_qmllint_py(args: list[str]):
     )
 
 
-def get_assets_path(filename: str):
-    return os.path.join(ASSETS_DIR, "qml", filename)
-
-
 def parse_json(string: str):
     return json.loads(
         string, object_hook=lambda d: collections.defaultdict(lambda: None, d)
     )
 
 
-class QmlLintWarning(typing.TypedDict):
-    charOffset: int | None
-    column: int
-    length: int
-    line: int
-    message: str
-    suggestions: list
-    type: (
-        typing.Literal["info"] | typing.Literal["warning"] | typing.Literal["critical"]
-    )
+@pytest.fixture
+def schema():
+    with open(get_assets_path("schema.json")) as f:
+        return json.load(f)
+
+
+def get_assets_path(filename: str):
+    return os.path.join(ASSETS_DIR, "qml", filename)
 
 
 class QmlLintFileResult(typing.TypedDict):
     filename: str
     success: bool
-    warnings: list[QmlLintWarning]
+    warnings: list
 
 
 class QmlLintResult(typing.TypedDict):
