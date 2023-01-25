@@ -1,7 +1,7 @@
 import os
 
-SCRIPTS_DIR = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), os.pardir, "scripts"
-)
+TESTS_DIR = os.path.dirname(os.path.realpath(__file__))
 
-ASSETS_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "assets")
+SCRIPTS_DIR = os.path.join(TESTS_DIR, os.pardir, "scripts")
+
+ASSETS_DIR = os.path.join(TESTS_DIR, "assets")

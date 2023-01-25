@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Source: https://github.com/qt/qtdeclarative/blob/dev/tools/qmllint/main.cpp#L437",
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "description": "Source: https://github.com/qt/qtdeclarative/blob/dev/src/qmlcompiler/qqmljslinter.cpp#L415",
+        "type": "object",
+        "properties": {
+          "filename": {
+            "type": "string"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "description": "Source: https://github.com/qt/qtdeclarative/blob/dev/src/qmlcompiler/qqmljslinter.cpp#L325",
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "debug",
+                    "warning",
+                    "critical",
+                    "fatal",
+                    "info",
+                    "unknown"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "line": {
+                  "type": "integer"
+                },
+                "column": {
+                  "type": "integer"
+                },
+                "charOffset": {
+                  "type": "integer"
+                },
+                "length": {
+                  "type": "integer"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "suggestion": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "message": {
+                        "type": "string"
+                      },
+                      "line": {
+                        "type": "integer"
+                      },
+                      "column": {
+                        "type": "integer"
+                      },
+                      "charOffset": {
+                        "type": "integer"
+                      },
+                      "length": {
+                        "type": "integer"
+                      },
+                      "replacement": {
+                        "type": "string"
+                      },
+                      "isHint": {
+                        "type": "boolean"
+                      },
+                      "filename": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "message",
+                      "line",
+                      "column",
+                      "charOffset",
+                      "length",
+                      "replacement",
+                      "isHint"
+                    ]
+                  }
+                }
+              },
+              "required": ["type", "message"]
+            }
+          },
+          "success": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "revision": {
+      "type": "integer",
+      "const": 3
+    }
+  }
+}
