@@ -1,26 +1,15 @@
 import { Diagnostic, DiagnosticSeverity, Position, Range } from 'vscode'
 import { notNil } from '../utils'
-import type { QmlLintWarning } from './lint'
+import type { QmlLintSuggestion, QmlLintWarning } from './lint'
+
+export const DIAGNOSTIC_SOURCE = 'qmllint'
 
 export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
-  const diagnostic = new Diagnostic(
-    new Range(
-      new Position(
-        notNil(qmlLintWarning.line) ? qmlLintWarning.line - 1 : 0,
-        notNil(qmlLintWarning.column) ? qmlLintWarning.column - 1 : 0,
-      ),
-      new Position(
-        notNil(qmlLintWarning.line) ? qmlLintWarning.line - 1 : 0,
-        notNil(qmlLintWarning.column) && notNil(qmlLintWarning.length)
-          ? qmlLintWarning.column + qmlLintWarning.length - 1
-          : 1,
-      ),
-    ),
-    qmlLintWarning.suggestions?.length === 0
-      ? qmlLintWarning.message
-      : `${qmlLintWarning.message} (${JSON.stringify(
-          qmlLintWarning.suggestions,
-        )})`,
+  const diagnostic = new DiagnosticWithSuggestions(
+    toRange(qmlLintWarning),
+    `${qmlLintWarning.message}${
+      notNil(qmlLintWarning.id) ? ` (${qmlLintWarning.id})` : ''
+    }`,
     qmlLintWarning.type === 'critical'
       ? DiagnosticSeverity.Error
       : qmlLintWarning.type === 'warning'
@@ -28,7 +17,40 @@ export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
       : DiagnosticSeverity.Information,
   )
 
-  diagnostic.source = 'qmllint'
+  diagnostic.suggestions = qmlLintWarning.suggestions ?? [] // for code actions
+
+  diagnostic.source = DIAGNOSTIC_SOURCE
 
   return diagnostic
+}
+
+export function toRange(value: LocationalQmlLintValue): Range {
+  return new Range(
+    new Position(
+      notNil(value.line) ? value.line - 1 : 0,
+      notNil(value.column) ? value.column - 1 : 0,
+    ),
+    new Position(
+      notNil(value.line) ? value.line - 1 : 0,
+      notNil(value.column) && notNil(value.length)
+        ? value.column + value.length - 1
+        : 1,
+    ),
+  )
+}
+
+type LocationalQmlLintValue = {
+  readonly line?: number
+  readonly column?: number
+  readonly length?: number
+}
+
+export class DiagnosticWithSuggestions extends Diagnostic {
+  suggestions: QmlLintSuggestion[] = []
+}
+
+export function isDiagnosticWithSuggestions(
+  diagnostic: Diagnostic,
+): diagnostic is DiagnosticWithSuggestions {
+  return 'suggestions' in diagnostic
 }
