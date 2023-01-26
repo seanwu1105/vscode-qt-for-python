@@ -1,7 +1,7 @@
+import { z } from 'zod'
 import type { CommandArgs, ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import type { ErrorResult, SuccessResult } from '../types'
-import { notNil } from '../utils'
 
 export async function lint({
   qmlLintCommand,
@@ -66,10 +66,14 @@ function parseQmlLintRunReturnValue(
     return { kind: 'ParseError', message: JSON.stringify(error) }
   }
 
-  if (!isQmlLintResult(json))
+  const parseQmlLintResult = qmlLintResultSchema.safeParse(json)
+
+  if (!parseQmlLintResult.success)
     return {
       kind: 'ParseError',
-      message: `Not a valid QML Lint result: ${value}`,
+      message: `Not a valid QML Lint result. \n${parseQmlLintResult.error.issues
+        .map(i => `${i.path}: ${i.message}`)
+        .join('\n')}`,
     }
   return { kind: 'Success', value: json }
 }
@@ -78,53 +82,42 @@ type ParseQmlLintRunReturnValueResult =
   | SuccessResult<QmlLintResult>
   | ErrorResult<'Parse'>
 
-export type QmlLintResult = {
-  readonly files: readonly QmlLintFileResult[]
-}
+// Converted from python/tests/assets/qml/schema.json
+const qmlLintWarningSchema = z.object({
+  type: z.enum(['debug', 'warning', 'critical', 'fatal', 'info', 'unknown']),
+  id: z.string().optional(),
+  line: z.number().int().optional(),
+  column: z.number().int().optional(),
+  charOffset: z.number().int().optional(),
+  length: z.number().int().optional(),
+  message: z.string(),
+  suggestions: z
+    .array(
+      z.object({
+        message: z.string(),
+        line: z.number().int(),
+        column: z.number().int(),
+        charOffset: z.number().int(),
+        length: z.number().int(),
+        replacement: z.string(),
+        isHint: z.boolean(),
+        filename: z.string().optional(),
+      }),
+    )
+    .optional(),
+})
 
-type QmlLintFileResult = {
-  readonly filename: string
-  readonly warnings: readonly QmlLintWarning[]
-}
+const qmlLintResultSchema = z.object({
+  files: z.array(
+    z.object({
+      filename: z.string(),
+      warnings: z.array(qmlLintWarningSchema),
+      success: z.boolean(),
+    }),
+  ),
+  revision: z.number(), // Should not be too strict to be 3 only
+})
 
-export type QmlLintWarning = {
-  readonly column?: number
-  readonly length?: number
-  readonly line?: number
-  readonly message: string
-  readonly suggestions: readonly unknown[]
-  readonly type: typeof QmlLintWarningType[number]
-}
+export type QmlLintResult = z.infer<typeof qmlLintResultSchema>
 
-const QmlLintWarningType = ['info', 'warning', 'critical'] as const
-
-function isQmlLintResult(value: any): value is QmlLintResult {
-  if (typeof value !== 'object') return false
-  if (!Array.isArray(value['files'])) return false
-  if (value.files.some((file: any) => !isQmlLintFileResult(file))) return false
-  return true
-}
-
-function isQmlLintFileResult(value: any): value is QmlLintFileResult {
-  if (typeof value !== 'object') return false
-  if (typeof value['filename'] !== 'string') return false
-  if (!Array.isArray(value['warnings'])) return false
-  if (value.warnings.some((warning: any) => !isQmlLintWarning(warning)))
-    return false
-  return true
-}
-
-function isQmlLintWarning(value: any): value is QmlLintWarning {
-  if (typeof value !== 'object') return false
-
-  if (typeof value['message'] !== 'string') return false
-  if (!Array.isArray(value['suggestions'])) return false
-  if (!QmlLintWarningType.includes(value['type'])) return false
-
-  if (notNil(value['column']) && typeof value['column'] !== 'number')
-    return false
-  if (notNil(value['length']) && typeof value['length'] !== 'number')
-    return false
-  if (notNil(value['line']) && typeof value['line'] !== 'number') return false
-  return true
-}
+export type QmlLintWarning = z.infer<typeof qmlLintWarningSchema>

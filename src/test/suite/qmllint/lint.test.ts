@@ -16,8 +16,10 @@ suite('qmllint/lint', () => {
       {
         filename: 'myFile.qml',
         warnings: [{ message: 'my message', suggestions: [], type: 'warning' }],
+        success: false,
       },
     ],
+    revision: 3,
   }
 
   let result: LintResult

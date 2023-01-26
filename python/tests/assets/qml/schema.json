@@ -47,7 +47,7 @@
                 "message": {
                   "type": "string"
                 },
-                "suggestion": {
+                "suggestions": {
                   "type": "array",
                   "items": {
                     "type": "object",
@@ -95,12 +95,14 @@
           "success": {
             "type": "boolean"
           }
-        }
+        },
+        "required": ["filename", "warnings", "success"]
       }
     },
     "revision": {
       "type": "integer",
       "const": 3
     }
-  }
+  },
+  "required": ["files", "revision"]
 }

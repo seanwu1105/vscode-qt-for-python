@@ -22,7 +22,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "vscode-uri": "^3.0.3"
+    "vscode-uri": "^3.0.3",
+    "zod": "^3.20.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
