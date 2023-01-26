@@ -4,6 +4,10 @@ import { EXTENSION_NAMESPACE } from '../constants'
 import type { ExecError, StdErrError } from '../run'
 import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
+import {
+  createQmlLintSuggestionsProvider,
+  QmlLintSuggestionCodeActionKind,
+} from './code-actions'
 import { toDiagnostic } from './converters'
 import type { QmlLintResult } from './lint'
 import { lint } from './lint'
@@ -39,6 +43,14 @@ export function registerQmlLint({
   subscriptions.push(
     workspace.onDidSaveTextDocument(async ({ uri, languageId }) =>
       lintQml({ uri, languageId, extensionPath, onResult }),
+    ),
+  )
+
+  subscriptions.push(
+    languages.registerCodeActionsProvider(
+      'qml',
+      createQmlLintSuggestionsProvider(),
+      { providedCodeActionKinds: [QmlLintSuggestionCodeActionKind] },
     ),
   )
 }

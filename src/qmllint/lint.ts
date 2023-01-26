@@ -75,7 +75,7 @@ function parseQmlLintRunReturnValue(
         .map(i => `${i.path}: ${i.message}`)
         .join('\n')}`,
     }
-  return { kind: 'Success', value: json }
+  return { kind: 'Success', value: parseQmlLintResult.data }
 }
 
 type ParseQmlLintRunReturnValueResult =
@@ -83,6 +83,17 @@ type ParseQmlLintRunReturnValueResult =
   | ErrorResult<'Parse'>
 
 // Converted from python/tests/assets/qml/schema.json
+export const qmlLintSuggestionSchema = z.object({
+  message: z.string(),
+  line: z.number().int(),
+  column: z.number().int(),
+  charOffset: z.number().int(),
+  length: z.number().int(),
+  replacement: z.string(),
+  isHint: z.boolean(),
+  filename: z.string().optional(),
+})
+
 const qmlLintWarningSchema = z.object({
   type: z.enum(['debug', 'warning', 'critical', 'fatal', 'info', 'unknown']),
   id: z.string().optional(),
@@ -91,20 +102,7 @@ const qmlLintWarningSchema = z.object({
   charOffset: z.number().int().optional(),
   length: z.number().int().optional(),
   message: z.string(),
-  suggestions: z
-    .array(
-      z.object({
-        message: z.string(),
-        line: z.number().int(),
-        column: z.number().int(),
-        charOffset: z.number().int(),
-        length: z.number().int(),
-        replacement: z.string(),
-        isHint: z.boolean(),
-        filename: z.string().optional(),
-      }),
-    )
-    .optional(),
+  suggestions: z.array(qmlLintSuggestionSchema).optional(),
 })
 
 const qmlLintResultSchema = z.object({
@@ -121,3 +119,5 @@ const qmlLintResultSchema = z.object({
 export type QmlLintResult = z.infer<typeof qmlLintResultSchema>
 
 export type QmlLintWarning = z.infer<typeof qmlLintWarningSchema>
+
+export type QmlLintSuggestion = z.infer<typeof qmlLintSuggestionSchema>

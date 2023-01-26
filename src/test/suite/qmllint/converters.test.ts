@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import * as assert from 'node:assert'
-import { Diagnostic, DiagnosticSeverity, Position, Range } from 'vscode'
-import { toDiagnostic } from '../../../qmllint/converters'
+import { DiagnosticSeverity, Position, Range } from 'vscode'
+import {
+  DiagnosticWithSuggestions,
+  toDiagnostic,
+} from '../../../qmllint/converters'
 import type { QmlLintWarning } from '../../../qmllint/lint'
 suite('qmllint/converters', () => {
   suite('toDiagnostic', () => {
@@ -16,7 +19,7 @@ suite('qmllint/converters', () => {
       }
 
       test('should return error diagnostic', () => {
-        const expectedDiagnostic = new Diagnostic(
+        const expectedDiagnostic = new DiagnosticWithSuggestions(
           new Range(new Position(0, 1), new Position(0, 4)),
           qmlLintWarning.message,
           DiagnosticSeverity.Error,
@@ -37,7 +40,7 @@ suite('qmllint/converters', () => {
       }
 
       test('should return warning diagnostic', () => {
-        const expectedDiagnostic = new Diagnostic(
+        const expectedDiagnostic = new DiagnosticWithSuggestions(
           new Range(new Position(0, 1), new Position(0, 4)),
           qmlLintWarning.message,
           DiagnosticSeverity.Warning,
@@ -58,7 +61,7 @@ suite('qmllint/converters', () => {
       }
 
       test('should return information diagnostic', () => {
-        const expectedDiagnostic = new Diagnostic(
+        const expectedDiagnostic = new DiagnosticWithSuggestions(
           new Range(new Position(0, 1), new Position(0, 4)),
           qmlLintWarning.message,
           DiagnosticSeverity.Information,
