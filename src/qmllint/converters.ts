@@ -16,7 +16,7 @@ export function toDiagnostic(qmlLintWarning: QmlLintWarning): Diagnostic {
           : 1,
       ),
     ),
-    qmlLintWarning.suggestions.length === 0
+    qmlLintWarning.suggestions?.length === 0
       ? qmlLintWarning.message
       : `${qmlLintWarning.message} (${JSON.stringify(
           qmlLintWarning.suggestions,
