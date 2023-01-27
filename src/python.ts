@@ -1,7 +1,6 @@
 import * as path from 'node:path'
-import type { Uri } from 'vscode'
 import { extensions, workspace } from 'vscode'
-import { URI } from 'vscode-uri'
+import type { URI } from 'vscode-uri'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
 import { notNil } from './utils'
@@ -11,9 +10,7 @@ export async function resolveScriptCommand({
   extensionPath,
   resource,
 }: ResolveScriptCommandArgs): Promise<ResolveScriptCommandResult> {
-  const pythonInterpreterPathResult = await getPythonInterpreterPath(
-    URI.parse(resource),
-  )
+  const pythonInterpreterPathResult = await getPythonInterpreterPath(resource)
   if (pythonInterpreterPathResult.kind === 'Success') {
     return {
       kind: 'Success',
@@ -30,7 +27,7 @@ export async function resolveScriptCommand({
 export type ResolveScriptCommandArgs = {
   readonly tool: SupportedTool
   readonly extensionPath: string
-  readonly resource: string
+  readonly resource: URI
 }
 
 export type ResolveScriptCommandResult =
@@ -38,7 +35,7 @@ export type ResolveScriptCommandResult =
   | ErrorResult<'NotFound'>
 
 async function getPythonInterpreterPath(
-  resource: Uri,
+  resource: URI,
 ): Promise<GetPythonInterpreterPathResult> {
   // Get path with the Python extension public API: https://github.com/microsoft/vscode-python/blob/main/src/client/apiTypes.ts
   const pythonExtensionApi = await extensions
@@ -72,7 +69,7 @@ type GetPythonInterpreterPathResult =
 // Excerpt from: https://github.com/microsoft/vscode-python/blob/344c912a1c15d07eb9b14bf749c7529a7fa0877b/src/client/apiTypes.ts#L15
 export type PythonExtensionApi = {
   readonly settings: {
-    getExecutionDetails(resource: Uri): {
+    getExecutionDetails(resource: URI): {
       readonly execCommand: CommandArgs | undefined
     }
   }

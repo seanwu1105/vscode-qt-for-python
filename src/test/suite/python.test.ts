@@ -2,6 +2,7 @@ import * as assert from 'node:assert'
 import * as path from 'node:path'
 import * as sinon from 'sinon'
 import { extensions, workspace } from 'vscode'
+import { URI } from 'vscode-uri'
 import type {
   PythonExtensionApi,
   ResolveScriptCommandArgs,
@@ -15,7 +16,7 @@ suite('python', () => {
     const args: ResolveScriptCommandArgs = {
       tool: 'qmllint',
       extensionPath: 'xyz',
-      resource: 'file:///abc',
+      resource: URI.file('file:///abc'),
     }
 
     let command: ResolveScriptCommandResult

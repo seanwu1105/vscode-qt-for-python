@@ -18,7 +18,7 @@ export async function compileUi(
   const getToolCommandResult = await getToolCommand({
     tool: 'uic',
     extensionPath,
-    resource: uiFile.toString(),
+    resource: uiFile,
   })
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
