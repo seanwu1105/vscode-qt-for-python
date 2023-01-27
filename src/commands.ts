@@ -1,4 +1,4 @@
-import type { ExtensionContext, Uri } from 'vscode'
+import type { ExtensionContext } from 'vscode'
 import { window } from 'vscode'
 import { URI } from 'vscode-uri'
 import { createUi } from './designer/create-ui'
@@ -51,5 +51,5 @@ export function getTargetDocumentUri(
 }
 
 export type GetTargetDocumentUriResult =
-  | SuccessResult<Uri>
+  | SuccessResult<URI>
   | ErrorResult<'Type'>

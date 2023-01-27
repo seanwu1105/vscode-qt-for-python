@@ -1,5 +1,6 @@
-import type { ExtensionContext, Uri } from 'vscode'
+import type { ExtensionContext } from 'vscode'
 import { workspace } from 'vscode'
+import type { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../constants'
 import type { ExecError, StdErrError } from '../run'
 import type { ErrorResult, SuccessResult } from '../types'
@@ -47,7 +48,7 @@ async function onUiFileUpdated({
 
 type OnUiFileUpdatedArgs = {
   readonly extensionPath: string
-  readonly uri: Uri
+  readonly uri: URI
 }
 
 type OnUiFileUpdatedResult =

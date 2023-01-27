@@ -1,6 +1,8 @@
-import { Diagnostic, DiagnosticSeverity, Position, Range } from 'vscode'
+import type { Diagnostic } from 'vscode'
+import { DiagnosticSeverity, Position, Range } from 'vscode'
 import { notNil } from '../utils'
-import type { QmlLintSuggestion, QmlLintWarning } from './lint'
+import { DiagnosticWithSuggestions } from './diagnostic-with-suggestions'
+import type { QmlLintWarning } from './lint-result'
 
 export const DIAGNOSTIC_SOURCE = 'qmllint'
 
@@ -43,14 +45,4 @@ type LocationalQmlLintValue = {
   readonly line?: number
   readonly column?: number
   readonly length?: number
-}
-
-export class DiagnosticWithSuggestions extends Diagnostic {
-  suggestions: QmlLintSuggestion[] = []
-}
-
-export function isDiagnosticWithSuggestions(
-  diagnostic: Diagnostic,
-): diagnostic is DiagnosticWithSuggestions {
-  return 'suggestions' in diagnostic
 }

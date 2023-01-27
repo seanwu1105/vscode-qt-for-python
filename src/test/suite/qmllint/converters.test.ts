@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import * as assert from 'node:assert'
 import { DiagnosticSeverity, Position, Range } from 'vscode'
-import {
-  DiagnosticWithSuggestions,
-  toDiagnostic,
-} from '../../../qmllint/converters'
-import type { QmlLintWarning } from '../../../qmllint/lint'
+import { toDiagnostic } from '../../../qmllint/converters'
+import { DiagnosticWithSuggestions } from '../../../qmllint/diagnostic-with-suggestions'
+import type { QmlLintWarning } from '../../../qmllint/lint-result'
 suite('qmllint/converters', () => {
   suite('toDiagnostic', () => {
     suite('when QML Lint warning is critical type', () => {

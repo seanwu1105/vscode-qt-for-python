@@ -1,5 +1,6 @@
-import type { DiagnosticCollection, ExtensionContext, Uri } from 'vscode'
+import type { DiagnosticCollection, ExtensionContext } from 'vscode'
 import { languages, workspace } from 'vscode'
+import type { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../constants'
 import type { ExecError, StdErrError } from '../run'
 import { getToolCommand } from '../tool-utils'
@@ -9,8 +10,8 @@ import {
   QmlLintSuggestionCodeActionKind,
 } from './code-actions'
 import { toDiagnostic } from './converters'
-import type { QmlLintResult } from './lint'
 import { lint } from './lint'
+import type { QmlLintResult } from './lint-result'
 
 let diagnosticCollection: DiagnosticCollection | undefined = undefined
 
@@ -62,7 +63,7 @@ type ActivateArgs = Pick<
   readonly onResult: (result: LintQmlResult) => void
 }
 
-function filterTextDocumentEvent(uri: Uri) {
+function filterTextDocumentEvent(uri: URI) {
   if (uri.fsPath.endsWith('.git')) return false
   if (uri.scheme === 'output') return false // Example "output:extension-output-..."
   if (uri.scheme === 'vscode') return false // Example "vscode:scm/git/scm0/input?rootUri..."
@@ -119,7 +120,7 @@ async function lintQml({
 }
 
 type LintQmlArgs = {
-  readonly uri: Uri
+  readonly uri: URI
   readonly languageId: string
   readonly extensionPath: string
   readonly onResult: (result: LintQmlResult) => void

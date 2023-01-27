@@ -1,7 +1,8 @@
 import * as assert from 'node:assert'
 import * as sinon from 'sinon'
-import type { LintArgs, LintResult, QmlLintResult } from '../../../qmllint/lint'
+import type { LintArgs, LintResult } from '../../../qmllint/lint'
 import { lint } from '../../../qmllint/lint'
+import type { QmlLintResult } from '../../../qmllint/lint-result'
 import * as Run from '../../../run'
 
 suite('qmllint/lint', () => {
