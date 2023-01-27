@@ -2,7 +2,6 @@ import type {
   CancellationToken,
   CodeActionContext,
   CodeActionProvider,
-  Command,
   ProviderResult,
   Range,
   Selection,
@@ -23,7 +22,7 @@ export function createQmlLintSuggestionsProvider(): CodeActionProvider {
       _range: Range | Selection,
       context: CodeActionContext,
       _token: CancellationToken,
-    ): ProviderResult<(Command | CodeAction)[]> {
+    ): ProviderResult<CodeAction[]> {
       const codeActions: CodeAction[] = []
 
       for (const diagnostic of context.diagnostics) {
