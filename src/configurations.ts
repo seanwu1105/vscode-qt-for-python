@@ -1,5 +1,5 @@
 import { workspace } from 'vscode'
-import { URI } from 'vscode-uri'
+import type { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
 import { resolvePredefinedVariables } from './predefined-variable-resolver'
 import type { CommandArgs } from './run'
@@ -9,15 +9,15 @@ export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
   return resolvePredefinedVariables({
     str:
       workspace
-        .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
+        .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, resource)
         .get<string>('path') ?? '',
-    resource: URI.parse(resource),
+    resource,
   })
 }
 
 type GetPathFromConfig = {
   readonly tool: SupportedTool
-  readonly resource: string
+  readonly resource: URI
 }
 
 export function getOptionsFromConfig({
@@ -26,17 +26,15 @@ export function getOptionsFromConfig({
 }: GetOptionsFromConfig): CommandArgs {
   return (
     workspace
-      .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, URI.parse(resource))
+      .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, resource)
       .get<readonly string[]>('options') ?? []
   )
     .map(str => str.split(' '))
     .flat()
-    .map(str =>
-      resolvePredefinedVariables({ str, resource: URI.parse(resource) }),
-    )
+    .map(str => resolvePredefinedVariables({ str, resource }))
 }
 
 type GetOptionsFromConfig = {
   readonly tool: SupportedTool
-  readonly resource: string
+  readonly resource: URI
 }

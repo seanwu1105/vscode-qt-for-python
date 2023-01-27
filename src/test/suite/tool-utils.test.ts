@@ -1,5 +1,6 @@
 import * as assert from 'node:assert'
 import * as sinon from 'sinon'
+import { URI } from 'vscode-uri'
 import * as Configurations from '../../configurations'
 import * as Python from '../../python'
 import type { GetToolCommandResult } from '../../tool-utils'
@@ -8,6 +9,7 @@ import { getToolCommand } from '../../tool-utils'
 suite('tool-utils', () => {
   suite('getToolCommand', () => {
     const mockOptions = ['--option1', '--option2']
+    const mockResource = URI.file('fake/resource')
 
     let result: GetToolCommandResult
 
@@ -26,7 +28,7 @@ suite('tool-utils', () => {
         result = await getToolCommand({
           tool: 'rcc',
           extensionPath: '',
-          resource: '',
+          resource: mockResource,
         })
       })
 
@@ -66,7 +68,7 @@ suite('tool-utils', () => {
           result = await getToolCommand({
             tool: 'rcc',
             extensionPath: '',
-            resource: '',
+            resource: mockResource,
           })
 
           assert.deepStrictEqual(result, {
@@ -89,7 +91,7 @@ suite('tool-utils', () => {
           result = await getToolCommand({
             tool: 'rcc',
             extensionPath: '',
-            resource: '',
+            resource: mockResource,
           })
 
           assert.strictEqual(result.kind, 'NotFoundError')

@@ -94,7 +94,7 @@ async function lintQml({
   const qmlLintCommandResult = await getToolCommand({
     tool: 'qmllint',
     extensionPath,
-    resource: uri.toString(),
+    resource: uri,
   })
 
   if (qmlLintCommandResult.kind === 'NotFoundError')

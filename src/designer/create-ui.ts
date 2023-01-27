@@ -22,7 +22,7 @@ export async function createUi(
   const getToolCommandResult = await getToolCommand({
     tool: 'designer',
     extensionPath,
-    resource: uri.toString(),
+    resource: uri,
   })
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult

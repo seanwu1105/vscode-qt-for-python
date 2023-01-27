@@ -1,3 +1,4 @@
+import type { URI } from 'vscode-uri'
 import { getOptionsFromConfig, getPathFromConfig } from './configurations'
 import { resolveScriptCommand } from './python'
 import type { CommandArgs } from './run'
@@ -39,7 +40,7 @@ export async function getToolCommand({
 type GetToolCommandArgs = {
   readonly tool: SupportedTool
   readonly extensionPath: string
-  readonly resource: string
+  readonly resource: URI
 }
 
 export type GetToolCommandResult =

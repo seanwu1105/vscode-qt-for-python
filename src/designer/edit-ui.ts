@@ -18,7 +18,7 @@ export async function editUi(
   const getToolCommandResult = await getToolCommand({
     tool: 'designer',
     extensionPath,
-    resource: uiFile.toString(),
+    resource: uiFile,
   })
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult

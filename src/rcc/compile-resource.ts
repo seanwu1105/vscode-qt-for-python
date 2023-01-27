@@ -18,7 +18,7 @@ export async function compileResource(
   const getToolCommandResult = await getToolCommand({
     tool: 'rcc',
     extensionPath,
-    resource: qrcFile.toString(),
+    resource: qrcFile,
   })
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
