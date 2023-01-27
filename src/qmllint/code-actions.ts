@@ -44,7 +44,7 @@ export function createQmlLintSuggestionsProvider(): CodeActionProvider {
             const edit = new WorkspaceEdit()
             edit.replace(
               notNil(suggestion.filename)
-                ? Uri.parse(suggestion.filename)
+                ? Uri.file(suggestion.filename)
                 : document.uri,
               toRange(suggestion),
               suggestion.replacement,
