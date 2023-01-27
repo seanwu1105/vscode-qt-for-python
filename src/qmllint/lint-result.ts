@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 // Converted from python/tests/assets/qml/schema.json
+
 export const qmlLintSuggestionSchema = z.object({
   message: z.string(),
   line: z.number().int(),
