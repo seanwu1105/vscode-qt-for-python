@@ -8,13 +8,11 @@ import type {
   Selection,
   TextDocument,
 } from 'vscode'
-import { CodeAction, CodeActionKind, Uri, WorkspaceEdit } from 'vscode'
+import { CodeAction, CodeActionKind, WorkspaceEdit } from 'vscode'
+import { URI } from 'vscode-uri'
 import { notNil } from '../utils'
-import {
-  DIAGNOSTIC_SOURCE,
-  isDiagnosticWithSuggestions,
-  toRange,
-} from './converters'
+import { DIAGNOSTIC_SOURCE, toRange } from './converters'
+import { isDiagnosticWithSuggestions } from './diagnostic-with-suggestions'
 
 export const QmlLintSuggestionCodeActionKind = CodeActionKind.QuickFix
 
@@ -44,7 +42,7 @@ export function createQmlLintSuggestionsProvider(): CodeActionProvider {
             const edit = new WorkspaceEdit()
             edit.replace(
               notNil(suggestion.filename)
-                ? Uri.file(suggestion.filename)
+                ? URI.file(suggestion.filename)
                 : document.uri,
               toRange(suggestion),
               suggestion.replacement,

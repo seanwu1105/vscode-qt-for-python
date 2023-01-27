@@ -1,6 +1,6 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import type { CodeAction, Range, TextDocument, Uri } from 'vscode'
+import type { CodeAction, Range, TextDocument } from 'vscode'
 import { commands, languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import {
@@ -105,7 +105,7 @@ async function manuallySaveDocument(document: TextDocument) {
   await commands.executeCommand('workbench.action.files.save')
 }
 
-async function getCodeActions(uri: Uri, range: Range): Promise<CodeAction[]> {
+async function getCodeActions(uri: URI, range: Range): Promise<CodeAction[]> {
   return await commands.executeCommand(
     'vscode.executeCodeActionProvider',
     uri,

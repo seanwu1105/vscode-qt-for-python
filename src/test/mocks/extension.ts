@@ -1,9 +1,10 @@
 import type { Extension, WorkspaceConfiguration } from 'vscode'
-import { ExtensionKind, Uri } from 'vscode'
+import { ExtensionKind } from 'vscode'
+import { URI } from 'vscode-uri'
 
 export const MOCK_EXTENSION: Extension<any> = {
   id: '',
-  extensionUri: Uri.from({ scheme: 'mockScheme', path: 'mockPath' }),
+  extensionUri: URI.from({ scheme: 'mockScheme', path: 'mockPath' }),
   extensionPath: 'mockPath',
   extensionKind: ExtensionKind.UI,
   isActive: true,
