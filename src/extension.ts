@@ -3,6 +3,7 @@ import { commands, window } from 'vscode'
 import { COMMANDS } from './commands'
 import { EXTENSION_NAMESPACE } from './constants'
 import { registerQmlLint } from './qmllint/register'
+import { registerQmlLanguageServer } from './qmlls/client'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution } from './uic/uic-live-execution'
@@ -23,6 +24,13 @@ export async function activate(context: ExtensionContext) {
   registerQmlLint({
     subscriptions: context.subscriptions,
     extensionPath: context.extensionPath,
+    onResult: onResultReceived,
+  })
+
+  registerQmlLanguageServer({
+    subscriptions: context.subscriptions,
+    extensionPath: context.extensionPath,
+    outputChannel,
     onResult: onResultReceived,
   })
 }
@@ -64,7 +72,10 @@ function onResultReceived(
   switch (result.kind) {
     case 'Success':
       return outputChannel.appendLine(
-        JSON.stringify(result.value, null, indent),
+        prefixLogging({
+          message: JSON.stringify(result.value, null, indent),
+          severity: 'INFO',
+        }),
       )
     case 'ParseError':
     case 'TypeError':
@@ -81,6 +92,20 @@ function onResultReceived(
 }
 
 async function showError(message: string) {
-  outputChannel.appendLine(message)
+  outputChannel.appendLine(prefixLogging({ message, severity: 'ERROR' }))
   return window.showErrorMessage(message)
 }
+
+function prefixLogging({ message, severity }: PrefixLoggingArgs) {
+  return `[${severity.padEnd(
+    Math.max(...LoggingSeverity.map(s => s.length)),
+  )} - ${new Date().toLocaleTimeString()}] ${message}`
+}
+
+type PrefixLoggingArgs = {
+  readonly message: string
+  readonly severity: LoggingSeverity
+}
+
+const LoggingSeverity = ['INFO', 'ERROR'] as const
+type LoggingSeverity = typeof LoggingSeverity[number]

@@ -22,6 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "vscode-languageclient": "^8.0.2",
     "vscode-uri": "^3.0.3",
     "zod": "^3.20.2"
   },
@@ -237,6 +238,27 @@
           "default": [],
           "markdownDescription": "The options passed to Qt `qmllint` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
+        },
+        "qtForPython.qmlls.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Enable the Qt `qmlls` integration.",
+          "scope": "window"
+        },
+        "qtForPython.qmlls.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to Qt `qmlls` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "window"
+        },
+        "qtForPython.qmlls.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "The options passed to Qt `qmlls` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "window"
         },
         "qtForPython.rcc.path": {
           "type": "string",

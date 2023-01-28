@@ -5,7 +5,7 @@ import * as os from 'node:os'
 import * as path from 'node:path'
 import { env, window, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
-import { notNil } from './utils'
+import { isNil, notNil } from './utils'
 
 export function resolvePredefinedVariables({
   str,
@@ -26,10 +26,10 @@ export function resolvePredefinedVariables({
 
 type ResolvePredefinedVariablesArgs = {
   readonly str: string
-  readonly resource: URI
+  readonly resource: URI | undefined
 }
 
-function getResolver(resource: URI) {
+function getResolver(resource: URI | undefined) {
   return {
     userHome: () => os.homedir(),
 
@@ -86,10 +86,12 @@ function getResolver(resource: URI) {
 
     // -- Additional Variables --
 
-    resource: () => resource.fsPath,
+    resource: () => resource?.fsPath ?? '',
 
     resourceWorkspaceFolder: () =>
-      workspace.getWorkspaceFolder(resource)?.uri.fsPath ?? '',
+      isNil(resource)
+        ? ''
+        : workspace.getWorkspaceFolder(resource)?.uri.fsPath ?? '',
 
     relativeResource: () =>
       path.relative(
