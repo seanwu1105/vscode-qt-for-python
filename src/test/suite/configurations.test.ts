@@ -13,7 +13,7 @@ suite('configurations', () => {
     setup(() =>
       sinon.replace(workspace, 'getConfiguration', () => ({
         ...MOCK_CONFIGURATION,
-        get: () => path.normalize('${userHome}/.local/bin/qmllint'),
+        get: () => path.normalize('${userHome}/.local/bin/qmlls'),
       })),
     )
 
@@ -21,8 +21,8 @@ suite('configurations', () => {
 
     test('should return the path from the configuration with predefined variable resolved', () =>
       assert.strictEqual(
-        getPathFromConfig({ tool: 'qmllint', resource: mockResource }),
-        path.normalize(`${os.homedir()}/.local/bin/qmllint`),
+        getPathFromConfig({ tool: 'qmlls', resource: mockResource }),
+        path.normalize(`${os.homedir()}/.local/bin/qmlls`),
       ))
   })
 
@@ -38,7 +38,7 @@ suite('configurations', () => {
 
     test('should return the options from the configuration with predefined variables resolved', () =>
       assert.deepStrictEqual(
-        getOptionsFromConfig({ tool: 'qmllint', resource: mockResource }),
+        getOptionsFromConfig({ tool: 'qmlls', resource: mockResource }),
         ['--option1', '--option2', `${process.env['HOME']}`],
       ))
   })

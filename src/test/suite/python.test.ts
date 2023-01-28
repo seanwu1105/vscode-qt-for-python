@@ -14,7 +14,7 @@ import { MOCK_CONFIGURATION, MOCK_EXTENSION } from '../mocks/extension'
 suite('python', () => {
   suite('resolveScriptCommand', () => {
     const args: ResolveScriptCommandArgs = {
-      tool: 'qmllint',
+      tool: 'qmlls',
       extensionPath: 'xyz',
       resource: URI.file('file:///abc'),
     }

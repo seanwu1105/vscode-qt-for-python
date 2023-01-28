@@ -2,7 +2,6 @@ import type { ExtensionContext, OutputChannel } from 'vscode'
 import { commands, window } from 'vscode'
 import { COMMANDS } from './commands'
 import { EXTENSION_NAMESPACE } from './constants'
-import { registerQmlLint } from './qmllint/register'
 import { registerQmlLanguageServer } from './qmlls/client'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
@@ -19,12 +18,6 @@ export async function activate(context: ExtensionContext) {
     subscriptions: context.subscriptions,
     extensionPath: context.extensionPath,
     onResultReceived,
-  })
-
-  registerQmlLint({
-    subscriptions: context.subscriptions,
-    extensionPath: context.extensionPath,
-    onResult: onResultReceived,
   })
 
   registerQmlLanguageServer({
