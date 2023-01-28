@@ -17,7 +17,7 @@ export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
 
 type GetPathFromConfig = {
   readonly tool: SupportedTool
-  readonly resource: URI
+  readonly resource: URI | undefined
 }
 
 export function getOptionsFromConfig({
@@ -36,5 +36,5 @@ export function getOptionsFromConfig({
 
 type GetOptionsFromConfig = {
   readonly tool: SupportedTool
-  readonly resource: URI
+  readonly resource: URI | undefined
 }

@@ -2,7 +2,7 @@ import * as assert from 'node:assert'
 import * as path from 'node:path'
 import * as process from 'node:process'
 import type { RunResult } from '../../run'
-import { run } from '../../run'
+import { run, wrapAndJoinCommandArgsWithQuotes } from '../../run'
 
 suite('run', () => {
   let result: RunResult
@@ -34,4 +34,12 @@ suite('run', () => {
       })
     },
   )
+})
+
+suite('wrapAndJoinCommandArgsWithQuotes', () => {
+  test('should wrap and join command args with quotes', async () => {
+    const args = ['a', 'b c', 'd']
+    const expected = 'a "b c" d'
+    assert.strictEqual(wrapAndJoinCommandArgsWithQuotes(args), expected)
+  })
 })

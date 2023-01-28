@@ -8,7 +8,7 @@ import { notNil } from './utils'
 export async function run({ command, cwd }: RunArgs): Promise<RunResult> {
   return new Promise<RunResult>(resolve => {
     exec(
-      command.map(s => (s.includes(' ') ? `"${s}"` : s)).join(' '),
+      wrapAndJoinCommandArgsWithQuotes(command),
       { cwd },
       (error, stdout, stderr) => {
         if (notNil(error)) resolve({ kind: 'ExecError', error, stdout, stderr })
@@ -37,4 +37,8 @@ export type StdErrError = {
   readonly kind: 'StdErrError'
   readonly stdout: string
   readonly stderr: string
+}
+
+export function wrapAndJoinCommandArgsWithQuotes(args: CommandArgs): string {
+  return args.map(arg => (arg.includes(' ') ? `"${arg}"` : arg)).join(' ')
 }

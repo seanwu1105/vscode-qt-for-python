@@ -27,7 +27,7 @@ export async function resolveScriptCommand({
 export type ResolveScriptCommandArgs = {
   readonly tool: SupportedTool
   readonly extensionPath: string
-  readonly resource: URI
+  readonly resource: URI | undefined
 }
 
 export type ResolveScriptCommandResult =
@@ -35,7 +35,7 @@ export type ResolveScriptCommandResult =
   | ErrorResult<'NotFound'>
 
 async function getPythonInterpreterPath(
-  resource: URI,
+  resource: URI | undefined,
 ): Promise<GetPythonInterpreterPathResult> {
   // Get path with the Python extension public API: https://github.com/microsoft/vscode-python/blob/main/src/client/apiTypes.ts
   const pythonExtensionApi = await extensions
@@ -69,7 +69,7 @@ type GetPythonInterpreterPathResult =
 // Excerpt from: https://github.com/microsoft/vscode-python/blob/344c912a1c15d07eb9b14bf749c7529a7fa0877b/src/client/apiTypes.ts#L15
 export type PythonExtensionApi = {
   readonly settings: {
-    getExecutionDetails(resource: URI): {
+    getExecutionDetails(resource: URI | undefined): {
       readonly execCommand: CommandArgs | undefined
     }
   }

@@ -40,7 +40,7 @@ export async function getToolCommand({
 type GetToolCommandArgs = {
   readonly tool: SupportedTool
   readonly extensionPath: string
-  readonly resource: URI
+  readonly resource: URI | undefined
 }
 
 export type GetToolCommandResult =
