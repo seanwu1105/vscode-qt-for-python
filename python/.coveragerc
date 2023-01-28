@@ -1,7 +1,6 @@
 [run]
 omit =
     **/test_*.py
-    scripts/qmllint.py
     scripts/qmlls.py
     scripts/rcc.py
     scripts/uic.py
