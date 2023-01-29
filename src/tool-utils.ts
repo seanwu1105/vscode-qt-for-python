@@ -6,7 +6,7 @@ import type { ErrorResult, SuccessResult, SupportedTool } from './types'
 
 export async function getToolCommand({
   tool,
-  extensionPath,
+  extensionUri,
   resource,
 }: GetToolCommandArgs): Promise<GetToolCommandResult> {
   const configToolOptions = getOptionsFromConfig({ tool, resource })
@@ -21,7 +21,7 @@ export async function getToolCommand({
 
   const resolveScriptCommandResult = await resolveScriptCommand({
     tool,
-    extensionPath,
+    extensionUri,
     resource,
   })
 
@@ -39,7 +39,7 @@ export async function getToolCommand({
 
 type GetToolCommandArgs = {
   readonly tool: SupportedTool
-  readonly extensionPath: string
+  readonly extensionUri: URI
   readonly resource: URI | undefined
 }
 

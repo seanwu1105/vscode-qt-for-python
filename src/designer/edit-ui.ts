@@ -6,7 +6,7 @@ import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function editUi(
-  { extensionPath }: CommandDeps,
+  { extensionUri }: CommandDeps,
   ...args: any[]
 ): Promise<EditUiResult> {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
@@ -17,7 +17,7 @@ export async function editUi(
 
   const getToolCommandResult = await getToolCommand({
     tool: 'designer',
-    extensionPath,
+    extensionUri,
     resource: uiFile,
   })
 

@@ -6,7 +6,7 @@ import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileUi(
-  { extensionPath }: CommandDeps,
+  { extensionUri }: CommandDeps,
   ...args: any[]
 ): Promise<CompileUiResult> {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
@@ -17,7 +17,7 @@ export async function compileUi(
 
   const getToolCommandResult = await getToolCommand({
     tool: 'uic',
-    extensionPath,
+    extensionUri,
     resource: uiFile,
   })
 

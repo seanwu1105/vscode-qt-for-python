@@ -6,7 +6,7 @@ import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileResource(
-  { extensionPath }: CommandDeps,
+  { extensionUri }: CommandDeps,
   ...args: any[]
 ): Promise<CompileResourceResult> {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
@@ -17,7 +17,7 @@ export async function compileResource(
 
   const getToolCommandResult = await getToolCommand({
     tool: 'rcc',
-    extensionPath,
+    extensionUri,
     resource: qrcFile,
   })
 
