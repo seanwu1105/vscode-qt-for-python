@@ -53,6 +53,7 @@
   ],
   "activationEvents": [
     "onLanguage:qml",
+    "workspaceContains:**/*.qml",
     "workspaceContains:**/*.ui",
     "onCommand:qtForPython.compileResource",
     "onCommand:qtForPython.compileUi",

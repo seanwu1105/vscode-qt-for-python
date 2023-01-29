@@ -37,7 +37,7 @@ async function main() {
     })
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('Failed to run tests')
+    console.error(err)
     process.exit(1)
   }
 }

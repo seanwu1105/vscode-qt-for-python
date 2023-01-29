@@ -11,17 +11,17 @@ export async function resolveScriptCommand({
   resource,
 }: ResolveScriptCommandArgs): Promise<ResolveScriptCommandResult> {
   const pythonInterpreterPathResult = await getPythonInterpreterPath(resource)
-  if (pythonInterpreterPathResult.kind === 'Success') {
-    return {
-      kind: 'Success',
-      value: [
-        ...pythonInterpreterPathResult.value,
-        path.join(extensionUri.fsPath, 'python', 'scripts', `${tool}.py`),
-      ],
-    }
-  }
 
-  return pythonInterpreterPathResult
+  if (pythonInterpreterPathResult.kind !== 'Success')
+    return pythonInterpreterPathResult
+
+  return {
+    kind: 'Success',
+    value: [
+      ...pythonInterpreterPathResult.value,
+      path.join(extensionUri.fsPath, 'python', 'scripts', `${tool}.py`),
+    ],
+  }
 }
 
 export type ResolveScriptCommandArgs = {

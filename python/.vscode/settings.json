@@ -8,9 +8,9 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
+  "python.defaultInterpreterPath": "./.venv/bin/python", // This is required for e2e tests.
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
-  "python.linting.pylintArgs": ["--rcfile=python/.pylintrc"],
   "python.linting.mypyEnabled": true
 }
