@@ -36,12 +36,9 @@ export async function registerQmlLanguageServer({
   await activateClient()
 
   async function activateClient() {
-    if (!workspace.getConfiguration('qtForPython.qmlls').get('enabled')) {
-      await stopClient()
-      return
-    }
-
     await stopClient()
+
+    if (!workspace.getConfiguration('qtForPython.qmlls').get('enabled')) return
 
     const startClientResult = await startClient({
       extensionUri,
@@ -51,6 +48,7 @@ export async function registerQmlLanguageServer({
     if (startClientResult.kind !== 'Success') return onResult(startClientResult)
 
     client = startClientResult.value
+    subscriptions.push(client)
   }
 
   async function stopClient() {
