@@ -22,6 +22,7 @@ def invoke_rcc_py(args: list[str]):
         ["poetry", "run", "python", "rcc.py", *args],
         cwd=SCRIPTS_DIR,
         capture_output=True,
+        check=True,
     )
 
 

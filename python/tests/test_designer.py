@@ -19,6 +19,7 @@ def invoke_designer_py(args: list[str]):
         ["poetry", "run", "python", "designer.py", *args],
         cwd=SCRIPTS_DIR,
         capture_output=True,
+        check=True,
     )
 
 
