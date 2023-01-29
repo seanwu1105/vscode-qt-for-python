@@ -27,7 +27,7 @@ export const COMMANDS = [
   },
 ] as const
 
-export type CommandDeps = Pick<ExtensionContext, 'extensionPath'>
+export type CommandDeps = Pick<ExtensionContext, 'extensionUri'>
 
 export function getTargetDocumentUri(
   ...args: readonly any[]

@@ -27,7 +27,7 @@ suite('tool-utils', () => {
 
         result = await getToolCommand({
           tool: 'rcc',
-          extensionPath: '',
+          extensionUri: URI.file('file:///xyz'),
           resource: mockResource,
         })
       })
@@ -67,7 +67,7 @@ suite('tool-utils', () => {
         test('should return path with options', async () => {
           result = await getToolCommand({
             tool: 'rcc',
-            extensionPath: '',
+            extensionUri: URI.file('file:///xyz'),
             resource: mockResource,
           })
 
@@ -90,7 +90,7 @@ suite('tool-utils', () => {
         test('should return path with options', async () => {
           result = await getToolCommand({
             tool: 'rcc',
-            extensionPath: '',
+            extensionUri: URI.file('file:///xyz'),
             resource: mockResource,
           })
 

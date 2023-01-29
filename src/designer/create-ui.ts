@@ -10,7 +10,7 @@ import type { ErrorResult, SuccessResult } from '../types'
 import { notNil } from '../utils'
 
 export async function createUi(
-  { extensionPath }: CommandDeps,
+  { extensionUri }: CommandDeps,
   ...args: any[]
 ): Promise<CreateUiResult> {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
@@ -21,7 +21,7 @@ export async function createUi(
 
   const getToolCommandResult = await getToolCommand({
     tool: 'designer',
-    extensionPath,
+    extensionUri,
     resource: uri,
   })
 

@@ -16,19 +16,19 @@ export async function activate(context: ExtensionContext) {
 
   registerUicLiveExecution({
     subscriptions: context.subscriptions,
-    extensionPath: context.extensionPath,
+    extensionUri: context.extensionUri,
     onResultReceived,
   })
 
   registerQmlLanguageServer({
     subscriptions: context.subscriptions,
-    extensionPath: context.extensionPath,
+    extensionUri: context.extensionUri,
     outputChannel,
     onResult: onResultReceived,
   })
 }
 
-function registerCommands({ extensionPath, subscriptions }: ExtensionContext) {
+function registerCommands({ extensionUri, subscriptions }: ExtensionContext) {
   return COMMANDS.map(command =>
     subscriptions.push(
       commands.registerCommand(
@@ -36,7 +36,7 @@ function registerCommands({ extensionPath, subscriptions }: ExtensionContext) {
         async (...args) => {
           try {
             return onResultReceived(
-              await command.callback({ extensionPath }, ...args),
+              await command.callback({ extensionUri }, ...args),
             )
           } catch (e) {
             return onResultReceived({

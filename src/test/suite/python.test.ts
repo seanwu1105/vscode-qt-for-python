@@ -15,7 +15,7 @@ suite('python', () => {
   suite('resolveScriptCommand', () => {
     const args: ResolveScriptCommandArgs = {
       tool: 'qmlls',
-      extensionPath: 'xyz',
+      extensionUri: URI.file('file:///xyz'),
       resource: URI.file('file:///abc'),
     }
 
@@ -50,7 +50,7 @@ suite('python', () => {
             value: [
               ...mockPythonExecCommand,
               path.join(
-                args.extensionPath,
+                args.extensionUri.fsPath,
                 'python',
                 'scripts',
                 `${args.tool}.py`,
@@ -83,7 +83,7 @@ suite('python', () => {
               value: [
                 mockDefaultInterpreterPath,
                 path.join(
-                  args.extensionPath,
+                  args.extensionUri.fsPath,
                   'python',
                   'scripts',
                   `${args.tool}.py`,

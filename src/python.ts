@@ -7,7 +7,7 @@ import { notNil } from './utils'
 
 export async function resolveScriptCommand({
   tool,
-  extensionPath,
+  extensionUri,
   resource,
 }: ResolveScriptCommandArgs): Promise<ResolveScriptCommandResult> {
   const pythonInterpreterPathResult = await getPythonInterpreterPath(resource)
@@ -16,7 +16,7 @@ export async function resolveScriptCommand({
       kind: 'Success',
       value: [
         ...pythonInterpreterPathResult.value,
-        path.join(extensionPath, 'python', 'scripts', `${tool}.py`),
+        path.join(extensionUri.fsPath, 'python', 'scripts', `${tool}.py`),
       ],
     }
   }
@@ -26,7 +26,7 @@ export async function resolveScriptCommand({
 
 export type ResolveScriptCommandArgs = {
   readonly tool: SupportedTool
-  readonly extensionPath: string
+  readonly extensionUri: URI
   readonly resource: URI | undefined
 }
 

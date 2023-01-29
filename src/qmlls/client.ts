@@ -8,6 +8,7 @@ import {
   LanguageClient,
   RevealOutputChannelOn,
 } from 'vscode-languageclient/node'
+import type { URI } from 'vscode-uri'
 import { wrapAndJoinCommandArgsWithQuotes } from '../run'
 import { getToolCommand } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
@@ -15,7 +16,7 @@ import { withConcatMap } from '../utils'
 
 export async function registerQmlLanguageServer({
   subscriptions,
-  extensionPath,
+  extensionUri,
   outputChannel,
   onResult,
 }: RegisterQmlLanguageServerArgs) {
@@ -43,7 +44,7 @@ export async function registerQmlLanguageServer({
     await stopClient()
 
     const startClientResult = await startClient({
-      extensionPath,
+      extensionUri,
       outputChannel,
     })
 
@@ -60,18 +61,18 @@ export async function registerQmlLanguageServer({
 
 type RegisterQmlLanguageServerArgs = {
   readonly subscriptions: Disposable[]
-  readonly extensionPath: string
+  readonly extensionUri: URI
   readonly outputChannel: OutputChannel
   readonly onResult: (result: StartClientResult) => void
 }
 
 async function startClient({
-  extensionPath,
+  extensionUri,
   outputChannel,
 }: StartClientArgs): Promise<StartClientResult> {
   const getToolCommandResult = await getToolCommand({
     tool: 'qmlls',
-    extensionPath,
+    extensionUri,
     resource: undefined,
   })
 
@@ -105,7 +106,7 @@ async function startClient({
 }
 
 type StartClientArgs = {
-  readonly extensionPath: string
+  readonly extensionUri: URI
   readonly outputChannel: OutputChannel
 }
 

@@ -7,34 +7,30 @@ import type { ErrorResult, SuccessResult } from '../types'
 import { compileUi } from './compile-ui'
 
 export function registerUicLiveExecution({
-  extensionPath,
+  extensionUri,
   subscriptions,
   onResultReceived,
 }: RegisterUicLiveExecutionArgs) {
   const watcher = workspace.createFileSystemWatcher('**/*.ui')
   watcher.onDidChange(async uri =>
-    onResultReceived(
-      await onUiFileUpdated({ uri, extensionPath: extensionPath }),
-    ),
+    onResultReceived(await onUiFileUpdated({ uri, extensionUri })),
   )
   watcher.onDidCreate(async uri =>
-    onResultReceived(
-      await onUiFileUpdated({ uri, extensionPath: extensionPath }),
-    ),
+    onResultReceived(await onUiFileUpdated({ uri, extensionUri })),
   )
   subscriptions.push(watcher)
 }
 
 type RegisterUicLiveExecutionArgs = Pick<
   ExtensionContext,
-  'subscriptions' | 'extensionPath'
+  'subscriptions' | 'extensionUri'
 > & {
   readonly onResultReceived: (result: OnUiFileUpdatedResult) => void
 }
 
 async function onUiFileUpdated({
   uri,
-  extensionPath,
+  extensionUri,
 }: OnUiFileUpdatedArgs): Promise<OnUiFileUpdatedResult> {
   const enabled =
     workspace
@@ -43,11 +39,11 @@ async function onUiFileUpdated({
 
   if (!enabled) return { kind: 'Success', value: 'Live execution disabled' }
 
-  return compileUi({ extensionPath }, uri)
+  return compileUi({ extensionUri }, uri)
 }
 
 type OnUiFileUpdatedArgs = {
-  readonly extensionPath: string
+  readonly extensionUri: URI
   readonly uri: URI
 }
 
