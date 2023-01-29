@@ -14,4 +14,5 @@ def invoke_qmlls_py(args: list[str]):
         ["poetry", "run", "python", "qmlls.py", *args],
         cwd=SCRIPTS_DIR,
         capture_output=True,
+        check=True,
     )
