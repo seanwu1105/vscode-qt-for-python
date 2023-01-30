@@ -13,6 +13,7 @@ export const MOCK_EXTENSION: Extension<any> = {
   activate: () => Promise.resolve({}),
 }
 
+// TODO: Remove this mock.
 export const MOCK_CONFIGURATION: WorkspaceConfiguration = {
   get: () => undefined,
   has: () => true,

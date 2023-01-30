@@ -1,44 +1,10 @@
-import { concatMap, defer, from, fromEventPattern, map, merge } from 'rxjs'
+import { defer, fromEventPattern, map, merge } from 'rxjs'
 import { workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
 import { resolvePredefinedVariables } from './predefined-variable-resolver'
 import type { CommandArgs } from './run'
 import type { SupportedTool } from './types'
-
-export function getPathFromConfig({ tool, resource }: GetPathFromConfig) {
-  return resolvePredefinedVariables({
-    str:
-      workspace
-        .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, resource)
-        .get<string>('path') ?? DEFAULT_PATH,
-    resource,
-  })
-}
-
-type GetPathFromConfig = {
-  readonly tool: SupportedTool
-  readonly resource: URI | undefined
-}
-
-export function getOptionsFromConfig({
-  tool,
-  resource,
-}: GetOptionsFromConfig): CommandArgs {
-  return (
-    workspace
-      .getConfiguration(`${EXTENSION_NAMESPACE}.${tool}`, resource)
-      .get<readonly string[]>('options') ?? []
-  )
-    .map(str => str.split(' '))
-    .flat()
-    .map(str => resolvePredefinedVariables({ str, resource }))
-}
-
-type GetOptionsFromConfig = {
-  readonly tool: SupportedTool
-  readonly resource: URI | undefined
-}
 
 export function getPathFromConfig$({ tool, resource }: GetPathFromConfig$Args) {
   return getConfiguration$({
@@ -49,41 +15,66 @@ export function getPathFromConfig$({ tool, resource }: GetPathFromConfig$Args) {
   }).pipe(map(path => resolvePredefinedVariables({ str: path, resource })))
 }
 
+export const DEFAULT_PATH = ''
+
 type GetPathFromConfig$Args = {
   readonly tool: SupportedTool
   readonly resource: URI | undefined
 }
 
-export const DEFAULT_PATH = ''
-
 export function getOptionsFromConfig$({
   tool,
   resource,
-}: GetOptionsFromConfig$Args) {
-  return getConfiguration$<readonly string[]>({
+}: GetOptionsFromConfigArgs) {
+  return getConfiguration$<CommandArgs>({
     section: `${EXTENSION_NAMESPACE}.${tool}`,
     key: 'options',
-    defaultValue: [],
+    defaultValue: DEFAULT_OPTIONS,
     resource,
   }).pipe(
-    concatMap(options => from(options)),
-    map(option => option.split(' ')),
-    concatMap(options => from(options)),
-    map(option => resolvePredefinedVariables({ str: option, resource })),
+    map(options =>
+      options
+        .map(option => option.split(' '))
+        .flat()
+        .map(str => resolvePredefinedVariables({ str, resource })),
+    ),
   )
 }
 
-type GetOptionsFromConfig$Args = {
+export const DEFAULT_OPTIONS = []
+
+type GetOptionsFromConfigArgs = {
   readonly tool: SupportedTool
   readonly resource: URI | undefined
 }
+
+export function getEnabledFromConfig$({
+  tool,
+  resource,
+}: GetEnabledFromConfigArgs) {
+  return getConfiguration$<boolean>({
+    section: `${EXTENSION_NAMESPACE}.${tool}`,
+    key: 'enabled',
+    defaultValue: DEFAULT_ENABLED,
+    resource,
+  })
+}
+
+export const DEFAULT_ENABLED = true
+
+type GetEnabledFromConfigArgs = {
+  readonly tool: SupportedSwitchableTool
+  readonly resource: URI | undefined
+}
+
+type SupportedSwitchableTool = Extract<SupportedTool, 'qmlls'>
 
 function getConfiguration$<T>({
   section,
   key,
   defaultValue,
   resource,
-}: GetConfiguration$Args<T>) {
+}: GetConfigurationArgs<T>) {
   return merge(
     defer(
       async () =>
@@ -104,7 +95,7 @@ function getConfiguration$<T>({
   )
 }
 
-type GetConfiguration$Args<T> = {
+type GetConfigurationArgs<T> = {
   readonly section: string
   readonly key: string
   readonly defaultValue: T

@@ -38,6 +38,7 @@ export async function registerQmlLanguageServer({
   async function activateClient() {
     await stopClient()
 
+    // TODO: Use `getEnabledFromConfig$` instead.
     if (!workspace.getConfiguration('qtForPython.qmlls').get('enabled')) return
 
     const startClientResult = await startClient({
