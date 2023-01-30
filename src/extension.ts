@@ -2,7 +2,6 @@ import type { ExtensionContext, OutputChannel } from 'vscode'
 import { commands, window } from 'vscode'
 import { COMMANDS } from './commands'
 import { EXTENSION_NAMESPACE } from './constants'
-import { registerQmlLanguageServer } from './qmlls/client'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution } from './uic/uic-live-execution'
@@ -20,12 +19,12 @@ export async function activate(context: ExtensionContext) {
     onResultReceived,
   })
 
-  registerQmlLanguageServer({
-    subscriptions: context.subscriptions,
-    extensionUri: context.extensionUri,
-    outputChannel,
-    onResult: onResultReceived,
-  })
+  // registerQmlLanguageServer({
+  //   subscriptions: context.subscriptions,
+  //   extensionUri: context.extensionUri,
+  //   outputChannel,
+  //   onResult: onResultReceived,
+  // })
 }
 
 function registerCommands({ extensionUri, subscriptions }: ExtensionContext) {
