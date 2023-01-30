@@ -48,7 +48,7 @@ export async function waitFor<T>(
   const defaultOptions: Required<WaitForOptions> = {
     timeout:
       process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
-    interval: 100,
+    interval: 20,
   }
 
   const start = Date.now()
