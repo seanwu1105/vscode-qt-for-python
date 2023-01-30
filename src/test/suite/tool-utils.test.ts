@@ -1,51 +1,69 @@
 import * as assert from 'node:assert'
+import { of, Subscription } from 'rxjs'
 import * as sinon from 'sinon'
 import { URI } from 'vscode-uri'
 import * as Configurations from '../../configurations'
 import * as Python from '../../python'
-import type { GetToolCommandResult } from '../../tool-utils'
-import { getToolCommand } from '../../tool-utils'
+import { getToolCommand$, GetToolCommandResult } from '../../tool-utils'
+import { waitFor } from './test-utils'
 
 suite('tool-utils', () => {
-  suite('getToolCommand', () => {
-    const mockOptions = ['--option1', '--option2']
+  suite('getToolCommand$', () => {
+    const mockExtensionUri = URI.file('file:///xyz')
     const mockResource = URI.file('fake/resource')
 
-    let result: GetToolCommandResult
+    const toolCommand$ = getToolCommand$({
+      tool: 'designer',
+      extensionUri: mockExtensionUri,
+      resource: mockResource,
+    })
 
-    setup(() =>
-      sinon.replace(Configurations, 'getOptionsFromConfig', () => mockOptions),
-    )
+    const mockOptions = ['--option1', '--option2']
 
-    teardown(() => sinon.restore())
+    let results: GetToolCommandResult[]
+    let subscription: Subscription
+
+    setup(() => {
+      results = []
+
+      sinon.replace(Configurations, 'getOptionsFromConfig$', () =>
+        of(mockOptions),
+      )
+    })
+
+    teardown(() => {
+      subscription.unsubscribe()
+      sinon.restore()
+    })
 
     suite('when the tool path is set in configuration', () => {
       const mockPath = 'foo/bar'
 
-      setup(async () => {
-        sinon.replace(Configurations, 'getPathFromConfig', () => mockPath)
-
-        result = await getToolCommand({
-          tool: 'rcc',
-          extensionUri: URI.file('file:///xyz'),
-          resource: mockResource,
-        })
-      })
+      setup(async () =>
+        sinon.replace(Configurations, 'getPathFromConfig$', () => of(mockPath)),
+      )
 
       teardown(() => sinon.restore())
 
-      test('should return path with options', () =>
-        assert.deepStrictEqual(result, {
-          kind: 'Success',
-          value: { command: [mockPath], options: mockOptions },
-        }))
+      test('should return path with options', async () => {
+        subscription = toolCommand$.subscribe(v => results.push(v))
+
+        await waitFor(() =>
+          assert.deepStrictEqual(results, [
+            {
+              kind: 'Success',
+              value: { command: [mockPath], options: mockOptions },
+            },
+          ]),
+        )
+      })
     })
 
     suite('when the tool path is not set in configuration', () => {
       const mockPath = ''
 
       setup(() =>
-        sinon.replace(Configurations, 'getPathFromConfig', () => mockPath),
+        sinon.replace(Configurations, 'getPathFromConfig$', () => of(mockPath)),
       )
 
       teardown(() => sinon.restore())
@@ -65,36 +83,39 @@ suite('tool-utils', () => {
         teardown(() => sinon.restore())
 
         test('should return path with options', async () => {
-          result = await getToolCommand({
-            tool: 'rcc',
-            extensionUri: URI.file('file:///xyz'),
-            resource: mockResource,
-          })
+          subscription = toolCommand$.subscribe(v => results.push(v))
 
-          assert.deepStrictEqual(result, {
-            kind: 'Success',
-            value: { command: mockCommand, options: mockOptions },
-          })
+          await waitFor(() =>
+            assert.deepStrictEqual(results, [
+              {
+                kind: 'Success',
+                value: { command: mockCommand, options: mockOptions },
+              },
+            ]),
+          )
         })
       })
 
       suite('when the tool cannot be found in Python environment', () => {
+        const mockScriptCommandResult: GetToolCommandResult = {
+          kind: 'NotFoundError',
+          message: 'failure',
+        }
+
         setup(() =>
           sinon.replace(Python, 'resolveScriptCommand', () =>
-            Promise.resolve({ kind: 'NotFoundError', message: 'failure' }),
+            Promise.resolve(mockScriptCommandResult),
           ),
         )
 
         teardown(() => sinon.restore())
 
         test('should return path with options', async () => {
-          result = await getToolCommand({
-            tool: 'rcc',
-            extensionUri: URI.file('file:///xyz'),
-            resource: mockResource,
-          })
+          subscription = toolCommand$.subscribe(v => results.push(v))
 
-          assert.strictEqual(result.kind, 'NotFoundError')
+          await waitFor(() =>
+            assert.deepStrictEqual(results, [mockScriptCommandResult]),
+          )
         })
       })
     })

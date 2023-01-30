@@ -10,6 +10,7 @@ export function isNil<T>(
   return !notNil(value)
 }
 
+// TODO: Remove this one.
 export function withConcatMap<E>(callback: (event: E) => Promise<void>) {
   const queue: E[] = []
 

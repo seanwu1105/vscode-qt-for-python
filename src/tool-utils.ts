@@ -1,40 +1,45 @@
+import { combineLatest, concatMap, defer, iif, map, Observable, of } from 'rxjs'
 import type { URI } from 'vscode-uri'
-import { getOptionsFromConfig, getPathFromConfig } from './configurations'
+import { getOptionsFromConfig$, getPathFromConfig$ } from './configurations'
 import { resolveScriptCommand } from './python'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
 
-export async function getToolCommand({
+export function getToolCommand$({
   tool,
   extensionUri,
   resource,
-}: GetToolCommandArgs): Promise<GetToolCommandResult> {
-  const configToolOptions = getOptionsFromConfig({ tool, resource })
+}: GetToolCommandArgs): Observable<GetToolCommandResult> {
+  return defer(() =>
+    combineLatest([
+      getPathFromConfig$({ tool, resource }),
+      getOptionsFromConfig$({ tool, resource }),
+    ]),
+  ).pipe(
+    concatMap(([path, options]) =>
+      iif(
+        () => path.length > 0,
 
-  const configToolPath = getPathFromConfig({ tool, resource })
+        of({
+          kind: 'Success',
+          value: { command: [path], options },
+        } as const),
 
-  if (configToolPath.length !== 0)
-    return {
-      kind: 'Success',
-      value: { command: [configToolPath], options: configToolOptions },
-    }
+        defer(() =>
+          resolveScriptCommand({ tool, extensionUri, resource }),
+        ).pipe(
+          map(result => {
+            if (result.kind === 'NotFoundError') return result
 
-  const resolveScriptCommandResult = await resolveScriptCommand({
-    tool,
-    extensionUri,
-    resource,
-  })
-
-  if (resolveScriptCommandResult.kind === 'NotFoundError')
-    return resolveScriptCommandResult
-
-  return {
-    kind: 'Success',
-    value: {
-      command: resolveScriptCommandResult.value,
-      options: configToolOptions,
-    },
-  }
+            return {
+              kind: 'Success',
+              value: { command: result.value, options },
+            } as const
+          }),
+        ),
+      ),
+    ),
+  )
 }
 
 type GetToolCommandArgs = {
