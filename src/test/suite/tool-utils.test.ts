@@ -1,10 +1,12 @@
 import * as assert from 'node:assert'
-import { of, Subscription } from 'rxjs'
+import type { Subscription } from 'rxjs'
+import { of } from 'rxjs'
 import * as sinon from 'sinon'
 import { URI } from 'vscode-uri'
 import * as Configurations from '../../configurations'
 import * as Python from '../../python'
-import { getToolCommand$, GetToolCommandResult } from '../../tool-utils'
+import type { GetToolCommandResult } from '../../tool-utils'
+import { getToolCommand$ } from '../../tool-utils'
 import { waitFor } from './test-utils'
 
 suite('tool-utils', () => {

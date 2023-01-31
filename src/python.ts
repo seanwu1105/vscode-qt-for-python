@@ -1,15 +1,7 @@
 import * as path from 'node:path'
-import type {
-  Observable} from 'rxjs';
-import {
-  concatMap,
-  defer,
-  fromEventPattern,
-  map,
-  merge,
-  of,
-} from 'rxjs'
-import type { Event} from 'vscode';
+import type { Observable } from 'rxjs'
+import { concatMap, defer, fromEventPattern, map, merge, of } from 'rxjs'
+import type { Event } from 'vscode'
 import { extensions, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 import type { CommandArgs } from './run'

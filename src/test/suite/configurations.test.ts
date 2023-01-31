@@ -12,7 +12,7 @@ import {
   getPathFromConfig$,
 } from '../../configurations'
 import { EXTENSION_NAMESPACE } from '../../constants'
-import { CommandArgs } from '../../run'
+import type { CommandArgs } from '../../run'
 import type { SupportedTool } from '../../types'
 import { waitFor } from './test-utils'
 
