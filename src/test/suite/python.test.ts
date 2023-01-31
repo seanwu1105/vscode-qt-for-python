@@ -3,12 +3,13 @@ import * as path from 'node:path'
 import type { Subscription } from 'rxjs'
 import { workspace } from 'vscode'
 import { URI } from 'vscode-uri'
-import type { ResolveScriptCommandResult } from '../../python';
+import type { ResolveScriptCommandResult } from '../../python'
 import { resolveScriptCommand$ } from '../../python'
 import type { SupportedTool } from '../../types'
-import { waitFor } from './test-utils'
+import { IS_CI, waitFor } from './test-utils'
 
-const PYTHON_TESTS_TIMEOUT = 10000
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
+const PYTHON_TESTS_TIMEOUT = IS_CI ? 100000 : 10000
 
 suite('python', () => {
   suite.only('resolveScriptCommand$', () => {

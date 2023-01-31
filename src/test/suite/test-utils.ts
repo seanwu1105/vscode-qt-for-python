@@ -19,7 +19,7 @@ const DEFAULT_CI_WAIT_TIME = 120000
 const DEFAULT_WAIT_TIME = 1000
 
 export async function sleep(
-  ms = process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
+  ms = IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
 ) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -46,8 +46,7 @@ export async function waitFor<T>(
   options?: WaitForOptions,
 ): Promise<T> {
   const defaultOptions: Required<WaitForOptions> = {
-    timeout:
-      process.env['CI'] === 'true' ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
+    timeout: IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
     interval: 20,
   }
 
@@ -63,3 +62,5 @@ export async function waitFor<T>(
     `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
   )
 }
+
+export const IS_CI = process.env['CI'] === 'true'
