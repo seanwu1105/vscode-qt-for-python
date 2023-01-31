@@ -1,127 +1,74 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import * as sinon from 'sinon'
-import { extensions, workspace } from 'vscode'
+import type { Subscription } from 'rxjs'
+import { workspace } from 'vscode'
 import { URI } from 'vscode-uri'
-import type {
-  PythonExtensionApi,
-  ResolveScriptCommandArgs,
-  ResolveScriptCommandResult,
-} from '../../python'
-import { resolveScriptCommand } from '../../python'
-import { MOCK_CONFIGURATION, MOCK_EXTENSION } from '../mocks/extension'
+import type { ResolveScriptCommandResult } from '../../python';
+import { resolveScriptCommand$ } from '../../python'
+import type { SupportedTool } from '../../types'
+import { waitFor } from './test-utils'
+
+const PYTHON_TESTS_TIMEOUT = 10000
 
 suite('python', () => {
-  suite('resolveScriptCommand', () => {
-    const args: ResolveScriptCommandArgs = {
-      tool: 'qmlls',
-      extensionUri: URI.file('file:///xyz'),
-      resource: URI.file('file:///abc'),
-    }
+  suite.only('resolveScriptCommand$', () => {
+    const tool: SupportedTool = 'designer'
+    const mockExtensionUri = URI.file('file:///xyz')
 
-    let command: ResolveScriptCommandResult
+    let results: ResolveScriptCommandResult[] = []
+    let subscription: Subscription
 
-    suite('when getting Python interpreter path is successful', () => {
-      const mockPythonExecCommand = ['python']
-
-      setup(() => {
-        const mockPythonExtensionApi: PythonExtensionApi = {
-          settings: {
-            getExecutionDetails: () => ({ execCommand: mockPythonExecCommand }),
-          },
-        }
-
-        sinon.replace(extensions, 'getExtension', (extensionId: string) => ({
-          ...MOCK_EXTENSION,
-          id: extensionId,
-          api: mockPythonExtensionApi,
-          activate: () => mockPythonExtensionApi as any,
-        }))
-      })
-
-      teardown(() => sinon.restore())
-
-      suite('when getting path from Python extension execCommand', () => {
-        setup(async () => (command = await resolveScriptCommand(args)))
-
-        test('should get success result', async () => {
-          const expectedResult: ResolveScriptCommandResult = {
-            kind: 'Success',
-            value: [
-              ...mockPythonExecCommand,
-              path.join(
-                args.extensionUri.fsPath,
-                'python',
-                'scripts',
-                `${args.tool}.py`,
-              ),
-            ],
-          }
-
-          assert.deepStrictEqual(command, expectedResult)
-        })
-      })
-
-      suite(
-        'when getting path from Python extension defaultInterpreterPath',
-        () => {
-          const mockDefaultInterpreterPath = 'python'
-
-          setup(async () => {
-            sinon.replace(workspace, 'getConfiguration', () => ({
-              ...MOCK_CONFIGURATION,
-              get: () => mockDefaultInterpreterPath,
-            }))
-            command = await resolveScriptCommand(args)
-          })
-
-          teardown(() => sinon.restore())
-
-          test('should get success result', async () => {
-            const expectedResult: ResolveScriptCommandResult = {
-              kind: 'Success',
-              value: [
-                mockDefaultInterpreterPath,
-                path.join(
-                  args.extensionUri.fsPath,
-                  'python',
-                  'scripts',
-                  `${args.tool}.py`,
-                ),
-              ],
-            }
-
-            assert.deepStrictEqual(command, expectedResult)
-          })
-        },
-      )
+    setup(() => {
+      results = []
+      subscription = resolveScriptCommand$({
+        tool,
+        resource: undefined,
+        extensionUri: mockExtensionUri,
+      }).subscribe(v => results.push(v))
     })
 
-    suite('when getting Python interpreter path is failed', async () => {
-      setup(async () => {
-        const mockPythonExtensionApi: PythonExtensionApi = {
-          settings: { getExecutionDetails: () => ({ execCommand: undefined }) },
-        }
+    teardown(() => subscription.unsubscribe())
 
-        sinon.replace(extensions, 'getExtension', (extensionId: string) => ({
-          ...MOCK_EXTENSION,
-          id: extensionId,
-          api: mockPythonExtensionApi,
-          activate: () => mockPythonExtensionApi as any,
-        }))
+    test('should get command with the interpreter in .venv', async () =>
+      waitFor(
+        () => {
+          assert.strictEqual(results.length, 1)
+          assert.ok(results[0])
+          assert.ok(results[0].kind === 'Success')
+          assert.ok(results[0].value.some(s => s.includes('.venv')))
+        },
+        { timeout: PYTHON_TESTS_TIMEOUT },
+      )).timeout(PYTHON_TESTS_TIMEOUT)
 
-        sinon.replace(workspace, 'getConfiguration', () => ({
-          ...MOCK_CONFIGURATION,
-          get: () => undefined,
-        }))
+    // Skip as we cannot change the interpreter programmatically:
+    // https://github.com/microsoft/vscode-python/issues/9673
+    suite.skip('when user change Python interpreter', () => {
+      setup(async () =>
+        workspace
+          .getConfiguration('python', undefined)
+          .update('defaultInterpreterPath', 'python'),
+      )
 
-        command = await resolveScriptCommand(args)
-      })
+      teardown(async () =>
+        workspace
+          .getConfiguration('python', undefined)
+          .update('defaultInterpreterPath', undefined),
+      )
 
-      teardown(() => sinon.restore())
-
-      test('should get error result', () =>
-        assert.deepStrictEqual(command.kind, 'NotFoundError'))
+      test('should get command with the new interpreter', async () =>
+        waitFor(
+          () => {
+            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+            assert.strictEqual(results.length, 2)
+            assert.ok(results[1])
+            assert.ok(results[1].kind === 'Success')
+            assert.strictEqual(results[1].value, [
+              'python',
+              path.join(mockExtensionUri.fsPath, 'script', `${tool}.py`),
+            ])
+          },
+          { timeout: PYTHON_TESTS_TIMEOUT },
+        )).timeout(PYTHON_TESTS_TIMEOUT)
     })
   })
 })
