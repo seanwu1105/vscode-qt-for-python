@@ -27,6 +27,7 @@ export async function activate(context: ExtensionContext) {
   // })
 }
 
+// TODO: Move to commands.ts
 function registerCommands({ extensionUri, subscriptions }: ExtensionContext) {
   return COMMANDS.map(command =>
     subscriptions.push(
