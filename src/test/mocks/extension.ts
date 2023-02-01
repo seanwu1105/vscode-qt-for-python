@@ -1,4 +1,4 @@
-import type { Extension, WorkspaceConfiguration } from 'vscode'
+import type { Extension } from 'vscode'
 import { ExtensionKind } from 'vscode'
 import { URI } from 'vscode-uri'
 
@@ -11,12 +11,4 @@ export const MOCK_EXTENSION: Extension<any> = {
   packageJSON: {},
   exports: {},
   activate: () => Promise.resolve({}),
-}
-
-// TODO: Remove this mock.
-export const MOCK_CONFIGURATION: WorkspaceConfiguration = {
-  get: () => undefined,
-  has: () => true,
-  inspect: () => undefined,
-  update: () => Promise.resolve(),
 }

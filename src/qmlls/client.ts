@@ -1,3 +1,4 @@
+import { firstValueFrom } from 'rxjs'
 import type { Disposable, OutputChannel } from 'vscode'
 import { workspace } from 'vscode'
 import type {
@@ -10,7 +11,7 @@ import {
 } from 'vscode-languageclient/node'
 import type { URI } from 'vscode-uri'
 import { wrapAndJoinCommandArgsWithQuotes } from '../run'
-import { getToolCommand } from '../tool-utils'
+import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 import { withConcatMap } from '../utils'
 
@@ -69,11 +70,14 @@ async function startClient({
   extensionUri,
   outputChannel,
 }: StartClientArgs): Promise<StartClientResult> {
-  const getToolCommandResult = await getToolCommand({
-    tool: 'qmlls',
-    extensionUri,
-    resource: undefined,
-  })
+  // TODO: Make it reactive.
+  const getToolCommandResult = await firstValueFrom(
+    getToolCommand$({
+      tool: 'qmlls',
+      extensionUri,
+      resource: undefined,
+    }),
+  )
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
 
