@@ -10,7 +10,7 @@ import {
 } from 'rxjs'
 import type { URI } from 'vscode-uri'
 import { getOptionsFromConfig$, getPathFromConfig$ } from './configurations'
-import { resolveScriptCommand } from './python'
+import { resolveScriptCommand$ } from './python'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
 
@@ -43,9 +43,7 @@ export function getToolCommand$({
           value: { command: [path], options },
         } as const),
 
-        defer(() =>
-          resolveScriptCommand({ tool, extensionUri, resource }),
-        ).pipe(
+        resolveScriptCommand$({ tool, extensionUri, resource }).pipe(
           map(result => {
             if (result.kind === 'NotFoundError') return result
 

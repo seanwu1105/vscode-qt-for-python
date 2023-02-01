@@ -12,7 +12,7 @@ import { IS_CI, waitFor } from './test-utils'
 const PYTHON_TESTS_TIMEOUT = IS_CI ? 100000 : 10000
 
 suite('python', () => {
-  suite.only('resolveScriptCommand$', () => {
+  suite('resolveScriptCommand$', () => {
     const tool: SupportedTool = 'designer'
     const mockExtensionUri = URI.file('file:///xyz')
 
