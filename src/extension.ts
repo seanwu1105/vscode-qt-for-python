@@ -1,7 +1,7 @@
+import type { Observer } from 'rxjs'
 import type { ExtensionContext, OutputChannel } from 'vscode'
-import { commands, window } from 'vscode'
-import { COMMANDS } from './commands'
-import { EXTENSION_NAMESPACE } from './constants'
+import { window } from 'vscode'
+import { registerCommands$ } from './commands'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { getUicLiveExecution$ } from './uic/uic-live-execution'
@@ -16,15 +16,25 @@ export async function activate({
   outputChannel = window.createOutputChannel('Qt for Python')
   subscriptions.push(outputChannel)
 
-  registerCommands({ extensionUri, subscriptions })
+  const observables = [
+    registerCommands$({ extensionUri }),
+    getUicLiveExecution$({ extensionUri }),
+  ]
 
-  subscriptions.push(
-    toDisposable(
-      getUicLiveExecution$({ extensionUri }).subscribe(v =>
-        onResultReceived(v),
-      ),
-    ),
-  )
+  const observer: Partial<Observer<Result>> = {
+    next: v => onResultReceived(v),
+    error: e =>
+      onResultReceived({
+        kind: 'UnexpectedError',
+        message: `Unexpected error: ${JSON.stringify(e)}`,
+      }),
+  }
+
+  const disposables = observables
+    .map(observable$ => observable$.subscribe(observer))
+    .map(toDisposable)
+
+  subscriptions.push(...disposables)
 
   // registerQmlLanguageServer({
   //   subscriptions: context.subscriptions,
@@ -34,43 +44,7 @@ export async function activate({
   // })
 }
 
-// TODO: Move to commands.ts
-function registerCommands({
-  extensionUri,
-  subscriptions,
-}: Pick<ExtensionContext, 'subscriptions' | 'extensionUri'>) {
-  return COMMANDS.map(command =>
-    subscriptions.push(
-      commands.registerCommand(
-        `${EXTENSION_NAMESPACE}.${command.name}`,
-        async (...args) => {
-          try {
-            return onResultReceived(
-              await command.callback({ extensionUri }, ...args),
-            )
-          } catch (e) {
-            return onResultReceived({
-              kind: 'UnexpectedError',
-              message: `Unexpected error: ${JSON.stringify(e)}`,
-            })
-          }
-        },
-      ),
-    ),
-  )
-}
-
-function onResultReceived(
-  result:
-    | SuccessResult<any>
-    | ExecError
-    | StdErrError
-    | ErrorResult<'Unexpected'>
-    | ErrorResult<'NotFound'>
-    | ErrorResult<'Type'>
-    | ErrorResult<'Parse'>
-    | ErrorResult<'IO'>,
-) {
+function onResultReceived(result: Result) {
   const indent = 2
   switch (result.kind) {
     case 'Success':
@@ -93,6 +67,16 @@ function onResultReceived(
       return showError(`${result.stderr}\n${result.stdout}`)
   }
 }
+
+type Result =
+  | SuccessResult<any>
+  | ExecError
+  | StdErrError
+  | ErrorResult<'Unexpected'>
+  | ErrorResult<'NotFound'>
+  | ErrorResult<'Type'>
+  | ErrorResult<'Parse'>
+  | ErrorResult<'IO'>
 
 async function showError(message: string) {
   outputChannel.appendLine(prefixLogging({ message, severity: 'ERROR' }))
