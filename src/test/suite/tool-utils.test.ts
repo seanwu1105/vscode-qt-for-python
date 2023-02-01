@@ -9,7 +9,7 @@ import type { GetToolCommandResult } from '../../tool-utils'
 import { getToolCommand$ } from '../../tool-utils'
 import { waitFor } from './test-utils'
 
-suite('tool-utils', () => {
+suite.only('tool-utils', () => {
   suite('getToolCommand$', () => {
     const mockExtensionUri = URI.file('file:///xyz')
     const mockResource = URI.file('fake/resource')
@@ -74,8 +74,8 @@ suite('tool-utils', () => {
         const mockCommand = ['foo', 'bar']
 
         setup(() =>
-          sinon.replace(Python, 'resolveScriptCommand', () =>
-            Promise.resolve({
+          sinon.replace(Python, 'resolveScriptCommand$', () =>
+            of({
               kind: 'Success',
               value: mockCommand,
             }),
@@ -105,8 +105,8 @@ suite('tool-utils', () => {
         }
 
         setup(() =>
-          sinon.replace(Python, 'resolveScriptCommand', () =>
-            Promise.resolve(mockScriptCommandResult),
+          sinon.replace(Python, 'resolveScriptCommand$', () =>
+            of(mockScriptCommandResult),
           ),
         )
 
