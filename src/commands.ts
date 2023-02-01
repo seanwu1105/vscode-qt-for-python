@@ -1,6 +1,8 @@
-import type { ExtensionContext } from 'vscode'
-import { window } from 'vscode'
+import { fromEventPattern } from 'rxjs'
+import type { ExtensionContext} from 'vscode';
+import { commands, Disposable, window } from 'vscode'
 import { URI } from 'vscode-uri'
+import { EXTENSION_NAMESPACE } from './constants'
 import { createUi } from './designer/create-ui'
 import { editUi } from './designer/edit-ui'
 import { compileResource } from './rcc/compile-resource'
@@ -8,7 +10,25 @@ import type { ErrorResult, SuccessResult } from './types'
 import { compileUi } from './uic/compile-ui'
 import { isNil } from './utils'
 
-export const COMMANDS = [
+export function registerCommands$({ extensionUri }: RegisterCommandsArgs) {
+  return fromEventPattern<CommandCallbackValue>(
+    callback =>
+      Disposable.from(
+        ...COMMANDS.map(command =>
+          commands.registerCommand(
+            `${EXTENSION_NAMESPACE}.${command.name}`,
+            (...args) => callback(command.callback({ extensionUri }, ...args)),
+          ),
+        ),
+      ),
+
+    (_, disposable) => disposable.dispose(),
+  )
+}
+
+type RegisterCommandsArgs = Pick<ExtensionContext, 'extensionUri'>
+
+const COMMANDS = [
   {
     name: 'compileResource',
     callback: compileResource,
@@ -26,6 +46,10 @@ export const COMMANDS = [
     callback: editUi,
   },
 ] as const
+
+type CommandCallbackValue = Awaited<
+  ReturnType<typeof COMMANDS[number]['callback']>
+>
 
 export type CommandDeps = Pick<ExtensionContext, 'extensionUri'>
 
