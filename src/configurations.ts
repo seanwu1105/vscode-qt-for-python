@@ -69,7 +69,7 @@ type GetEnabledFromConfigArgs = {
 
 type SupportedSwitchableTool = Extract<SupportedTool, 'qmlls'>
 
-function getConfiguration$<T>({
+export function getConfiguration$<T>({
   section,
   key,
   defaultValue,
