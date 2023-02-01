@@ -1,11 +1,12 @@
 import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { firstValueFrom } from 'rxjs'
 import type { URI } from 'vscode-uri'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
 import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
-import { getToolCommand } from '../tool-utils'
+import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 import { notNil } from '../utils'
 
@@ -19,11 +20,13 @@ export async function createUi(
 
   const uri = targetDocumentUriResult.value
 
-  const getToolCommandResult = await getToolCommand({
-    tool: 'designer',
-    extensionUri,
-    resource: uri,
-  })
+  const getToolCommandResult = await firstValueFrom(
+    getToolCommand$({
+      tool: 'designer',
+      extensionUri,
+      resource: uri,
+    }),
+  )
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
 

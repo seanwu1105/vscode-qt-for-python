@@ -1,8 +1,9 @@
+import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
 import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
-import { getToolCommand } from '../tool-utils'
+import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileUi(
@@ -15,11 +16,13 @@ export async function compileUi(
 
   const uiFile = targetDocumentUriResult.value
 
-  const getToolCommandResult = await getToolCommand({
-    tool: 'uic',
-    extensionUri,
-    resource: uiFile,
-  })
+  const getToolCommandResult = await firstValueFrom(
+    getToolCommand$({
+      tool: 'uic',
+      extensionUri,
+      resource: uiFile,
+    }),
+  )
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
 

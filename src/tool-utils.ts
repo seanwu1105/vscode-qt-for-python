@@ -1,27 +1,10 @@
 import type { Observable } from 'rxjs'
-import {
-  combineLatest,
-  concatMap,
-  defer,
-  firstValueFrom,
-  iif,
-  map,
-  of,
-} from 'rxjs'
+import { combineLatest, concatMap, defer, iif, map, of } from 'rxjs'
 import type { URI } from 'vscode-uri'
 import { getOptionsFromConfig$, getPathFromConfig$ } from './configurations'
 import { resolveScriptCommand$ } from './python'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
-
-// TODO: Remove it.
-export async function getToolCommand({
-  tool,
-  extensionUri,
-  resource,
-}: GetToolCommandArgs): Promise<GetToolCommandResult> {
-  return firstValueFrom(getToolCommand$({ tool, extensionUri, resource }))
-}
 
 export function getToolCommand$({
   tool,

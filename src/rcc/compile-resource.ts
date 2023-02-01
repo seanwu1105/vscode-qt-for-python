@@ -1,8 +1,9 @@
+import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
 import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
-import { getToolCommand } from '../tool-utils'
+import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileResource(
@@ -15,11 +16,13 @@ export async function compileResource(
 
   const qrcFile = targetDocumentUriResult.value
 
-  const getToolCommandResult = await getToolCommand({
-    tool: 'rcc',
-    extensionUri,
-    resource: qrcFile,
-  })
+  const getToolCommandResult = await firstValueFrom(
+    getToolCommand$({
+      tool: 'rcc',
+      extensionUri,
+      resource: qrcFile,
+    }),
+  )
 
   if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
 
