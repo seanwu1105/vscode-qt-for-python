@@ -20,7 +20,7 @@ export function resolveScriptCommand$({
         kind: 'Success',
         value: [
           ...result.value,
-          path.join(extensionUri.fsPath, 'scripts', `${tool}.py`),
+          path.join(extensionUri.fsPath, 'python', 'scripts', `${tool}.py`),
         ],
       }
     }),

@@ -9,7 +9,7 @@ import type { GetToolCommandResult } from '../../tool-utils'
 import { getToolCommand$ } from '../../tool-utils'
 import { waitFor } from './test-utils'
 
-suite.only('tool-utils', () => {
+suite('tool-utils', () => {
   suite('getToolCommand$', () => {
     const mockExtensionUri = URI.file('file:///xyz')
     const mockResource = URI.file('fake/resource')

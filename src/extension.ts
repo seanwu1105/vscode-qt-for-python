@@ -4,20 +4,27 @@ import { COMMANDS } from './commands'
 import { EXTENSION_NAMESPACE } from './constants'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
-import { registerUicLiveExecution } from './uic/uic-live-execution'
+import { getUicLiveExecution$ } from './uic/uic-live-execution'
+import { toDisposable } from './utils'
 
 let outputChannel: OutputChannel
 
-export async function activate(context: ExtensionContext) {
+export async function activate({
+  extensionUri,
+  subscriptions,
+}: ExtensionContext) {
   outputChannel = window.createOutputChannel('Qt for Python')
+  subscriptions.push(outputChannel)
 
-  registerCommands(context)
+  registerCommands({ extensionUri, subscriptions })
 
-  registerUicLiveExecution({
-    subscriptions: context.subscriptions,
-    extensionUri: context.extensionUri,
-    onResultReceived,
-  })
+  subscriptions.push(
+    toDisposable(
+      getUicLiveExecution$({ extensionUri }).subscribe(v =>
+        onResultReceived(v),
+      ),
+    ),
+  )
 
   // registerQmlLanguageServer({
   //   subscriptions: context.subscriptions,
@@ -28,7 +35,10 @@ export async function activate(context: ExtensionContext) {
 }
 
 // TODO: Move to commands.ts
-function registerCommands({ extensionUri, subscriptions }: ExtensionContext) {
+function registerCommands({
+  extensionUri,
+  subscriptions,
+}: Pick<ExtensionContext, 'subscriptions' | 'extensionUri'>) {
   return COMMANDS.map(command =>
     subscriptions.push(
       commands.registerCommand(

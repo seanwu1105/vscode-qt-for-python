@@ -6,10 +6,7 @@ import { URI } from 'vscode-uri'
 import type { ResolveScriptCommandResult } from '../../python'
 import { resolveScriptCommand$ } from '../../python'
 import type { SupportedTool } from '../../types'
-import { IS_CI, waitFor } from './test-utils'
-
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const PYTHON_TESTS_TIMEOUT = IS_CI ? 100000 : 10000
+import { PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT, waitFor } from './test-utils'
 
 suite('python', () => {
   suite('resolveScriptCommand$', () => {
@@ -38,8 +35,8 @@ suite('python', () => {
           assert.ok(results[0].kind === 'Success')
           assert.ok(results[0].value.some(s => s.includes('.venv')))
         },
-        { timeout: PYTHON_TESTS_TIMEOUT },
-      )).timeout(PYTHON_TESTS_TIMEOUT)
+        { timeout: PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT },
+      )).timeout(PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT)
 
     // Skip as we cannot change the interpreter programmatically:
     // https://github.com/microsoft/vscode-python/issues/9673
@@ -68,8 +65,8 @@ suite('python', () => {
               path.join(mockExtensionUri.fsPath, 'script', `${tool}.py`),
             ])
           },
-          { timeout: PYTHON_TESTS_TIMEOUT },
-        )).timeout(PYTHON_TESTS_TIMEOUT)
+          { timeout: PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT },
+        )).timeout(PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT)
     })
   })
 })

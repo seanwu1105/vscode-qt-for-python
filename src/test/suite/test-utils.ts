@@ -6,7 +6,17 @@ import { notNil } from '../../utils'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { name, publisher } = require('../../../package.json')
 
+const DEFAULT_CI_WAIT_TIME = 120000
+const DEFAULT_WAIT_TIME = 1000
+const DEFAULT_PYTHON_EXTENSION_DEPENDENT_WAIT_TIME = 10000
+
+export const IS_CI = process.env['CI'] === 'true'
+
 export const E2E_TIMEOUT = 1000000
+
+export const PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT = IS_CI
+  ? DEFAULT_CI_WAIT_TIME
+  : DEFAULT_PYTHON_EXTENSION_DEPENDENT_WAIT_TIME
 
 export const TEST_WORKSPACE_PATH = path.resolve(__dirname, '../../../python')
 
@@ -14,9 +24,6 @@ export const TEST_ASSETS_PATH = path.resolve(
   TEST_WORKSPACE_PATH,
   'tests/assets',
 )
-
-const DEFAULT_CI_WAIT_TIME = 120000
-const DEFAULT_WAIT_TIME = 1000
 
 export async function sleep(
   ms = IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
@@ -62,5 +69,3 @@ export async function waitFor<T>(
     `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
   )
 }
-
-export const IS_CI = process.env['CI'] === 'true'
