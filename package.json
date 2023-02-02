@@ -54,13 +54,8 @@
     "ms-python.python"
   ],
   "activationEvents": [
-    "onLanguage:qml",
     "workspaceContains:**/*.qml",
-    "workspaceContains:**/*.ui",
-    "onCommand:qtForPython.compileResource",
-    "onCommand:qtForPython.compileUi",
-    "onCommand:qtForPython.createUi",
-    "onCommand:qtForPython.editUi"
+    "workspaceContains:**/*.ui"
   ],
   "contributes": {
     "languages": [
