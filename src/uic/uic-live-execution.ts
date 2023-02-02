@@ -7,7 +7,7 @@ import type { ExecError, StdErrError } from '../run'
 import type { ErrorResult, SuccessResult, SupportedTool } from '../types'
 import { compileUi } from './compile-ui'
 
-export function getUicLiveExecution$({
+export function registerUicLiveExecution$({
   extensionUri,
 }: GetUicLiveExecutionArgs) {
   return uiFileWatcher$.pipe(

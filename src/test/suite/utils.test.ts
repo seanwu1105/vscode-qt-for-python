@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import * as assert from 'node:assert'
-import { isNil, notNil, withConcatMap } from '../../utils'
-import { sleep, waitFor } from './test-utils'
+import { isNil, notNil } from '../../utils'
 
 suite('utils', () => {
   test('notNil', () => {
@@ -22,36 +21,5 @@ suite('utils', () => {
     assert.strictEqual(isNil('foo'), false)
     assert.strictEqual(isNil([]), false)
     assert.strictEqual(isNil({}), false)
-  })
-
-  suite('withConcatMap', () => {
-    let executedValues: number[]
-
-    const handler = withConcatMap(async (e: number) => {
-      await sleep(e)
-      executedValues.push(e)
-    })
-
-    suite('only one event', () => {
-      const events = [10]
-
-      setup(() => (executedValues = []))
-
-      test('should get result value in sequential order', async () => {
-        events.forEach(handler)
-        await waitFor(() => assert.deepStrictEqual(executedValues, events))
-      })
-    })
-
-    suite('three events', () => {
-      const events = [10, 5, 4]
-
-      setup(() => (executedValues = []))
-
-      test('should get result value in sequential order', async () => {
-        events.forEach(handler)
-        await waitFor(() => assert.deepStrictEqual(executedValues, events))
-      })
-    })
   })
 })

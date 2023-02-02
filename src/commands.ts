@@ -1,5 +1,5 @@
 import { fromEventPattern } from 'rxjs'
-import type { ExtensionContext} from 'vscode';
+import type { ExtensionContext } from 'vscode'
 import { commands, Disposable, window } from 'vscode'
 import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
