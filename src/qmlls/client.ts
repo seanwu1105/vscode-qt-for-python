@@ -1,12 +1,5 @@
-import {
-  concatMap,
-  defer,
-  Observable,
-  of,
-  pairwise,
-  startWith,
-  using,
-} from 'rxjs'
+import type { Observable } from 'rxjs'
+import { concatMap, defer, of, using } from 'rxjs'
 import type { OutputChannel } from 'vscode'
 import type {
   LanguageClientOptions,
@@ -18,9 +11,10 @@ import {
 } from 'vscode-languageclient/node'
 import type { URI } from 'vscode-uri'
 import { getEnabledFromConfig$ } from '../configurations'
-import { CommandArgs, wrapAndJoinCommandArgsWithQuotes } from '../run'
+import type { CommandArgs } from '../run'
+import { wrapAndJoinCommandArgsWithQuotes } from '../run'
 import { getToolCommand$ } from '../tool-utils'
-import { ErrorResult, SuccessResult } from '../types'
+import type { ErrorResult, SuccessResult } from '../types'
 
 export function registerQmlLanguageServer$({
   extensionUri,
@@ -108,20 +102,4 @@ type CreateClientArgs = {
   readonly command: CommandArgs
   readonly options: CommandArgs
   readonly outputChannel: OutputChannel
-}
-
-// TODO: Unit test this behavior.
-function stopPreviousClient() {
-  return (source$: Observable<LanguageClient | undefined>) =>
-    source$.pipe(
-      startWith(undefined),
-      pairwise(),
-      concatMap(async ([previous]) => {
-        if (previous) {
-          await previous.stop()
-          previous.dispose()
-        }
-      }),
-      concatMap(() => source$),
-    )
 }
