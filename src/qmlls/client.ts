@@ -1,6 +1,13 @@
-import { firstValueFrom } from 'rxjs'
-import type { Disposable, OutputChannel } from 'vscode'
-import { workspace } from 'vscode'
+import {
+  concatMap,
+  defer,
+  Observable,
+  of,
+  pairwise,
+  startWith,
+  using,
+} from 'rxjs'
+import type { OutputChannel } from 'vscode'
 import type {
   LanguageClientOptions,
   ServerOptions,
@@ -10,82 +17,75 @@ import {
   RevealOutputChannelOn,
 } from 'vscode-languageclient/node'
 import type { URI } from 'vscode-uri'
-import { wrapAndJoinCommandArgsWithQuotes } from '../run'
+import { getEnabledFromConfig$ } from '../configurations'
+import { CommandArgs, wrapAndJoinCommandArgsWithQuotes } from '../run'
 import { getToolCommand$ } from '../tool-utils'
-import type { ErrorResult, SuccessResult } from '../types'
-import { withConcatMap } from '../utils'
+import { ErrorResult, SuccessResult } from '../types'
 
-export async function registerQmlLanguageServer({
-  subscriptions,
+export function registerQmlLanguageServer$({
   extensionUri,
   outputChannel,
-  onResult,
-}: RegisterQmlLanguageServerArgs) {
-  let client: LanguageClient | undefined
+}: RegisterQmlLanguageServerArgs): Observable<RegisterQmlLanguageServerResult> {
+  let client: LanguageClient | undefined = undefined
 
-  subscriptions.push(
-    // Make sure the configuration is in "window" scope.
-    workspace.onDidChangeConfiguration(
-      withConcatMap(async e => {
-        if (!e.affectsConfiguration('qtForPython.qmlls')) return
+  return getEnabledFromConfig$({ tool: 'qmlls', resource: undefined }).pipe(
+    concatMap(enabled => {
+      if (!enabled)
+        return defer(async () => {
+          await client?.dispose()
+          client = undefined
 
-        return await activateClient()
-      }),
-    ),
+          return { kind: 'Success', value: 'qmlls is disabled' } as const
+        })
+
+      return getToolCommand$({
+        tool: 'qmlls',
+        resource: undefined,
+        extensionUri,
+      }).pipe(
+        concatMap(result => {
+          if (result.kind !== 'Success') return of(result)
+
+          return defer(async () => {
+            await client?.dispose()
+          }).pipe(
+            concatMap(() =>
+              using(
+                () => {
+                  client = createClient({
+                    command: result.value.command,
+                    options: result.value.options,
+                    outputChannel,
+                  })
+
+                  return { unsubscribe: () => client?.dispose() }
+                },
+                async () => {
+                  await client?.start()
+                  return { kind: 'Success', value: 'qmlls is enabled' } as const
+                },
+              ),
+            ),
+          )
+        }),
+      )
+    }),
   )
-
-  await activateClient()
-
-  async function activateClient() {
-    await stopClient()
-
-    // TODO: Use `getEnabledFromConfig$` instead.
-    if (!workspace.getConfiguration('qtForPython.qmlls').get('enabled')) return
-
-    const startClientResult = await startClient({
-      extensionUri,
-      outputChannel,
-    })
-
-    if (startClientResult.kind !== 'Success') return onResult(startClientResult)
-
-    client = startClientResult.value
-    subscriptions.push(client)
-  }
-
-  async function stopClient() {
-    await client?.stop()
-    client = undefined
-  }
 }
 
 type RegisterQmlLanguageServerArgs = {
-  readonly subscriptions: Disposable[]
   readonly extensionUri: URI
   readonly outputChannel: OutputChannel
-  readonly onResult: (result: StartClientResult) => void
 }
 
-async function startClient({
-  extensionUri,
-  outputChannel,
-}: StartClientArgs): Promise<StartClientResult> {
-  // TODO: Make it reactive.
-  const getToolCommandResult = await firstValueFrom(
-    getToolCommand$({
-      tool: 'qmlls',
-      extensionUri,
-      resource: undefined,
-    }),
-  )
+type RegisterQmlLanguageServerResult =
+  | ErrorResult<'NotFound'>
+  | SuccessResult<string>
 
-  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
-
+function createClient({ command, options, outputChannel }: CreateClientArgs) {
   const serverOptions: ServerOptions = {
-    command: wrapAndJoinCommandArgsWithQuotes(
-      getToolCommandResult.value.command,
-    ),
-    args: [...getToolCommandResult.value.options],
+    command: wrapAndJoinCommandArgsWithQuotes(command),
+    args: [...options],
     options: { shell: true },
   }
 
@@ -96,21 +96,32 @@ async function startClient({
     revealOutputChannelOn: RevealOutputChannelOn.Never,
   }
 
-  const client = new LanguageClient(
+  return new LanguageClient(
     'qmlls',
     'QML Language Server',
     serverOptions,
     clientOptions,
   )
-
-  await client.start()
-
-  return { kind: 'Success', value: client }
 }
 
-type StartClientArgs = {
-  readonly extensionUri: URI
+type CreateClientArgs = {
+  readonly command: CommandArgs
+  readonly options: CommandArgs
   readonly outputChannel: OutputChannel
 }
 
-type StartClientResult = SuccessResult<LanguageClient> | ErrorResult<'NotFound'>
+// TODO: Unit test this behavior.
+function stopPreviousClient() {
+  return (source$: Observable<LanguageClient | undefined>) =>
+    source$.pipe(
+      startWith(undefined),
+      pairwise(),
+      concatMap(async ([previous]) => {
+        if (previous) {
+          await previous.stop()
+          previous.dispose()
+        }
+      }),
+      concatMap(() => source$),
+    )
+}

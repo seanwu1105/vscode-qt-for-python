@@ -2,9 +2,10 @@ import type { Observer } from 'rxjs'
 import type { ExtensionContext, OutputChannel } from 'vscode'
 import { window } from 'vscode'
 import { registerCommands$ } from './commands'
+import { registerQmlLanguageServer$ } from './qmlls/client'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
-import { getUicLiveExecution$ } from './uic/uic-live-execution'
+import { registerUicLiveExecution$ } from './uic/uic-live-execution'
 import { toDisposable } from './utils'
 
 let outputChannel: OutputChannel
@@ -18,7 +19,8 @@ export async function activate({
 
   const observables = [
     registerCommands$({ extensionUri }),
-    getUicLiveExecution$({ extensionUri }),
+    registerUicLiveExecution$({ extensionUri }),
+    registerQmlLanguageServer$({ extensionUri, outputChannel }),
   ]
 
   const observer: Partial<Observer<Result>> = {
@@ -35,13 +37,6 @@ export async function activate({
     .map(toDisposable)
 
   subscriptions.push(...disposables)
-
-  // registerQmlLanguageServer({
-  //   subscriptions: context.subscriptions,
-  //   extensionUri: context.extensionUri,
-  //   outputChannel,
-  //   onResult: onResultReceived,
-  // })
 }
 
 function onResultReceived(result: Result) {
