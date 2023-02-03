@@ -7,16 +7,13 @@ import { notNil } from '../../utils'
 const { name, publisher } = require('../../../package.json')
 
 const DEFAULT_CI_WAIT_TIME = 120000
-const DEFAULT_WAIT_TIME = 1000
-const DEFAULT_PYTHON_EXTENSION_DEPENDENT_WAIT_TIME = 10000
+const DEFAULT_WAIT_TIME = 5000
 
-export const IS_CI = process.env['CI'] === 'true'
+const IS_CI = process.env['CI'] === 'true'
+
+export const DEFAULT_TIMEOUT = IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME
 
 export const E2E_TIMEOUT = 1000000
-
-export const PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT = IS_CI
-  ? DEFAULT_CI_WAIT_TIME
-  : DEFAULT_PYTHON_EXTENSION_DEPENDENT_WAIT_TIME
 
 export const TEST_WORKSPACE_PATH = path.resolve(__dirname, '../../../python')
 
@@ -25,9 +22,7 @@ export const TEST_ASSETS_PATH = path.resolve(
   'tests/assets',
 )
 
-export async function sleep(
-  ms = IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
-) {
+export async function sleep(ms = DEFAULT_TIMEOUT) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
@@ -53,7 +48,7 @@ export async function waitFor<T>(
   options?: WaitForOptions,
 ): Promise<T> {
   const defaultOptions: Required<WaitForOptions> = {
-    timeout: IS_CI ? DEFAULT_CI_WAIT_TIME : DEFAULT_WAIT_TIME,
+    timeout: DEFAULT_TIMEOUT,
     interval: 20,
   }
 

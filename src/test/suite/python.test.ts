@@ -6,7 +6,7 @@ import { URI } from 'vscode-uri'
 import type { ResolveScriptCommandResult } from '../../python'
 import { resolveScriptCommand$ } from '../../python'
 import type { SupportedTool } from '../../types'
-import { PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT, waitFor } from './test-utils'
+import { waitFor } from './test-utils'
 
 suite('python', () => {
   suite('resolveScriptCommand$', () => {
@@ -28,15 +28,12 @@ suite('python', () => {
     teardown(() => subscription.unsubscribe())
 
     test('should get command with the interpreter in .venv', async () =>
-      waitFor(
-        () => {
-          assert.strictEqual(results.length, 1)
-          assert.ok(results[0])
-          assert.ok(results[0].kind === 'Success')
-          assert.ok(results[0].value.some(s => s.includes('.venv')))
-        },
-        { timeout: PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT },
-      )).timeout(PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT)
+      waitFor(() => {
+        assert.strictEqual(results.length, 1)
+        assert.ok(results[0])
+        assert.ok(results[0].kind === 'Success')
+        assert.ok(results[0].value.some(s => s.includes('.venv')))
+      }))
 
     // Skip as we cannot change the interpreter programmatically:
     // https://github.com/microsoft/vscode-python/issues/9673
@@ -54,19 +51,16 @@ suite('python', () => {
       )
 
       test('should get command with the new interpreter', async () =>
-        waitFor(
-          () => {
-            // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-            assert.strictEqual(results.length, 2)
-            assert.ok(results[1])
-            assert.ok(results[1].kind === 'Success')
-            assert.strictEqual(results[1].value, [
-              'python',
-              path.join(mockExtensionUri.fsPath, 'script', `${tool}.py`),
-            ])
-          },
-          { timeout: PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT },
-        )).timeout(PYTHON_EXTENSION_DEPENDENT_TEST_TIMEOUT)
+        waitFor(() => {
+          // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+          assert.strictEqual(results.length, 2)
+          assert.ok(results[1])
+          assert.ok(results[1].kind === 'Success')
+          assert.strictEqual(results[1].value, [
+            'python',
+            path.join(mockExtensionUri.fsPath, 'script', `${tool}.py`),
+          ])
+        }))
     })
   })
 })
