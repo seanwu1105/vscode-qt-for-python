@@ -8,6 +8,7 @@ import {
   E2E_TIMEOUT,
   setupE2EEnvironment,
   TEST_ASSETS_PATH,
+  waitFor,
 } from '../test-utils'
 
 suite('compile-ui/e2e', () => {
@@ -48,12 +49,14 @@ suite('compile-ui/e2e', () => {
       test('should run command', async () => {
         await commands.executeCommand(`${EXTENSION_NAMESPACE}.compileUi`)
 
-        assert.ok(
-          fs.existsSync(
-            path.resolve(
-              TEST_ASSETS_PATH,
-              'ui',
-              `ui_${sampleFilenameNoExt}.py`,
+        return waitFor(() =>
+          assert.ok(
+            fs.existsSync(
+              path.resolve(
+                TEST_ASSETS_PATH,
+                'ui',
+                `ui_${sampleFilenameNoExt}.py`,
+              ),
             ),
           ),
         )

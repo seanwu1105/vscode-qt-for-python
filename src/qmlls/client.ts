@@ -29,9 +29,45 @@ export function registerQmlLanguageServer$({
   extensionUri,
   outputChannel,
 }: RegisterQmlLanguageServerArgs): Observable<RegisterQmlLanguageServerResult> {
-  let client: LanguageClient | undefined = undefined
-
   const client$ = new ReplaySubject<LanguageClient | undefined>(1)
+
+  const createClient$ = getToolCommand$({
+    tool: 'qmlls',
+    resource: undefined,
+    extensionUri,
+  }).pipe(
+    concatMap(result => {
+      if (result.kind !== 'Success') return of(result)
+
+      return using(
+        () => {
+          const client = createClient({
+            command: result.value.command,
+            options: result.value.options,
+            outputChannel,
+          })
+          client$.next(client)
+
+          return { unsubscribe: () => client.dispose() }
+        },
+        () =>
+          client$.pipe(
+            stopPreviousClient(),
+            concatMap(client =>
+              defer(async () => {
+                await client?.start()
+                return {
+                  kind: 'Success',
+                  value: `qmlls is enabled with latest config: ${JSON.stringify(
+                    result.value,
+                  )}`,
+                } as const
+              }),
+            ),
+          ),
+      )
+    }),
+  )
 
   return getEnabledFromConfig$({ tool: 'qmlls', resource: undefined }).pipe(
     switchMap(enabled => {
@@ -41,45 +77,7 @@ export function registerQmlLanguageServer$({
           return { kind: 'Success', value: 'qmlls is disabled' } as const
         })
 
-      return getToolCommand$({
-        tool: 'qmlls',
-        resource: undefined,
-        extensionUri,
-      }).pipe(
-        concatMap(result => {
-          if (result.kind !== 'Success') return of(result)
-
-          return using(
-            () => {
-              client = createClient({
-                command: result.value.command,
-                options: result.value.options,
-                outputChannel,
-              })
-              client$.next(client)
-
-              return {
-                unsubscribe: () => client?.dispose(),
-              }
-            },
-            () =>
-              client$.pipe(
-                stopPreviousClient(),
-                concatMap(client =>
-                  defer(async () => {
-                    await client?.start()
-                    return {
-                      kind: 'Success',
-                      value: `qmlls is enabled with latest config: ${JSON.stringify(
-                        result.value,
-                      )}`,
-                    } as const
-                  }),
-                ),
-              ),
-          )
-        }),
-      )
+      return createClient$
     }),
   )
 }

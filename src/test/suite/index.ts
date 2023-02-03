@@ -1,12 +1,14 @@
 import * as glob from 'glob'
 import * as Mocha from 'mocha'
 import * as path from 'node:path'
+import { DEFAULT_TIMEOUT } from './test-utils'
 
 export async function run(): Promise<void> {
   // Create the mocha test
   const mocha = new Mocha({
     ui: 'tdd',
     color: true,
+    timeout: DEFAULT_TIMEOUT,
   })
 
   const testsRoot = path.resolve(__dirname, '..')
