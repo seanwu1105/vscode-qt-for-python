@@ -5,6 +5,6 @@ npx lint-staged
 npm test
 
 cd python
-poetry run python -m black .
-poetry run python -m pylint scripts
-poetry run python -m pytest
+poetry run black .
+poetry run pylint scripts
+poetry run pytest

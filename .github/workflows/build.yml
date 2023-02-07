@@ -131,8 +131,8 @@ jobs:
 
       - name: Lint
         run: |
-          poetry run python -m pylint scripts
-          poetry run python -m mypy scripts
+          poetry run pylint scripts
+          poetry run mypy scripts
 
   py-test:
     strategy:
@@ -158,4 +158,4 @@ jobs:
         run: poetry install --no-interaction --no-root
 
       - name: Test
-        run: poetry run python -m pytest
+        run: poetry run pytest
