@@ -38,6 +38,8 @@ function getDocumentColorProvider(): DocumentColorProvider {
         ...extractRgbaToColors(text),
         ...extractHsvToColors(text),
         ...extractHsvaToColors(text),
+        ...extractHslToColors(text),
+        ...extractHslaToColors(text),
       ]
 
       return matchedColors.map(match => {
@@ -56,6 +58,7 @@ function getDocumentColorProvider(): DocumentColorProvider {
         new ColorPresentation(fromColorToHexAarrggbb(color)),
         new ColorPresentation(fromColorToRgba(color)),
         new ColorPresentation(fromColorToHsva(color)),
+        new ColorPresentation(fromColorToHsla(color)),
       ]
 
       if (color.alpha === 1)
@@ -64,6 +67,7 @@ function getDocumentColorProvider(): DocumentColorProvider {
           new ColorPresentation(fromColorToHexRrggbb(color)),
           new ColorPresentation(fromColorToRgb(color)),
           new ColorPresentation(fromColorToHsv(color)),
+          new ColorPresentation(fromColorToHsl(color)),
         )
 
       return supportedPresentation
@@ -270,6 +274,66 @@ export function extractHsvaToColors(text: string): readonly MatchedColor[] {
     .filter(notNil)
 }
 
+export function extractHslToColors(text: string): readonly MatchedColor[] {
+  // parse 'hsl(360, 100%, 100%)'
+  const matches = text.matchAll(
+    /hsl\s*\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)/g,
+  )
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, h, s, l] = match
+
+      if (isNil(h) || isNil(s) || isNil(l)) return undefined
+
+      const rgb = hslToRgb({
+        h: Number(h),
+        s: fromColorValueStringToNumber(s),
+        l: fromColorValueStringToNumber(l),
+      })
+      return {
+        color: new Color(rgb.r, rgb.g, rgb.b, 1),
+        offsetRange: {
+          start: match.index,
+          end: match.index + code.length,
+        },
+      }
+    })
+    .filter(notNil)
+}
+
+export function extractHslaToColors(text: string): readonly MatchedColor[] {
+  // parse 'hsla(360, 100%, 100%, 100%)'
+  const matches = text.matchAll(
+    /hsla\s*\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)/g,
+  )
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, h, s, l, a] = match
+
+      if (isNil(h) || isNil(s) || isNil(l) || isNil(a)) return undefined
+
+      const rgb = hslToRgb({
+        h: Number(h),
+        s: fromColorValueStringToNumber(s),
+        l: fromColorValueStringToNumber(l),
+      })
+      return {
+        color: new Color(rgb.r, rgb.g, rgb.b, fromColorValueStringToNumber(a)),
+        offsetRange: {
+          start: match.index,
+          end: match.index + code.length,
+        },
+      }
+    })
+    .filter(notNil)
+}
+
 export type MatchedColor = {
   readonly color: Color
   readonly offsetRange: {
@@ -356,6 +420,16 @@ export function fromColorToHsva(color: Color) {
   return `hsva(${h}, ${s * 100}%, ${v * 100}%, ${color.alpha * 100}%)`
 }
 
+export function fromColorToHsl(color: Color) {
+  const { h, s, l } = rgbToHsl({ r: color.red, g: color.green, b: color.blue })
+  return `hsl(${h}, ${s * 100}%, ${l * 100}%)`
+}
+
+export function fromColorToHsla(color: Color) {
+  const { h, s, l } = rgbToHsl({ r: color.red, g: color.green, b: color.blue })
+  return `hsla(${h}, ${s * 100}%, ${l * 100}%, ${color.alpha * 100}%)`
+}
+
 function fromColorValueStringToNumber(str: string) {
   if (str.endsWith('%')) return parseInt(str.slice(0, -1), 10) / 100
   return parseInt(str, 10) / 255
@@ -422,4 +496,67 @@ export function rgbToHsv({ r, g, b }: { r: number; g: number; b: number }) {
   }
 
   return { h, s, v }
+}
+
+export function hslToRgb({ h, s, l }: { h: number; s: number; l: number }) {
+  const c = (1 - Math.abs(2 * l - 1)) * s
+  const x = c * (1 - Math.abs(((h / 60) % 2) - 1))
+  const m = l - c / 2
+
+  let r = 0
+  let g = 0
+  let b = 0
+
+  if (h < 60) {
+    r = c
+    g = x
+    b = 0
+  } else if (h < 120) {
+    r = x
+    g = c
+    b = 0
+  } else if (h < 180) {
+    r = 0
+    g = c
+    b = x
+  } else if (h < 240) {
+    r = 0
+    g = x
+    b = c
+  } else if (h < 300) {
+    r = x
+    g = 0
+    b = c
+  } else {
+    r = c
+    g = 0
+    b = x
+  }
+
+  return { r: r + m, g: g + m, b: b + m }
+}
+
+export function rgbToHsl({ r, g, b }: { r: number; g: number; b: number }) {
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  const c = max - min
+
+  let h = 0
+  let s = 0
+  const l = (max + min) / 2
+
+  if (c !== 0) {
+    if (max === r) {
+      h = ((g - b) / c) % 6
+    } else if (max === g) {
+      h = (b - r) / c + 2
+    } else {
+      h = (r - g) / c + 4
+    }
+
+    h *= 60
+    s = c / (1 - Math.abs(2 * l - 1))
+  }
+
+  return { h, s, l }
 }

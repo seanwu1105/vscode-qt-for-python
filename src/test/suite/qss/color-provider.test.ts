@@ -5,6 +5,8 @@ import {
   extractHexAarrggbbToColor,
   extractHexRgbToColor,
   extractHexRrggbbToColor,
+  extractHslaToColors,
+  extractHslToColors,
   extractHsvaToColors,
   extractHsvToColors,
   extractRgbaToColors,
@@ -12,11 +14,15 @@ import {
   fromColorToHexAarrggbb,
   fromColorToHexRgb,
   fromColorToHexRrggbb,
+  fromColorToHsl,
+  fromColorToHsla,
   fromColorToHsv,
   fromColorToHsva,
   fromColorToRgb,
   fromColorToRgba,
+  hslToRgb,
   hsvToRgb,
+  rgbToHsl,
   rgbToHsv,
 } from '../../../qss/color-provider'
 
@@ -103,5 +109,38 @@ suite('color-provider', () => {
   test('hsv <-> rgb', () => {
     const expected = { h: 60, s: 1, v: 1 }
     assert.deepStrictEqual(rgbToHsv(hsvToRgb(expected)), expected)
+  })
+
+  test('hsl', () => {
+    const expected = 'hsl(0, 0, 255)'
+    const color = extractHslToColors(expected).map(({ color }) => color)[0]
+    assert.ok(color)
+    assert.strictEqual(fromColorToHsl(color), 'hsl(0, 0%, 100%)')
+  })
+
+  test('hsl with percentage', () => {
+    const expected = 'hsl(0, 0%, 100%)'
+    const color = extractHslToColors(expected).map(({ color }) => color)[0]
+    assert.ok(color)
+    assert.strictEqual(fromColorToHsl(color), expected)
+  })
+
+  test('hsla', () => {
+    const expected = 'hsla(0, 0, 255, 255)'
+    const color = extractHslaToColors(expected).map(({ color }) => color)[0]
+    assert.ok(color)
+    assert.strictEqual(fromColorToHsla(color), 'hsla(0, 0%, 100%, 100%)')
+  })
+
+  test('hsla with percentage', () => {
+    const expected = 'hsla(0, 0%, 100%, 100%)'
+    const color = extractHslaToColors(expected).map(({ color }) => color)[0]
+    assert.ok(color)
+    assert.strictEqual(fromColorToHsla(color), expected)
+  })
+
+  test('hsl <-> rgb', () => {
+    const expected = { h: 240, s: 1, l: 0.5 }
+    assert.deepStrictEqual(rgbToHsl(hslToRgb(expected)), expected)
   })
 })

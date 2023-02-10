@@ -225,7 +225,7 @@
       "patterns": [
         {
           "description": "Color Type",
-          "begin": "\\b(rgb|rgba|hsv|hsva)\\s*\\(",
+          "begin": "\\b(rgb|rgba|hsv|hsva|hsl|hsla)\\s*\\(",
           "beginCaptures": {
             "1": {
               "name": "entity.name.function.qss"
