@@ -6,6 +6,36 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [4.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v3.0.2...v4.0.0) (2023-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop qmllint support as it's superseded by qmlls
+* drop qmllint 6.3.2 support
+
+### Features
+
+* drop qmllint 6.3.2 support ([d4d3343](https://github.com/seanwu1105/vscode-qt-for-python/commit/d4d33431f8ef241e559d725d422808c270fba71a))
+* drop qmllint support as it's superseded by qmlls ([01bbbaf](https://github.com/seanwu1105/vscode-qt-for-python/commit/01bbbaf7b16a5d23fa415117568d47a340bbb47b))
+* provide quick fix with suggestions field from qmllint ([a148ea7](https://github.com/seanwu1105/vscode-qt-for-python/commit/a148ea7714ca5f80dcafe695ef816bcf9b52deef)), closes [#248](https://github.com/seanwu1105/vscode-qt-for-python/issues/248)
+* support agb and agba color widget ([14c3f96](https://github.com/seanwu1105/vscode-qt-for-python/commit/14c3f96aad987e26d8ccea0c30866eb51b5bbb2d)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support HEX color widget ([76faae2](https://github.com/seanwu1105/vscode-qt-for-python/commit/76faae208d5a6daebd852cc5b3e5df49c2d71181)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support hsl and hsla color widget ([6411f26](https://github.com/seanwu1105/vscode-qt-for-python/commit/6411f264e250753be2cc8e2314e7e18af8a39840)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support hsv and hsva color widget ([13e6d79](https://github.com/seanwu1105/vscode-qt-for-python/commit/13e6d797cdd877e477579bc049a83bde14f3fbc7)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support qmlls ([0617762](https://github.com/seanwu1105/vscode-qt-for-python/commit/061776217ced03fcaff5243aa821efe39ac0fed5))
+* support qmlls with e2e tests for configuration changes ([87b49e1](https://github.com/seanwu1105/vscode-qt-for-python/commit/87b49e14779f8e5315b8c4fb235bde0b4db9f02f)), closes [#251](https://github.com/seanwu1105/vscode-qt-for-python/issues/251)
+* use zod to validate qmllint result ([67ea036](https://github.com/seanwu1105/vscode-qt-for-python/commit/67ea036d188c63e7593074410c13235bcc79c4c1))
+
+
+### Bug Fixes
+
+* [#248](https://github.com/seanwu1105/vscode-qt-for-python/issues/248) ([a148ea7](https://github.com/seanwu1105/vscode-qt-for-python/commit/a148ea7714ca5f80dcafe695ef816bcf9b52deef))
+* [#251](https://github.com/seanwu1105/vscode-qt-for-python/issues/251) ([87b49e1](https://github.com/seanwu1105/vscode-qt-for-python/commit/87b49e14779f8e5315b8c4fb235bde0b4db9f02f))
+* [#260](https://github.com/seanwu1105/vscode-qt-for-python/issues/260) ([e9681e8](https://github.com/seanwu1105/vscode-qt-for-python/commit/e9681e847da37b3d8fc1224eb7a6d2616486af34))
+* ensure the observable does not complete before the language client disposed ([8ded538](https://github.com/seanwu1105/vscode-qt-for-python/commit/8ded5384728c7160a065fd5170dc0a0332db912d))
+* force release bot to dump version ([7f134c8](https://github.com/seanwu1105/vscode-qt-for-python/commit/7f134c852d89d21bdecbcc1f66870e73e5dc1f7c))
+
 ## [5.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v4.0.0...v5.0.0) (2023-02-10)
 
 
