@@ -1,21 +1,21 @@
 /* for color provider test */
 
-QLabel { border-color: #ffa600 }
+QLabel { border-color: #ffff00 }
 
-QLabel { border-color: #7aff00d4 }
+QLabel { border-color: #ffffff00 }
 
-QLabel { border-color: #f00 }
+QLabel { border-color: #ff0 }
 
 QLabel { border-color: rgb(100%, 100%, 0%)}
 
 QLabel { border-color: rgb(255, 255, 0%)}
 
-QLabel { border-color: rgba(255, 255, 0%, 100)}
+QLabel { border-color: rgba(255, 255, 0%, 100%)}
 
 QLabel { border-color: hsv(60, 255, 100%)}
 
-QLabel { border-color: hsva(60, 255, 100%, 100)}
+QLabel { border-color: hsva(60, 255, 100%, 100%)}
 
 QLabel { border-color: hsl(60, 100%, 50%) }
 
-QLabel { border-color: hsla(60, 100%, 50%, 100) }
+QLabel { border-color: hsla(60, 100%, 50%, 100%) }
