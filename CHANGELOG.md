@@ -6,6 +6,106 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [5.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v4.0.0...v5.0.0) (2023-02-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* force release bot bump
+* drop qmllint support as it's superseded by qmlls
+* drop qmllint 6.3.2 support
+* bump official release a major version
+* Rebuild project to support more QML language features.
+
+### Features
+
+* build command execution wrapper ([55a2ed3](https://github.com/seanwu1105/vscode-qt-for-python/commit/55a2ed34c40296a7d1d89382f7643481c9b1fd0e))
+* build qmllint ts wrapper ([db65cb7](https://github.com/seanwu1105/vscode-qt-for-python/commit/db65cb72c46faa3033250c4d6da3f48dacae48d1))
+* **designer:** support Qt designer features ([50e46fe](https://github.com/seanwu1105/vscode-qt-for-python/commit/50e46fe7ce80eeedf8d5ce9d6a48a60210eeaf4d))
+* drop qmllint 6.3.2 support ([d4d3343](https://github.com/seanwu1105/vscode-qt-for-python/commit/d4d33431f8ef241e559d725d422808c270fba71a))
+* drop qmllint support as it's superseded by qmlls ([01bbbaf](https://github.com/seanwu1105/vscode-qt-for-python/commit/01bbbaf7b16a5d23fa415117568d47a340bbb47b))
+* provide quick fix with suggestions field from qmllint ([a148ea7](https://github.com/seanwu1105/vscode-qt-for-python/commit/a148ea7714ca5f80dcafe695ef816bcf9b52deef)), closes [#248](https://github.com/seanwu1105/vscode-qt-for-python/issues/248)
+* **python:** add qmllint scripts ([1263928](https://github.com/seanwu1105/vscode-qt-for-python/commit/12639280b61e7d2d7cc1ba83e245b6840d9bb595))
+* **qml:** add language features ([5140800](https://github.com/seanwu1105/vscode-qt-for-python/commit/51408001e908800c00ce9f68f66e511545ea29fe))
+* **qmldir:** add language features ([b301e7b](https://github.com/seanwu1105/vscode-qt-for-python/commit/b301e7b18493ba59c4f52e49c3f73b6cd23d4c4b))
+* **qmllint:** add enable/disable config ([ebb188f](https://github.com/seanwu1105/vscode-qt-for-python/commit/ebb188f8aa22a9bc8f9d9ff4d1716d04fb1d6096))
+* **qmllint:** add qmllint path and options configurations ([e978688](https://github.com/seanwu1105/vscode-qt-for-python/commit/e978688671d79687b1b0c7220911b20c5e24623f))
+* **qmllint:** catch uri-path conversion error ([4beef62](https://github.com/seanwu1105/vscode-qt-for-python/commit/4beef629e7969faa7da9825eaa87e35138576c06))
+* **qmllint:** lint QML files on opened/saved ([a6bd8c6](https://github.com/seanwu1105/vscode-qt-for-python/commit/a6bd8c60c8db4953db2c9a0165e490d3e4ebc26c))
+* **qmllint:** support .qmllint.ini file ([056478c](https://github.com/seanwu1105/vscode-qt-for-python/commit/056478cfa1ee66c2ca5ab7fa94f69168f4f17d34))
+* **qmllint:** support multi-root workspace on resolving Python script ([13db906](https://github.com/seanwu1105/vscode-qt-for-python/commit/13db906f1ac9a1994594511e23bf2e70669b09d4))
+* **qmllint:** support notification from server to client ([cc6798a](https://github.com/seanwu1105/vscode-qt-for-python/commit/cc6798af877d6f4850b62c250c79d7636d50c068))
+* **qrc:** assign qrc file to xml language ([e252249](https://github.com/seanwu1105/vscode-qt-for-python/commit/e2522494e5d1215c72c4a851f23a9b249a49fd48))
+* **qss:** support QSS syntax highlighting ([7999e44](https://github.com/seanwu1105/vscode-qt-for-python/commit/7999e4446783066a9903246a43c56bad0f3a45de))
+* **rcc:** add configurations for rcc path and options ([bb6e01a](https://github.com/seanwu1105/vscode-qt-for-python/commit/bb6e01ac637dd881a41bc01946344099e9d21554))
+* **rcc:** add rcc command ([a3a611a](https://github.com/seanwu1105/vscode-qt-for-python/commit/a3a611ad49d44940ee8d8cdbadadf3325e01b23c))
+* **rcc:** add rcc compile function ([338f4e2](https://github.com/seanwu1105/vscode-qt-for-python/commit/338f4e2319135832db8e77841bc177c0e1d834ae))
+* resolve predefined variables in tool path and options ([f139415](https://github.com/seanwu1105/vscode-qt-for-python/commit/f139415348414e72de78ca75f9178be5be602137)), closes [#184](https://github.com/seanwu1105/vscode-qt-for-python/issues/184)
+* show error notifications generated from Python scripts ([90a6a8f](https://github.com/seanwu1105/vscode-qt-for-python/commit/90a6a8f6011140670f5926040b1d6312e32891cb))
+* show errors with notification window ([d060b76](https://github.com/seanwu1105/vscode-qt-for-python/commit/d060b763270c044a581273d14a57616da09191f9))
+* show qmllint result ([a8a1161](https://github.com/seanwu1105/vscode-qt-for-python/commit/a8a1161d786b7cb81a0342baaf00e40ab7c36303))
+* support agb and agba color widget ([14c3f96](https://github.com/seanwu1105/vscode-qt-for-python/commit/14c3f96aad987e26d8ccea0c30866eb51b5bbb2d)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support HEX color widget ([76faae2](https://github.com/seanwu1105/vscode-qt-for-python/commit/76faae208d5a6daebd852cc5b3e5df49c2d71181)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support hsl and hsla color widget ([6411f26](https://github.com/seanwu1105/vscode-qt-for-python/commit/6411f264e250753be2cc8e2314e7e18af8a39840)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support hsv and hsva color widget ([13e6d79](https://github.com/seanwu1105/vscode-qt-for-python/commit/13e6d797cdd877e477579bc049a83bde14f3fbc7)), closes [#137](https://github.com/seanwu1105/vscode-qt-for-python/issues/137)
+* support PyQt6, PySide2 and PyQt5 ([5d41b39](https://github.com/seanwu1105/vscode-qt-for-python/commit/5d41b390692114fa641bcf246bf18fe177741744))
+* support qmlls ([0617762](https://github.com/seanwu1105/vscode-qt-for-python/commit/061776217ced03fcaff5243aa821efe39ac0fed5))
+* support qmlls with e2e tests for configuration changes ([87b49e1](https://github.com/seanwu1105/vscode-qt-for-python/commit/87b49e14779f8e5315b8c4fb235bde0b4db9f02f)), closes [#251](https://github.com/seanwu1105/vscode-qt-for-python/issues/251)
+* support resource-related predefined variables ([98b6a37](https://github.com/seanwu1105/vscode-qt-for-python/commit/98b6a37efd64f4b20cc90a6d7424566d1c4fec00))
+* support spaces in command arguments ([9f3e9cb](https://github.com/seanwu1105/vscode-qt-for-python/commit/9f3e9cb194fbae56aca3df8fa38a3e8bc11f16c4))
+* **uic:** add live execution support ([a757644](https://github.com/seanwu1105/vscode-qt-for-python/commit/a7576443e72d2761f292715d50bb08139e02f86b))
+* **uic:** add uic support ([9c17e9d](https://github.com/seanwu1105/vscode-qt-for-python/commit/9c17e9db60497bfcb1ea03b90f9b24f41093bb2f))
+* update CI (use feat to try release PR) ([13d1518](https://github.com/seanwu1105/vscode-qt-for-python/commit/13d15182c5d75d29aafb6cd915bac8ddf44a429e))
+* upload VSIX to release assets (force release) ([39c32fa](https://github.com/seanwu1105/vscode-qt-for-python/commit/39c32fa7921fc795d348cf0d9ced128b067c5055))
+* use zod to validate qmllint result ([67ea036](https://github.com/seanwu1105/vscode-qt-for-python/commit/67ea036d188c63e7593074410c13235bcc79c4c1))
+
+
+### Bug Fixes
+
+* [#184](https://github.com/seanwu1105/vscode-qt-for-python/issues/184) ([f139415](https://github.com/seanwu1105/vscode-qt-for-python/commit/f139415348414e72de78ca75f9178be5be602137))
+* [#237](https://github.com/seanwu1105/vscode-qt-for-python/issues/237) ([b182dc2](https://github.com/seanwu1105/vscode-qt-for-python/commit/b182dc2499d9442826ed3627e3faf4eb6ad8a9b9))
+* [#248](https://github.com/seanwu1105/vscode-qt-for-python/issues/248) ([a148ea7](https://github.com/seanwu1105/vscode-qt-for-python/commit/a148ea7714ca5f80dcafe695ef816bcf9b52deef))
+* [#251](https://github.com/seanwu1105/vscode-qt-for-python/issues/251) ([87b49e1](https://github.com/seanwu1105/vscode-qt-for-python/commit/87b49e14779f8e5315b8c4fb235bde0b4db9f02f))
+* [#260](https://github.com/seanwu1105/vscode-qt-for-python/issues/260) ([e9681e8](https://github.com/seanwu1105/vscode-qt-for-python/commit/e9681e847da37b3d8fc1224eb7a6d2616486af34))
+* 165. ([0a865bf](https://github.com/seanwu1105/vscode-qt-for-python/commit/0a865bfdcdb3afd286a1cf65f4de15c6d483aaac))
+* bundle dependencies into release ([35ea0d9](https://github.com/seanwu1105/vscode-qt-for-python/commit/35ea0d90ef1885993fe7efc777f4e763e6f23944))
+* cat the target variable to curl ([526238d](https://github.com/seanwu1105/vscode-qt-for-python/commit/526238dbcebb03705c145d5a5547493d90ee7cd1))
+* debug release workflow ([2c6b104](https://github.com/seanwu1105/vscode-qt-for-python/commit/2c6b104664949a960eb3f7d93a7723b7a2b99fcf))
+* destruct upload target ([3b34bbe](https://github.com/seanwu1105/vscode-qt-for-python/commit/3b34bbe64e2135bb18fc1efd1bffe3a8101290be))
+* ensure resolveScriptCommand returns an array of str ([82cd715](https://github.com/seanwu1105/vscode-qt-for-python/commit/82cd7159f2570d9e78032914310aa70a38ab9bbe))
+* ensure the observable does not complete before the language client disposed ([8ded538](https://github.com/seanwu1105/vscode-qt-for-python/commit/8ded5384728c7160a065fd5170dc0a0332db912d))
+* fix wrong curl command ([30817f2](https://github.com/seanwu1105/vscode-qt-for-python/commit/30817f2e5de6466b4afd3278a48d55a163cf5123))
+* force release bot to dump version ([7f134c8](https://github.com/seanwu1105/vscode-qt-for-python/commit/7f134c852d89d21bdecbcc1f66870e73e5dc1f7c))
+* give up and use an external upload action ([9d2d3cf](https://github.com/seanwu1105/vscode-qt-for-python/commit/9d2d3cfa5af0c063a34a924087a3614f81e1bf65))
+* normalize path in tests ([d4ec8ff](https://github.com/seanwu1105/vscode-qt-for-python/commit/d4ec8ffa12a9131b04e48322370c7177be6e5dd7))
+* **python:** fix tests on Windows ([51dc24f](https://github.com/seanwu1105/vscode-qt-for-python/commit/51dc24fe37b2c17099ee66696ae4bb3fc46f1be0))
+* **qmllint:** allow optional warning fields ([e00e384](https://github.com/seanwu1105/vscode-qt-for-python/commit/e00e3844e7b073ef7f76de4882105919a9f5f3f5))
+* **qmllint:** ensure the server does not depend on vscode ([07e77b5](https://github.com/seanwu1105/vscode-qt-for-python/commit/07e77b554a4114e28a92a01c4529227be6281086))
+* remove {?name,label} in upload_url ([85d667a](https://github.com/seanwu1105/vscode-qt-for-python/commit/85d667a7606d48d183ea679470c2dc3b22925c8b))
+* support qmllint with PySide 6.4.1 ([dc2f427](https://github.com/seanwu1105/vscode-qt-for-python/commit/dc2f42716a0793e34b0386316880c72527b93f9d)), closes [#255](https://github.com/seanwu1105/vscode-qt-for-python/issues/255)
+* the path of input file in command could include spaces ([bec856b](https://github.com/seanwu1105/vscode-qt-for-python/commit/bec856b77195827ee7819868d9bc4b00296b3103))
+* use parenthesis to concat URL ([94e74ab](https://github.com/seanwu1105/vscode-qt-for-python/commit/94e74ab1fd3392bc4dc6bd6e61dea2dddd2ae71d))
+* VSCE package errors. ([e567d18](https://github.com/seanwu1105/vscode-qt-for-python/commit/e567d1822e8ad3bfe09595b88b2d252689aa5a5d))
+* watching uic config for rcc. ([8da7769](https://github.com/seanwu1105/vscode-qt-for-python/commit/8da7769462d837dfaf67f9f5eb853b1abfd8b24f))
+* wrap upload_url with quotes to escape brackets ([c32e345](https://github.com/seanwu1105/vscode-qt-for-python/commit/c32e345972305fc91baac79daa966ff0f2d20dd0))
+
+
+### Reverts
+
+* remove waitFor util ([05dda25](https://github.com/seanwu1105/vscode-qt-for-python/commit/05dda251d03343b16ce68cbe3e664bd5ba305a2e))
+* revert changelog header removal ([e907ffd](https://github.com/seanwu1105/vscode-qt-for-python/commit/e907ffd1d39729a71e47e005e5a1ad7e5f43878f))
+
+
+### Miscellaneous Chores
+
+* bump official release a major version ([10136a0](https://github.com/seanwu1105/vscode-qt-for-python/commit/10136a061fab33a91dd8d2d9766bc0c226255572))
+* reset project ([4c77f9b](https://github.com/seanwu1105/vscode-qt-for-python/commit/4c77f9b0d64e3c57234e690da051c9a13fde0e4a))
+
+
+### Documentation
+
+* force release bot bump ([033b849](https://github.com/seanwu1105/vscode-qt-for-python/commit/033b849a637f99fb91304f854674558fb6e63dc6))
+
 ## [4.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v3.0.2...v4.0.0) (2023-02-10)
 
 
