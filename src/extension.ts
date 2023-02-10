@@ -3,19 +3,20 @@ import type { ExtensionContext, OutputChannel } from 'vscode'
 import { window } from 'vscode'
 import { registerCommands$ } from './commands'
 import { registerQmlLanguageServer$ } from './qmlls/client'
+import { registerQssColorProvider } from './qss/color-provider'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution$ } from './uic/uic-live-execution'
 import { toDisposable } from './utils'
 
-let outputChannel: OutputChannel
-
 export async function activate({
   extensionUri,
   subscriptions,
 }: ExtensionContext) {
-  outputChannel = window.createOutputChannel('Qt for Python')
+  const outputChannel = window.createOutputChannel('Qt for Python')
   subscriptions.push(outputChannel)
+
+  subscriptions.push(registerQssColorProvider())
 
   const observables = [
     registerCommands$({ extensionUri }),
@@ -24,12 +25,15 @@ export async function activate({
   ]
 
   const observer: Partial<Observer<Result>> = {
-    next: v => onResultReceived(v),
+    next: v => onResultReceived(v, outputChannel),
     error: e =>
-      onResultReceived({
-        kind: 'UnexpectedError',
-        message: `Unexpected error: ${JSON.stringify(e)}`,
-      }),
+      onResultReceived(
+        {
+          kind: 'UnexpectedError',
+          message: `Unexpected error: ${JSON.stringify(e)}`,
+        },
+        outputChannel,
+      ),
   }
 
   const disposables = observables
@@ -39,7 +43,7 @@ export async function activate({
   subscriptions.push(...disposables)
 }
 
-function onResultReceived(result: Result) {
+function onResultReceived(result: Result, outputChannel: OutputChannel) {
   const indent = 2
   switch (result.kind) {
     case 'Success':
@@ -53,13 +57,14 @@ function onResultReceived(result: Result) {
     case 'TypeError':
     case 'NotFoundError':
     case 'UnexpectedError':
-      return showError(result.message)
+      return showError(result.message, outputChannel)
     case 'ExecError':
       return showError(
         `${result.stderr}\n${result.stdout}\n${result.error.message ?? ''}`,
+        outputChannel,
       )
     case 'StdErrError':
-      return showError(`${result.stderr}\n${result.stdout}`)
+      return showError(`${result.stderr}\n${result.stdout}`, outputChannel)
   }
 }
 
@@ -73,7 +78,7 @@ type Result =
   | ErrorResult<'Parse'>
   | ErrorResult<'IO'>
 
-async function showError(message: string) {
+async function showError(message: string, outputChannel: OutputChannel) {
   outputChannel.appendLine(prefixLogging({ message, severity: 'ERROR' }))
   return window.showErrorMessage(message)
 }
