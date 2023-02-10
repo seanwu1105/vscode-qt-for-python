@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+
 import type {
   CancellationToken,
   DocumentColorProvider,
@@ -25,13 +27,22 @@ function getDocumentColorProvider(): DocumentColorProvider {
     provideDocumentColors: (
       document: TextDocument,
       _token: CancellationToken,
-    ): ProviderResult<ColorInformation[]> =>
-      matchHexColor(document.getText()).map(match => {
+    ): ProviderResult<ColorInformation[]> => {
+      const text = document.getText()
+
+      const matchedColors = [
+        ...extractHexRgbToColor(text),
+        ...extractHexRrggbbToColor(text),
+        ...extractHexAarrggbbToColor(text),
+        ...extractRgbToColors(text),
+      ]
+
+      return matchedColors.map(match => {
         const start = document.positionAt(match.offsetRange.start)
         const end = document.positionAt(match.offsetRange.end)
-        const range = new Range(start, end)
-        return new ColorInformation(range, match.color)
-      }),
+        return new ColorInformation(new Range(start, end), match.color)
+      })
+    },
 
     provideColorPresentations: (
       color: Color,
@@ -39,13 +50,14 @@ function getDocumentColorProvider(): DocumentColorProvider {
       _token: CancellationToken,
     ): ProviderResult<ColorPresentation[]> => {
       const supportedPresentation = [
-        new ColorPresentation(`#${fromColorToAarrggbb(color)}`),
+        new ColorPresentation(fromColorToHexAarrggbb(color)),
       ]
 
       if (color.alpha === 1)
         supportedPresentation.push(
-          new ColorPresentation(`#${fromColorToRgb(color)}`),
-          new ColorPresentation(`#${fromColorToRrggbb(color)}`),
+          new ColorPresentation(fromColorToHexRgb(color)),
+          new ColorPresentation(fromColorToHexRrggbb(color)),
+          new ColorPresentation(fromColorToRgb(color)),
         )
 
       return supportedPresentation
@@ -53,96 +65,157 @@ function getDocumentColorProvider(): DocumentColorProvider {
   }
 }
 
-export function matchHexColor(text: string): readonly MatchedColor[] {
-  /* eslint-disable @typescript-eslint/no-magic-numbers,@typescript-eslint/no-non-null-assertion */
-
-  // According to the spec: https://doc.qt.io/qt-6/qcolor.html#fromString
-  // Match #rgb, #rrggbb, #aarrggbb
-  const rgbLength = 3
-  const rrggbbLength = 6
-  const aarrggbbLength = 8
-
-  const regex = new RegExp(
-    `#([0-9a-f]{${rgbLength}}|[0-9a-f]{${rrggbbLength}}|[0-9a-f]{${aarrggbbLength}})\\b`,
-    'gi',
-  )
-  const matches = text.matchAll(regex)
+export function extractHexRgbToColor(text: string): readonly MatchedColor[] {
+  // parse '#rgb'
+  const matches = text.matchAll(/#([0-9a-f])([0-9a-f])([0-9a-f])\b/gi)
 
   return [...matches]
     .map(match => {
       if (isNil(match.index)) return undefined
 
-      const hex = match[1]
-      if (isNil(hex)) return undefined
+      const [code, r, g, b] = match
 
-      if (hex.length === rgbLength)
-        return {
-          color: fromRgbToColor(hex),
-          offsetRange: {
-            start: match.index,
-            end: match.index + match[0].length,
-          },
-        }
+      if (isNil(r) || isNil(g) || isNil(b)) return undefined
 
-      if (hex.length === rrggbbLength)
-        return {
-          color: fromRrggbbToColor(hex),
-          offsetRange: {
-            start: match.index,
-            end: match.index + match[0].length,
-          },
-        }
-
-      if (hex.length === aarrggbbLength)
-        return {
-          color: fromAarrggbbToColor(hex),
-          offsetRange: {
-            start: match.index,
-            end: match.index + match[0].length,
-          },
-        }
-
-      return undefined
+      return {
+        color: new Color(
+          parseInt(r, 16) / 15,
+          parseInt(g, 16) / 15,
+          parseInt(b, 16) / 15,
+          1,
+        ),
+        offsetRange: { start: match.index, end: match.index + code.length },
+      }
     })
     .filter(notNil)
 }
 
-export type MatchedColor = {
-  readonly color: Color
-  readonly offsetRange: {
-    readonly start: number // inclusive
-    readonly end: number // exclusive
-  }
+export function extractHexRrggbbToColor(text: string): readonly MatchedColor[] {
+  // parse '#rrggbb'
+  const matches = text.matchAll(/#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\b/gi)
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, r, g, b] = match
+
+      if (isNil(r) || isNil(g) || isNil(b)) return undefined
+
+      return {
+        color: new Color(
+          parseInt(r, 16) / 255,
+          parseInt(g, 16) / 255,
+          parseInt(b, 16) / 255,
+          1,
+        ),
+        offsetRange: { start: match.index, end: match.index + code.length },
+      }
+    })
+    .filter(notNil)
 }
 
-export function fromRgbToColor(rgb: string) {
-  return new Color(
-    parseInt(rgb.slice(0, 1), 16) / 15,
-    parseInt(rgb.slice(1, 2), 16) / 15,
-    parseInt(rgb.slice(2, 3), 16) / 15,
-    1,
+export function extractHexAarrggbbToColor(
+  text: string,
+): readonly MatchedColor[] {
+  // parse '#aarrggbb'
+  const matches = text.matchAll(
+    /#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\b/gi,
   )
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, a, r, g, b] = match
+
+      if (isNil(a) || isNil(r) || isNil(g) || isNil(b)) return undefined
+
+      return {
+        color: new Color(
+          parseInt(r, 16) / 255,
+          parseInt(g, 16) / 255,
+          parseInt(b, 16) / 255,
+          parseInt(a, 16) / 255,
+        ),
+        offsetRange: { start: match.index, end: match.index + code.length },
+      }
+    })
+    .filter(notNil)
 }
 
-export function fromColorToRgb(color: Color) {
+export function extractRgbToColors(text: string): readonly MatchedColor[] {
+  // parse 'rgb(255, 255, 255)'
+  const matches = text.matchAll(
+    /rgb\s*\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)/g,
+  )
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, r, g, b] = match
+
+      if (isNil(r) || isNil(g) || isNil(b)) return undefined
+
+      return {
+        color: new Color(
+          fromColorValueStringToNumber(r),
+          fromColorValueStringToNumber(g),
+          fromColorValueStringToNumber(b),
+          1,
+        ),
+        offsetRange: {
+          start: match.index,
+          end: match.index + code.length,
+        },
+      }
+    })
+    .filter(notNil)
+}
+
+export function extractRgbaToColors(text: string): readonly MatchedColor[] {
+  // parse 'rgba(255, 255, 255, 1)'
+  const matches = text.matchAll(
+    /rgba\s*\(\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*,\s*(\d+%?)\s*\)/g,
+  )
+
+  return [...matches]
+    .map(match => {
+      if (isNil(match.index)) return undefined
+
+      const [code, r, g, b, a] = match
+
+      if (isNil(r) || isNil(g) || isNil(b) || isNil(a)) return undefined
+
+      return {
+        color: new Color(
+          fromColorValueStringToNumber(r),
+          fromColorValueStringToNumber(g),
+          fromColorValueStringToNumber(b),
+          fromColorValueStringToNumber(a),
+        ),
+        offsetRange: {
+          start: match.index,
+          end: match.index + code.length,
+        },
+      }
+    })
+    .filter(notNil)
+}
+
+export function fromColorToHexRgb(color: Color) {
   return (
+    '#' +
     Math.round(color.red * 15).toString(16) +
     Math.round(color.green * 15).toString(16) +
     Math.round(color.blue * 15).toString(16)
   )
 }
 
-export function fromRrggbbToColor(rrggbb: string) {
-  return new Color(
-    parseInt(rrggbb.slice(0, 2), 16) / 255,
-    parseInt(rrggbb.slice(2, 4), 16) / 255,
-    parseInt(rrggbb.slice(4, 6), 16) / 255,
-    1,
-  )
-}
-
-export function fromColorToRrggbb(color: Color) {
+export function fromColorToHexRrggbb(color: Color) {
   return (
+    '#' +
     Math.round(color.red * 255)
       .toString(16)
       .padStart(2, '0') +
@@ -155,17 +228,9 @@ export function fromColorToRrggbb(color: Color) {
   )
 }
 
-export function fromAarrggbbToColor(aarrggbb: string) {
-  return new Color(
-    parseInt(aarrggbb.slice(2, 4), 16) / 255,
-    parseInt(aarrggbb.slice(4, 6), 16) / 255,
-    parseInt(aarrggbb.slice(6, 8), 16) / 255,
-    parseInt(aarrggbb.slice(0, 2), 16) / 255,
-  )
-}
-
-export function fromColorToAarrggbb(color: Color) {
+export function fromColorToHexAarrggbb(color: Color) {
   return (
+    '#' +
     Math.round(color.alpha * 255)
       .toString(16)
       .padStart(2, '0') +
@@ -179,4 +244,43 @@ export function fromColorToAarrggbb(color: Color) {
       .toString(16)
       .padStart(2, '0')
   )
+}
+
+export function fromColorToRgb(color: Color) {
+  return (
+    'rgb(' +
+    Math.round(color.red * 255) +
+    ', ' +
+    Math.round(color.green * 255) +
+    ', ' +
+    Math.round(color.blue * 255) +
+    ')'
+  )
+}
+
+export function fromColorToRgba(color: Color) {
+  return (
+    'rgba(' +
+    Math.round(color.red * 255) +
+    ', ' +
+    Math.round(color.green * 255) +
+    ', ' +
+    Math.round(color.blue * 255) +
+    ', ' +
+    Math.round(color.alpha * 255) +
+    ')'
+  )
+}
+
+function fromColorValueStringToNumber(str: string) {
+  if (str.endsWith('%')) return parseInt(str.slice(0, -1), 10) / 100
+  return parseInt(str, 10) / 255
+}
+
+export type MatchedColor = {
+  readonly color: Color
+  readonly offsetRange: {
+    readonly start: number // inclusive
+    readonly end: number // exclusive
+  }
 }
