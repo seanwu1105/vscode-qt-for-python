@@ -33,6 +33,7 @@ All features support multi-root workspace project.
 ### Qt Style Sheets
 
 - Syntax highlighting (`qss` files)
+- Provide color picker for HEX, RGBA, HSVA, and HSLA code
 
 ## Supported Environment Variables
 
