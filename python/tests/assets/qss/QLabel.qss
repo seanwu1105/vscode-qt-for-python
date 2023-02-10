@@ -1,0 +1,7 @@
+/* for color provider test */
+
+QLabel { border-color: #ffa600 }
+
+QLabel { border-color: #7aff00d4 }
+
+QLabel { border-color: #f00 }
