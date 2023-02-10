@@ -19,6 +19,16 @@
     "body": ["hsva(${1:h}, ${2:s}, ${3:v}, ${4:alpha})$0"],
     "description": "HSVA Color"
   },
+  "HSL": {
+    "prefix": "hsl",
+    "body": ["hsl(${1:h}, ${2:s}, ${3:l})$0"],
+    "description": "HSL Color"
+  },
+  "HSLA": {
+    "prefix": "hsla",
+    "body": ["hsla(${1:h}, ${2:s}, ${3:l}, ${4:alpha})$0"],
+    "description": "HSLA Color"
+  },
   "Linear Gradient": {
     "prefix": "qlineargradient",
     "body": [

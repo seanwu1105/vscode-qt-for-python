@@ -15,3 +15,7 @@ QLabel { border-color: rgba(255, 255, 0%, 100)}
 QLabel { border-color: hsv(60, 255, 100%)}
 
 QLabel { border-color: hsva(60, 255, 100%, 100)}
+
+QLabel { border-color: hsl(60, 100%, 50%) }
+
+QLabel { border-color: hsla(60, 100%, 50%, 100) }
