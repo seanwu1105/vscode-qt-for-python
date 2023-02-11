@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [6.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.0.0...v6.1.0) (2023-02-11)
+
+
+### Features
+
+* check if the environment has qmlls before establish language ([89ab7a7](https://github.com/seanwu1105/vscode-qt-for-python/commit/89ab7a7d4bc3b7c2ad4adf4c38a296a1f0e7f231)), closes [#266](https://github.com/seanwu1105/vscode-qt-for-python/issues/266)
+
 ## [6.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v5.0.0...v6.0.0) (2023-02-11)
 
 
