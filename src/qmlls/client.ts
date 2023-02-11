@@ -20,8 +20,8 @@ import {
 } from 'vscode-languageclient/node'
 import type { URI } from 'vscode-uri'
 import { getEnabledFromConfig$ } from '../configurations'
-import type { CommandArgs } from '../run'
-import { wrapAndJoinCommandArgsWithQuotes } from '../run'
+import type { CommandArgs, ExecError, StdErrError } from '../run'
+import { run, wrapAndJoinCommandArgsWithQuotes } from '../run'
 import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
@@ -36,6 +36,15 @@ export function registerQmlLanguageServer$({
     resource: undefined,
     extensionUri,
   }).pipe(
+    concatMap(result => {
+      if (result.kind !== 'Success') return of(result)
+
+      return defer(async () => {
+        const checkResult = await checkQmllsExists(result.value.command)
+        if (checkResult.kind !== 'Success') return checkResult
+        return result
+      })
+    }),
     concatMap(result => {
       if (result.kind !== 'Success') return of(result)
 
@@ -89,17 +98,12 @@ type RegisterQmlLanguageServerArgs = {
 
 type RegisterQmlLanguageServerResult =
   | ErrorResult<'NotFound'>
+  | ExecError
+  | StdErrError
   | SuccessResult<string>
 
-// TODO: Unit test this behavior.
-function stopPreviousClient() {
-  return (source$: Observable<LanguageClient | undefined>) =>
-    source$.pipe(
-      startWith(undefined),
-      pairwise(),
-      concatMap(async ([previous]) => previous?.dispose()),
-      concatMap(() => source$),
-    )
+async function checkQmllsExists(command: CommandArgs) {
+  return run({ command: [...command, '--help'] })
 }
 
 function createClient({ command, options, outputChannel }: CreateClientArgs) {
@@ -128,4 +132,15 @@ type CreateClientArgs = {
   readonly command: CommandArgs
   readonly options: CommandArgs
   readonly outputChannel: OutputChannel
+}
+
+// TODO: Unit test this behavior.
+function stopPreviousClient() {
+  return (source$: Observable<LanguageClient | undefined>) =>
+    source$.pipe(
+      startWith(undefined),
+      pairwise(),
+      concatMap(async ([previous]) => previous?.dispose()),
+      concatMap(() => source$),
+    )
 }
