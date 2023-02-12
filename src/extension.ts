@@ -1,9 +1,10 @@
-import type { Observer } from 'rxjs'
+import type { Observable, Observer } from 'rxjs'
 import type { ExtensionContext, OutputChannel } from 'vscode'
 import { window } from 'vscode'
 import { registerCommands$ } from './commands'
 import { registerQmlLanguageServer$ } from './qmlls/client'
 import { registerQssColorProvider } from './qss/color-provider'
+import { registerRccLiveExecution$ } from './rcc/rcc-live-execution'
 import type { ExecError, StdErrError } from './run'
 import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution$ } from './uic/uic-live-execution'
@@ -18,9 +19,10 @@ export async function activate({
 
   subscriptions.push(registerQssColorProvider())
 
-  const observables = [
+  const observables: readonly Observable<Result>[] = [
     registerCommands$({ extensionUri }),
     registerUicLiveExecution$({ extensionUri }),
+    registerRccLiveExecution$({ extensionUri }),
     registerQmlLanguageServer$({ extensionUri, outputChannel }),
   ]
 

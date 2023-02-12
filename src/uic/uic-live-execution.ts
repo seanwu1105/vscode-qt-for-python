@@ -1,16 +1,16 @@
-import { concatMap, defer, firstValueFrom, fromEventPattern } from 'rxjs'
-import { Disposable, workspace } from 'vscode'
+import { concatMap, firstValueFrom } from 'rxjs'
 import type { URI } from 'vscode-uri'
 import { getConfiguration$ } from '../configurations'
 import { EXTENSION_NAMESPACE } from '../constants'
 import type { ExecError, StdErrError } from '../run'
 import type { ErrorResult, SuccessResult, SupportedTool } from '../types'
+import { getWatcher$ } from '../watcher'
 import { compileUi } from './compile-ui'
 
 export function registerUicLiveExecution$({
   extensionUri,
 }: GetUicLiveExecutionArgs) {
-  return uiFileWatcher$.pipe(
+  return getWatcher$('**/*.ui').pipe(
     concatMap(uri => onUiFileUpdated({ uri, extensionUri })),
   )
 }
@@ -18,22 +18,6 @@ export function registerUicLiveExecution$({
 type GetUicLiveExecutionArgs = {
   readonly extensionUri: URI
 }
-
-const uiFileWatcher$ = defer(async () =>
-  workspace.createFileSystemWatcher('**/*.ui'),
-).pipe(
-  concatMap(watcher =>
-    fromEventPattern<URI>(
-      handler =>
-        Disposable.from(
-          watcher,
-          watcher.onDidChange(handler),
-          watcher.onDidCreate(handler),
-        ),
-      (_, disposable) => disposable.dispose(),
-    ),
-  ),
-)
 
 async function onUiFileUpdated({
   uri,
