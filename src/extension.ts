@@ -1,4 +1,5 @@
 import type { Observable, Observer } from 'rxjs'
+import { catchError, of } from 'rxjs'
 import type { ExtensionContext, OutputChannel } from 'vscode'
 import { window } from 'vscode'
 import { registerCommands$ } from './commands'
@@ -39,7 +40,20 @@ export async function activate({
   }
 
   const disposables = observables
-    .map(observable$ => observable$.subscribe(observer))
+    .map(observable$ =>
+      observable$
+        .pipe(
+          catchError((err: unknown, caught$) => {
+            return of({
+              kind: 'UnexpectedError',
+              message: `Unexpected error: ${JSON.stringify(
+                err,
+              )} (caught: ${JSON.stringify(caught$)})`,
+            } as const)
+          }),
+        )
+        .subscribe(observer),
+    )
     .map(toDisposable)
 
   subscriptions.push(...disposables)
