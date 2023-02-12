@@ -3,7 +3,6 @@ import type { GlobPattern } from 'vscode'
 import { Disposable, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 
-// TODO: Unit test
 export function getWatcher$(globPattern: GlobPattern) {
   return defer(async () => workspace.createFileSystemWatcher(globPattern)).pipe(
     concatMap(watcher =>

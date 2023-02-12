@@ -26,12 +26,12 @@ export async function sleep(ms = DEFAULT_TIMEOUT) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-// TODO: This might not be necessary
 export async function setupE2EEnvironment() {
-  await sleep() // wait for extension to load Extension Gallery
-
-  const pythonExtension = extensions.getExtension('ms-python.python')
-  assert.ok(notNil(pythonExtension))
+  const pythonExtension = await waitFor(async () => {
+    const extension = extensions.getExtension('ms-python.python')
+    assert.ok(notNil(extension))
+    return extension
+  })
   if (!pythonExtension.isActive) await pythonExtension.activate()
 
   const extension = extensions.getExtension(`${publisher}.${name}`)
