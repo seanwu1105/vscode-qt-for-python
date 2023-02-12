@@ -2,10 +2,21 @@ import type { X2jOptionsOptional } from 'fast-xml-parser'
 import { XMLParser } from 'fast-xml-parser'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
-import { concatMap, defer, from, merge, mergeMap, of, startWith } from 'rxjs'
+import {
+  concatMap,
+  defer,
+  firstValueFrom,
+  from,
+  merge,
+  mergeMap,
+  of,
+  startWith,
+} from 'rxjs'
 import { RelativePattern, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { z } from 'zod'
+import { getConfiguration$ } from '../configurations'
+import { EXTENSION_NAMESPACE } from '../constants'
 import type { ErrorResult, SuccessResult } from '../types'
 import { getWatcher$ } from '../watcher'
 import { compileResource } from './compile-resource'
@@ -13,9 +24,9 @@ import { compileResource } from './compile-resource'
 export function registerRccLiveExecution$({
   extensionUri,
 }: RegisterRccLiveExecutionArgs) {
-  const qrcFiles$ = defer(async () => workspace.findFiles('**/*.qrc')).pipe(
-    concatMap(uris => from(uris)),
-  )
+  const qrcFiles$ = defer(async () =>
+    workspace.findFiles('**/*.qrc', '**/site-packages/**'),
+  ).pipe(concatMap(uris => from(uris)))
 
   return merge(qrcFiles$, getWatcher$('**/*.qrc')).pipe(
     mergeMap(qrcUri =>
@@ -40,7 +51,24 @@ function registerResourcesLiveExecution$({
         ...result.value.map(uri => getWatcher$(new RelativePattern(uri, '*'))),
       ).pipe(
         startWith(undefined), // Trigger compilation on resource file changes
-        concatMap(async () => compileResource({ extensionUri }, qrcUri)),
+        concatMap(() =>
+          firstValueFrom(
+            getConfiguration$({
+              section: `${EXTENSION_NAMESPACE}.rcc`,
+              key: 'liveExecution',
+              defaultValue: true,
+              resource: qrcUri,
+            }),
+          ),
+        ),
+        concatMap(async enabled => {
+          if (!enabled)
+            return {
+              kind: 'Success',
+              value: 'Live execution disabled',
+            } as const
+          return compileResource({ extensionUri }, qrcUri)
+        }),
       )
     }),
   )

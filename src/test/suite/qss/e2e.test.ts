@@ -3,9 +3,18 @@ import * as path from 'node:path'
 import type { ColorInformation, TextDocument } from 'vscode'
 import { commands, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
-import { E2E_TIMEOUT, TEST_ASSETS_PATH } from '../test-utils'
+import {
+  E2E_TIMEOUT,
+  setupE2EEnvironment,
+  TEST_ASSETS_PATH,
+} from '../test-utils'
 
 suite('qss/e2e', () => {
+  suiteSetup(async function () {
+    this.timeout(E2E_TIMEOUT)
+    await setupE2EEnvironment()
+  })
+
   suite('color picker', () => {
     suite('when open QLabel.qss', () => {
       let document: TextDocument

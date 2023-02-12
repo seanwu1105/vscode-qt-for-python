@@ -40,7 +40,7 @@ suite('uic-live-execution/e2e', () => {
     removeGeneratedFile(sampleFilenameNoExt)
   })
 
-  test('should recompile UI file changed', async () => {
+  test('should recompile when UI file changed', async () => {
     fs.writeFileSync(
       uiFilePath,
       originalFullText.replace(/My Window Title/gi, 'My New Window Title'),

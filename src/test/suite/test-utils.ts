@@ -26,6 +26,7 @@ export async function sleep(ms = DEFAULT_TIMEOUT) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+// TODO: This might not be necessary
 export async function setupE2EEnvironment() {
   await sleep() // wait for extension to load Extension Gallery
 
