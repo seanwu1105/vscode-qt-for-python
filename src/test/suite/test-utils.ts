@@ -1,6 +1,7 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { extensions } from 'vscode'
+import { extensions, workspace } from 'vscode'
+import { URI } from 'vscode-uri'
 import { notNil } from '../../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -64,4 +65,12 @@ export async function waitFor<T>(
   throw new Error(
     `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
   )
+}
+
+export async function forceDeleteFile(filename: string) {
+  try {
+    await workspace.fs.delete(URI.file(filename))
+  } catch {
+    // ignore error
+  }
 }

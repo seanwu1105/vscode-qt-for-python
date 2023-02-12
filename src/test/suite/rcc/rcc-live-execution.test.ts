@@ -1,10 +1,11 @@
 import * as assert from 'node:assert'
-import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { workspace } from 'vscode'
+import { URI } from 'vscode-uri'
 import {
   E2E_TIMEOUT,
+  forceDeleteFile,
   setupE2EEnvironment,
-  sleep,
   TEST_ASSETS_PATH,
   waitFor,
 } from '../test-utils'
@@ -38,31 +39,38 @@ suite('rcc-live-execution/e2e', () => {
 
     setup(async function () {
       this.timeout(E2E_TIMEOUT)
-      originalFullText = fs.readFileSync(qrcFilePath, { encoding: 'utf-8' })
+      originalFullText = (
+        await workspace.fs.readFile(URI.file(qrcFilePath))
+      ).toString()
     })
 
     teardown(function () {
       this.timeout(E2E_TIMEOUT)
-      fs.writeFileSync(qrcFilePath, originalFullText, { encoding: 'utf-8' })
+      workspace.fs.writeFile(
+        URI.file(qrcFilePath),
+        Buffer.from(originalFullText),
+      )
     })
 
     test('should recompile', async () => {
-      fs.writeFileSync(
-        qrcFilePath,
-        originalFullText.replace(/<file>rc0.txt<\/file>/gi, ''),
+      workspace.fs.writeFile(
+        URI.file(qrcFilePath),
+        Buffer.from(originalFullText.replace(/<file>rc0.txt<\/file>/gi, '')),
       )
 
-      await waitFor(() =>
-        assert.ok(
-          fs.existsSync(
+      await waitFor(async () => {
+        const readResult = await workspace.fs.readFile(
+          URI.file(
             path.resolve(
               TEST_ASSETS_PATH,
               'qrc',
               `rc_${sampleQrcFilenameNoExt}.py`,
             ),
           ),
-        ),
-      )
+        )
+
+        assert.ok(readResult.byteLength > 0)
+      })
     }).timeout(E2E_TIMEOUT)
   })
 
@@ -77,50 +85,43 @@ suite('rcc-live-execution/e2e', () => {
 
     setup(async function () {
       this.timeout(E2E_TIMEOUT)
-      originalFullText = fs.readFileSync(resourceFilePath, {
-        encoding: 'utf-8',
-      })
+      originalFullText = (
+        await workspace.fs.readFile(URI.file(resourceFilePath))
+      ).toString()
     })
 
     teardown(function () {
       this.timeout(E2E_TIMEOUT)
-      fs.writeFileSync(resourceFilePath, originalFullText, {
-        encoding: 'utf-8',
-      })
+      workspace.fs.writeFile(
+        URI.file(resourceFilePath),
+        Buffer.from(originalFullText),
+      )
     })
 
     test('should recompile', async () => {
-      fs.writeFileSync(
-        resourceFilePath,
-        originalFullText.replace(/hello/gi, 'world'),
+      workspace.fs.writeFile(
+        URI.file(resourceFilePath),
+        Buffer.from(originalFullText.replace(/hello/gi, 'world')),
       )
 
-      await waitFor(() =>
-        assert.ok(
-          fs.existsSync(
+      await waitFor(async () => {
+        const readResult = await workspace.fs.readFile(
+          URI.file(
             path.resolve(
               TEST_ASSETS_PATH,
               'qrc',
               `rc_${sampleQrcFilenameNoExt}.py`,
             ),
           ),
-        ),
-      )
+        )
+        assert.ok(readResult.byteLength > 0)
+      })
     })
   })
 }).timeout(E2E_TIMEOUT)
 
 async function removeGeneratedFile(sampleFilenameNoExt: string) {
-  return waitFor(async () => {
-    await sleep() // Wait for the file to be created asynchronously by the extension
-    fs.rmSync(
-      path.resolve(TEST_ASSETS_PATH, 'qrc', `rc_${sampleFilenameNoExt}.py`),
-      { force: true, recursive: true },
-    )
-    assert.ok(
-      !fs.existsSync(
-        path.resolve(TEST_ASSETS_PATH, 'qrc', `rc_${sampleFilenameNoExt}.py`),
-      ),
-    )
-  })
+  await forceDeleteFile(
+    path.resolve(TEST_ASSETS_PATH, 'qrc', `rc_${sampleFilenameNoExt}.py`),
+  )
 }

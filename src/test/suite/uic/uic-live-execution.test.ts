@@ -1,8 +1,10 @@
 import * as assert from 'node:assert'
-import * as fs from 'node:fs'
 import * as path from 'node:path'
+import { workspace } from 'vscode'
+import { URI } from 'vscode-uri'
 import {
   E2E_TIMEOUT,
+  forceDeleteFile,
   setupE2EEnvironment,
   TEST_ASSETS_PATH,
   waitFor,
@@ -27,38 +29,43 @@ suite('uic-live-execution/e2e', () => {
   setup(async function () {
     this.timeout(E2E_TIMEOUT)
 
-    originalFullText = fs.readFileSync(uiFilePath, { encoding: 'utf-8' })
+    originalFullText = (
+      await workspace.fs.readFile(URI.file(uiFilePath))
+    ).toString()
 
-    removeGeneratedFile(sampleFilenameNoExt)
+    await removeGeneratedFile(sampleFilenameNoExt)
   })
 
-  teardown(function () {
+  teardown(async function () {
     this.timeout(E2E_TIMEOUT)
 
-    fs.writeFileSync(uiFilePath, originalFullText, { encoding: 'utf-8' })
+    workspace.fs.writeFile(URI.file(uiFilePath), Buffer.from(originalFullText))
 
-    removeGeneratedFile(sampleFilenameNoExt)
+    await removeGeneratedFile(sampleFilenameNoExt)
   })
 
   test('should recompile when UI file changed', async () => {
-    fs.writeFileSync(
-      uiFilePath,
-      originalFullText.replace(/My Window Title/gi, 'My New Window Title'),
-    )
-
-    await waitFor(() =>
-      assert.ok(
-        fs.existsSync(
-          path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
-        ),
+    workspace.fs.writeFile(
+      URI.file(uiFilePath),
+      Buffer.from(
+        originalFullText.replace(/My Window Title/gi, 'My New Window Title'),
       ),
     )
+
+    await waitFor(async () => {
+      const readResult = await workspace.fs.readFile(
+        URI.file(
+          path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+        ),
+      )
+
+      assert.ok(readResult.byteLength > 0)
+    })
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-function removeGeneratedFile(sampleFilenameNoExt: string) {
-  return fs.rmSync(
+async function removeGeneratedFile(sampleFilenameNoExt: string) {
+  return forceDeleteFile(
     path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
-    { force: true, recursive: true },
   )
 }

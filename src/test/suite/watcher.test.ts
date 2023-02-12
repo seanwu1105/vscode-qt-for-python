@@ -4,7 +4,7 @@ import type { Subscription } from 'rxjs'
 import { workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { getWatcher$ } from '../../watcher'
-import { TEST_ASSETS_PATH, waitFor } from './test-utils'
+import { forceDeleteFile, TEST_ASSETS_PATH, waitFor } from './test-utils'
 
 suite('watcher', () => {
   suite('getWatcher$', () => {
@@ -74,14 +74,6 @@ suite('watcher', () => {
     })
   })
 })
-
-async function forceDeleteFile(filename: string) {
-  try {
-    await workspace.fs.delete(URI.file(filename))
-  } catch {
-    // ignore error
-  }
-}
 
 function getRandomString() {
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers

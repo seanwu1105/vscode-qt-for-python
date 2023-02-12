@@ -1,6 +1,7 @@
-import * as fs from 'node:fs'
 import * as path from 'node:path'
 import { firstValueFrom } from 'rxjs'
+import type { FileStat } from 'vscode'
+import { FileType, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
@@ -8,7 +9,6 @@ import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
-import { notNil } from '../utils'
 
 export async function createUi(
   { extensionUri }: CommandDeps,
@@ -52,15 +52,16 @@ type CreateUiResult =
   | ErrorResult<'IO'>
 
 async function getDirectoryPath(uri: URI): Promise<GetDirectoryPathResult> {
-  return new Promise<GetDirectoryPathResult>(resolve => {
-    fs.lstat(uri.fsPath, (err, stats) => {
-      if (notNil(err))
-        resolve({ kind: 'IOError', message: `${JSON.stringify(err)}` })
-      else if (stats.isDirectory())
-        resolve({ kind: 'Success', value: uri.fsPath })
-      else resolve({ kind: 'Success', value: path.dirname(uri.fsPath) })
-    })
-  })
+  let stat: FileStat
+  try {
+    stat = await workspace.fs.stat(uri)
+  } catch (err) {
+    return { kind: 'IOError', message: `${JSON.stringify(err)}` }
+  }
+
+  if (stat.type === FileType.Directory)
+    return { kind: 'Success', value: uri.fsPath }
+  return { kind: 'Success', value: path.dirname(uri.fsPath) }
 }
 
 type GetDirectoryPathResult = SuccessResult<string> | ErrorResult<'IO'>

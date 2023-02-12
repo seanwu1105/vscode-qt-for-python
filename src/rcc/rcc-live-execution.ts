@@ -1,6 +1,5 @@
 import type { X2jOptionsOptional } from 'fast-xml-parser'
 import { XMLParser } from 'fast-xml-parser'
-import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 import {
   concatMap,
@@ -82,7 +81,7 @@ type RegisterResourcesLiveExecutionArgs = {
 async function getResourceFiles({
   qrcUri,
 }: GetResourceFilesArgs): Promise<GetResourceFilesResult> {
-  const content = await fs.readFile(qrcUri.fsPath, 'utf8')
+  const content = (await workspace.fs.readFile(qrcUri)).toString()
 
   const parserOptions: X2jOptionsOptional = {
     isArray: (name, _jpath, _isLeafNode, _isAttribute) => name === 'file',
