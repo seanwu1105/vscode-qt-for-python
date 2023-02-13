@@ -6,6 +6,15 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [6.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.1.0...v6.2.0) (2023-02-13)
+
+
+### Features
+
+* add configuration to enable/disable RCC live execution ([99f3f79](https://github.com/seanwu1105/vscode-qt-for-python/commit/99f3f79ea4b7f6c926990fe17662eab55d658800))
+* add live execution for QRC files ([003e28d](https://github.com/seanwu1105/vscode-qt-for-python/commit/003e28dbae82eb502ddfc9ed647273e8cbbac058)), closes [#249](https://github.com/seanwu1105/vscode-qt-for-python/issues/249)
+* catch errors at the end of all observable pipes ([24c4647](https://github.com/seanwu1105/vscode-qt-for-python/commit/24c4647d7d0d306f6b26f0bf9a5849654ca775a4))
+
 ## [6.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.0.0...v6.1.0) (2023-02-11)
 
 
