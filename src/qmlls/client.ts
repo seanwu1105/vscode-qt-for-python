@@ -134,8 +134,7 @@ type CreateClientArgs = {
   readonly outputChannel: OutputChannel
 }
 
-// TODO: Unit test this behavior.
-function stopPreviousClient() {
+export function stopPreviousClient() {
   return (source$: Observable<LanguageClient | undefined>) =>
     source$.pipe(
       startWith(undefined),

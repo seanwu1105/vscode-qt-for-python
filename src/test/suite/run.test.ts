@@ -3,6 +3,7 @@ import * as path from 'node:path'
 import * as process from 'node:process'
 import type { RunResult } from '../../run'
 import { run, wrapAndJoinCommandArgsWithQuotes } from '../../run'
+import { TEST_ASSETS_PATH } from './test-utils'
 
 suite('run', () => {
   let result: RunResult
@@ -19,8 +20,8 @@ suite('run', () => {
     () => {
       setup(async () => {
         const filePath = path.resolve(
-          __dirname,
-          '../../../src/test/assets/filename with spaces.txt',
+          TEST_ASSETS_PATH,
+          'filename with spaces.txt',
         )
 
         if (process.platform === 'win32')
