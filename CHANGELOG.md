@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [6.2.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.0...v6.2.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* highlight the ID selector in QSS without depending on ending spaces ([f0a56a9](https://github.com/seanwu1105/vscode-qt-for-python/commit/f0a56a97d10f58ab7b4b6e2ab6ce34ca4c9d521d)), closes [#273](https://github.com/seanwu1105/vscode-qt-for-python/issues/273)
+
 ## [6.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.1.0...v6.2.0) (2023-02-13)
 
 
