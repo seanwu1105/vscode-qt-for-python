@@ -99,9 +99,15 @@
     "id-selector": {
       "patterns": [
         {
-          "begin": "#",
-          "end": "\\s+",
-          "contentName": "entity.name.tag.qss"
+          "match": "(#)([a-zA-Z][a-zA-Z0-9_-]*)",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition.entity.qss"
+            },
+            "2": {
+              "name": "entity.name.tag.qss"
+            }
+          }
         }
       ]
     },
