@@ -16,7 +16,8 @@ All features support multi-root workspace project.
 
 - Syntax highlighting (`qml` and `qmldir` files)
 - Linting (requires PySide6 >= 6.3)
-- Support `.qmllint.ini` configuration file
+  - Support `.qmllint.ini` configuration file
+- Code completion (requires PySide6 >= 6.4)
 
 ### Qt UI Files
 
@@ -29,6 +30,7 @@ All features support multi-root workspace project.
 
 - Syntax highlighting (`qrc` files)
 - Compile to Python code (requires PySide6, PySide2, or PyQt5)
+- Continuous compilation
 
 ### Qt Style Sheets
 
