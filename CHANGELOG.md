@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [6.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.2...v6.3.0) (2023-02-16)
+
+
+### Features
+
+* improve logging messages ([ea2a893](https://github.com/seanwu1105/vscode-qt-for-python/commit/ea2a89358ace7819df92b4aee4621e4d9197dadc))
+
 ## [6.2.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.1...v6.2.2) (2023-02-16)
 
 
