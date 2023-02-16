@@ -18,19 +18,24 @@ suite('run', () => {
   suite(
     'when execute cat command to read exist file with spaces in filename',
     () => {
-      setup(async () => {
-        const filePath = path.resolve(
-          TEST_ASSETS_PATH,
-          'filename with spaces.txt',
-        )
+      const filePath = path.resolve(
+        TEST_ASSETS_PATH,
+        'filename with spaces.txt',
+      )
 
-        if (process.platform === 'win32')
-          result = await run({ command: ['type', filePath] })
-        else result = await run({ command: ['cat', filePath] })
-      })
+      const command =
+        process.platform === 'win32' ? ['type', filePath] : ['cat', filePath]
+
+      setup(async () => (result = await run({ command })))
 
       test('should return Success with contents', async () => {
-        const expected: RunResult = { kind: 'Success', value: 'hello' }
+        const expected: RunResult = {
+          kind: 'Success',
+          value: {
+            stdout: 'hello',
+            command: wrapAndJoinCommandArgsWithQuotes(command),
+          },
+        }
         assert.deepStrictEqual(result, expected)
       })
     },

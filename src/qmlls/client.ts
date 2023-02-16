@@ -20,15 +20,14 @@ import {
 } from 'vscode-languageclient/node'
 import type { URI } from 'vscode-uri'
 import { getEnabledFromConfig$ } from '../configurations'
-import type { CommandArgs, ExecError, StdErrError } from '../run'
+import type { CommandArgs } from '../run'
 import { run, wrapAndJoinCommandArgsWithQuotes } from '../run'
 import { getToolCommand$ } from '../tool-utils'
-import type { ErrorResult, SuccessResult } from '../types'
 
 export function registerQmlLanguageServer$({
   extensionUri,
   outputChannel,
-}: RegisterQmlLanguageServerArgs): Observable<RegisterQmlLanguageServerResult> {
+}: RegisterQmlLanguageServerArgs) {
   const client$ = new ReplaySubject<LanguageClient | undefined>(1)
 
   const createClient$ = getToolCommand$({
@@ -67,9 +66,9 @@ export function registerQmlLanguageServer$({
                 await client?.start()
                 return {
                   kind: 'Success',
-                  value: `qmlls is enabled with latest config: ${JSON.stringify(
-                    result.value,
-                  )}`,
+                  value: `qmlls is running with the command: '${wrapAndJoinCommandArgsWithQuotes(
+                    [...result.value.command, ...result.value.options],
+                  )}'`,
                 } as const
               }),
             ),
@@ -83,7 +82,7 @@ export function registerQmlLanguageServer$({
       if (!enabled)
         return defer(async () => {
           client$.next(undefined)
-          return { kind: 'Success', value: 'qmlls is disabled' } as const
+          return { kind: 'Success', value: 'qmlls has been stopped' } as const
         })
 
       return createClient$
@@ -95,12 +94,6 @@ type RegisterQmlLanguageServerArgs = {
   readonly extensionUri: URI
   readonly outputChannel: OutputChannel
 }
-
-type RegisterQmlLanguageServerResult =
-  | ErrorResult<'NotFound'>
-  | ExecError
-  | StdErrError
-  | SuccessResult<string>
 
 async function checkQmllsExists(command: CommandArgs) {
   return run({ command: [...command, '--help'] })

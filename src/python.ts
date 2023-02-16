@@ -22,7 +22,7 @@ export function resolveScriptCommand$({
           ...result.value,
           path.join(extensionUri.fsPath, 'python', 'scripts', `${tool}.py`),
         ],
-      }
+      } as const
     }),
   )
 }
@@ -37,9 +37,7 @@ export type ResolveScriptCommandResult =
   | SuccessResult<CommandArgs>
   | ErrorResult<'NotFound'>
 
-function getPythonInterpreterPath$(
-  resource: URI | undefined,
-): Observable<GetPythonInterpreterPathResult> {
+function getPythonInterpreterPath$(resource: URI | undefined) {
   return defer(async () => getPythonExtensionApi()).pipe(
     concatMap(result => {
       if (result.kind !== 'Success') return of(result)
@@ -61,7 +59,7 @@ type GetPythonInterpreterPathResult =
   | SuccessResult<CommandArgs>
   | ErrorResult<'NotFound'>
 
-async function getPythonExtensionApi(): Promise<GetPythonExtensionApiResult> {
+async function getPythonExtensionApi() {
   const pythonExtensionApi = await extensions
     .getExtension<PythonExtensionApi>('ms-python.python')
     ?.activate()
@@ -70,21 +68,14 @@ async function getPythonExtensionApi(): Promise<GetPythonExtensionApiResult> {
     return {
       kind: 'NotFoundError',
       message: 'Python extension not found.',
-    }
+    } as const
 
   await pythonExtensionApi.ready
 
-  return { kind: 'Success', value: pythonExtensionApi }
+  return { kind: 'Success', value: pythonExtensionApi } as const
 }
 
-type GetPythonExtensionApiResult =
-  | SuccessResult<PythonExtensionApi>
-  | ErrorResult<'NotFound'>
-
-function getPythonExecCommand({
-  api,
-  resource,
-}: GetPythonExecCommandArgs): GetPythonExecCommandResult {
+function getPythonExecCommand({ api, resource }: GetPythonExecCommandArgs) {
   const command = api.settings.getExecutionDetails(resource).execCommand
 
   if (isNil(command) || command.length === 0)
@@ -92,19 +83,15 @@ function getPythonExecCommand({
       kind: 'NotFoundError',
       message:
         'Python interpreter cannot could not be retrieved from the Python extension.',
-    }
+    } as const
 
-  return { kind: 'Success', value: [...command] }
+  return { kind: 'Success', value: [...command] } as const
 }
 
 type GetPythonExecCommandArgs = {
   readonly api: PythonExtensionApi
   readonly resource: URI | undefined
 }
-
-type GetPythonExecCommandResult =
-  | SuccessResult<string[]>
-  | ErrorResult<'NotFound'>
 
 // Excerpt from: https://github.com/microsoft/vscode-python/blob/344c912a1c15d07eb9b14bf749c7529a7fa0877b/src/client/apiTypes.ts
 type PythonExtensionApi = {

@@ -1,15 +1,10 @@
 import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
-import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import { getToolCommand$ } from '../tool-utils'
-import type { ErrorResult, SuccessResult } from '../types'
 
-export async function compileUi(
-  { extensionUri }: CommandDeps,
-  ...args: any[]
-): Promise<CompileUiResult> {
+export async function compileUi({ extensionUri }: CommandDeps, ...args: any[]) {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
 
   if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
@@ -34,10 +29,3 @@ export async function compileUi(
     ],
   })
 }
-
-type CompileUiResult =
-  | SuccessResult<string>
-  | ExecError
-  | StdErrError
-  | ErrorResult<'NotFound'>
-  | ErrorResult<'Type'>

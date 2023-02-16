@@ -11,6 +11,8 @@ import type { ErrorResult, SuccessResult } from './types'
 import { registerUicLiveExecution$ } from './uic/uic-live-execution'
 import { toDisposable } from './utils'
 
+const JSON_INDENT = 2
+
 export async function activate({
   extensionUri,
   subscriptions,
@@ -33,7 +35,15 @@ export async function activate({
       onResultReceived(
         {
           kind: 'UnexpectedError',
-          message: `Unexpected error: ${JSON.stringify(e)}`,
+          message: `${JSON.stringify(e, null, JSON_INDENT)}`,
+        },
+        outputChannel,
+      ),
+    complete: () =>
+      onResultReceived(
+        {
+          kind: 'Success',
+          value: 'An observable is completed',
         },
         outputChannel,
       ),
@@ -46,9 +56,11 @@ export async function activate({
           catchError((err: unknown, caught$) => {
             return of({
               kind: 'UnexpectedError',
-              message: `Unexpected error: ${JSON.stringify(
+              message: `${JSON.stringify(
                 err,
-              )} (caught: ${JSON.stringify(caught$)})`,
+                null,
+                JSON_INDENT,
+              )}\n(caught: ${JSON.stringify(caught$, null, JSON_INDENT)})`,
             } as const)
           }),
         )
@@ -60,12 +72,14 @@ export async function activate({
 }
 
 function onResultReceived(result: Result, outputChannel: OutputChannel) {
-  const indent = 2
   switch (result.kind) {
     case 'Success':
       return outputChannel.appendLine(
         prefixLogging({
-          message: JSON.stringify(result.value, null, indent),
+          message:
+            typeof result.value === 'string'
+              ? result.value
+              : JSON.stringify(result.value, null, JSON_INDENT),
           severity: 'INFO',
         }),
       )
@@ -73,7 +87,7 @@ function onResultReceived(result: Result, outputChannel: OutputChannel) {
     case 'TypeError':
     case 'NotFoundError':
     case 'UnexpectedError':
-      return showError(result.message, outputChannel)
+      return showError(`${result.kind}: ${result.message}`, outputChannel)
     case 'ExecError':
       return showError(
         `${result.stderr}\n${result.stdout}\n${result.error.message ?? ''}`,

@@ -1,15 +1,13 @@
 import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
-import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import { getToolCommand$ } from '../tool-utils'
-import type { ErrorResult, SuccessResult } from '../types'
 
 export async function compileResource(
   { extensionUri }: CommandDeps,
   ...args: any[]
-): Promise<CompileResourceResult> {
+) {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
 
   if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
@@ -34,10 +32,3 @@ export async function compileResource(
     ],
   })
 }
-
-type CompileResourceResult =
-  | SuccessResult<string>
-  | ExecError
-  | StdErrError
-  | ErrorResult<'NotFound'>
-  | ErrorResult<'Type'>

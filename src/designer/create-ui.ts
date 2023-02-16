@@ -5,15 +5,11 @@ import { FileType, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 import type { CommandDeps } from '../commands'
 import { getTargetDocumentUri } from '../commands'
-import type { ExecError, StdErrError } from '../run'
 import { run } from '../run'
 import { getToolCommand$ } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
-export async function createUi(
-  { extensionUri }: CommandDeps,
-  ...args: any[]
-): Promise<CreateUiResult> {
+export async function createUi({ extensionUri }: CommandDeps, ...args: any[]) {
   const targetDocumentUriResult = getTargetDocumentUri(...args)
 
   if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
@@ -42,14 +38,6 @@ export async function createUi(
     cwd: getDirectoryPathResult.value,
   })
 }
-
-type CreateUiResult =
-  | SuccessResult<string>
-  | ExecError
-  | StdErrError
-  | ErrorResult<'NotFound'>
-  | ErrorResult<'Type'>
-  | ErrorResult<'IO'>
 
 async function getDirectoryPath(uri: URI): Promise<GetDirectoryPathResult> {
   let stat: FileStat
