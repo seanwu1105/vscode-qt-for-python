@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [6.2.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.1...v6.2.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* await command result ([831280c](https://github.com/seanwu1105/vscode-qt-for-python/commit/831280c2b545ec642611a7c524eaf1d88d68616b)), closes [#275](https://github.com/seanwu1105/vscode-qt-for-python/issues/275)
+
 ## [6.2.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.0...v6.2.1) (2023-02-15)
 
 
