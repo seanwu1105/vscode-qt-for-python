@@ -17,7 +17,8 @@ export function registerCommands$({ extensionUri }: RegisterCommandsArgs) {
         ...COMMANDS.map(command =>
           commands.registerCommand(
             `${EXTENSION_NAMESPACE}.${command.name}`,
-            (...args) => callback(command.callback({ extensionUri }, ...args)),
+            async (...args) =>
+              callback(await command.callback({ extensionUri }, ...args)),
           ),
         ),
       ),
