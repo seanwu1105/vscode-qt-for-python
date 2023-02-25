@@ -6,6 +6,17 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.3.0...v7.0.0) (2023-02-25)
+
+
+### ⚠ BREAKING CHANGES
+
+* replace config rcc|uic.liveExecution with rcc|uic.liveExecution.enabled
+
+### Features
+
+* allow users to set glob pattern for live execution ([90ac3f0](https://github.com/seanwu1105/vscode-qt-for-python/commit/90ac3f0c0aadd141f93d91dc197d0bdc6e1bc7d3)), closes [#278](https://github.com/seanwu1105/vscode-qt-for-python/issues/278)
+
 ## [6.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.2.2...v6.3.0) (2023-02-16)
 
 
