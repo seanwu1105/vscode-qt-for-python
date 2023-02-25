@@ -69,6 +69,46 @@ type GetEnabledFromConfigArgs = {
 
 type SupportedSwitchableTool = Extract<SupportedTool, 'qmlls'>
 
+export function getLiveExecutionEnabledFromConfig$({
+  tool,
+  resource,
+}: GetLiveExecutionEnabledFromConfigArgs) {
+  return getConfiguration$<boolean>({
+    section: `${EXTENSION_NAMESPACE}.${tool}.liveExecution`,
+    key: 'enabled',
+    defaultValue: DEFAULT_LIVE_EXECUTION_ENABLED,
+    resource,
+  })
+}
+
+const DEFAULT_LIVE_EXECUTION_ENABLED = true
+
+type GetLiveExecutionEnabledFromConfigArgs = {
+  readonly tool: SupportedLiveExecutionTool
+  readonly resource: URI | undefined
+}
+
+export function getLiveExecutionGlobFromConfig$({
+  tool,
+  resource,
+  defaultValue,
+}: GetLiveExecutionGlobFromConfigArgs) {
+  return getConfiguration$<string>({
+    section: `${EXTENSION_NAMESPACE}.${tool}.liveExecution`,
+    key: 'glob',
+    defaultValue,
+    resource,
+  })
+}
+
+type GetLiveExecutionGlobFromConfigArgs = {
+  readonly tool: SupportedLiveExecutionTool
+  readonly resource: URI | undefined
+  readonly defaultValue: string
+}
+
+type SupportedLiveExecutionTool = Extract<SupportedTool, 'uic' | 'rcc'>
+
 export function getConfiguration$<T>({
   section,
   key,

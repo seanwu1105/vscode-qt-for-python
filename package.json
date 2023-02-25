@@ -238,10 +238,16 @@
           "markdownDescription": "The options passed to Qt `qmlls` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "window"
         },
-        "qtForPython.rcc.liveExecution": {
+        "qtForPython.rcc.liveExecution.enabled": {
           "type": "boolean",
           "default": true,
           "markdownDescription": "Enable live execution of Qt `rcc` executable. This will automatically compile the resource file when it is saved.",
+          "scope": "resource"
+        },
+        "qtForPython.rcc.liveExecution.glob": {
+          "type": "string",
+          "default": "**/*.qrc",
+          "markdownDescription": "The glob pattern used to match the resource files to be compiled. See [here](https://code.visualstudio.com/api/references/vscode-api#GlobPattern) for a detailed list of glob patterns.",
           "scope": "resource"
         },
         "qtForPython.rcc.path": {
@@ -262,10 +268,16 @@
           "markdownDescription": "The options passed to Qt `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         },
-        "qtForPython.uic.liveExecution": {
+        "qtForPython.uic.liveExecution.enabled": {
           "type": "boolean",
           "default": true,
           "markdownDescription": "Automatically recompile Qt UI files when any `*.ui` file has changed or created."
+        },
+        "qtForPython.uic.liveExecution.glob": {
+          "type": "string",
+          "default": "**/*.ui",
+          "markdownDescription": "The glob pattern used to match the UI files to be compiled. See [here](https://code.visualstudio.com/api/references/vscode-api#GlobPattern) for a detailed list of glob patterns.",
+          "scope": "resource"
         },
         "qtForPython.uic.path": {
           "type": "string",

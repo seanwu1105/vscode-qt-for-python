@@ -10,12 +10,15 @@ import {
   mergeMap,
   of,
   startWith,
+  switchMap,
 } from 'rxjs'
 import { RelativePattern, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { z } from 'zod'
-import { getConfiguration$ } from '../configurations'
-import { EXTENSION_NAMESPACE } from '../constants'
+import {
+  getLiveExecutionEnabledFromConfig$,
+  getLiveExecutionGlobFromConfig$,
+} from '../configurations'
 import type { ErrorResult, SuccessResult } from '../types'
 import { getWatcher$ } from '../watcher'
 import { compileResource } from './compile-resource'
@@ -23,11 +26,20 @@ import { compileResource } from './compile-resource'
 export function registerRccLiveExecution$({
   extensionUri,
 }: RegisterRccLiveExecutionArgs) {
-  const qrcFiles$ = defer(async () =>
-    workspace.findFiles('**/*.qrc', '**/site-packages/**'),
-  ).pipe(concatMap(uris => from(uris)))
+  const glob$ = getLiveExecutionGlobFromConfig$({
+    tool: 'rcc',
+    resource: undefined,
+    defaultValue: '**/*.qrc',
+  })
 
-  return merge(qrcFiles$, getWatcher$('**/*.qrc')).pipe(
+  const qrcFiles$ = glob$.pipe(
+    concatMap(glob => workspace.findFiles(glob, '**/site-packages/**')),
+    concatMap(uris => from(uris)),
+  )
+
+  const watcher$ = glob$.pipe(switchMap(glob => getWatcher$(glob)))
+
+  return merge(qrcFiles$, watcher$).pipe(
     mergeMap(qrcUri =>
       registerResourcesLiveExecution$({ extensionUri, qrcUri }),
     ),
@@ -52,10 +64,8 @@ function registerResourcesLiveExecution$({
         startWith(undefined), // Trigger compilation on resource file changes
         concatMap(() =>
           firstValueFrom(
-            getConfiguration$({
-              section: `${EXTENSION_NAMESPACE}.rcc`,
-              key: 'liveExecution',
-              defaultValue: true,
+            getLiveExecutionEnabledFromConfig$({
+              tool: 'rcc',
               resource: qrcUri,
             }),
           ),
