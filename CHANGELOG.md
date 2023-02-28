@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.0.0...v7.1.0) (2023-02-28)
+
+
+### Features
+
+* support pyside6-qml to preview QML files ([736dcdf](https://github.com/seanwu1105/vscode-qt-for-python/commit/736dcdf74afd32ec7ae515e5f8b22f389d1447d3))
+
 ## [7.0.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v6.3.0...v7.0.0) (2023-02-25)
 
 
