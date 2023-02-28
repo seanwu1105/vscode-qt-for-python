@@ -122,6 +122,11 @@
         "command": "qtForPython.editUi",
         "title": "Edit Qt UI File",
         "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.previewQml",
+        "title": "Preview QML File",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -145,6 +150,11 @@
           "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.previewQml",
+          "when": "resourceLangId == qml",
+          "group": "qtForPython"
         }
       ],
       "explorer/context": [
@@ -166,6 +176,11 @@
         {
           "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.previewQml",
+          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ],
@@ -189,6 +204,11 @@
           "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.previewQml",
+          "when": "resourceLangId == qml",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
@@ -210,6 +230,11 @@
         {
           "command": "qtForPython.editUi",
           "when": "resourceExtname == .ui && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.previewQml",
+          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ]
@@ -310,6 +335,21 @@
           },
           "default": [],
           "markdownDescription": "The options passed to Qt `designer` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.qml.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to `pyside6-qml` executable for QML preview. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.qml.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "The options passed to `pyside6-qml` executable for QML preview. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }

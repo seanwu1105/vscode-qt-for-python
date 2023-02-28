@@ -18,6 +18,7 @@ All features support multi-root workspace project.
 - Linting (requires PySide6 >= 6.3)
   - Support `.qmllint.ini` configuration file
 - Code completion (requires PySide6 >= 6.4)
+- Preview QML file in a separate window (requires PySide6)
 
 ### Qt UI Files
 

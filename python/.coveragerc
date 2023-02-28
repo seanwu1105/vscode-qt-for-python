@@ -5,6 +5,7 @@ omit =
     scripts/rcc.py
     scripts/uic.py
     scripts/designer.py
+    scripts/qml.py
 
 [report]
 fail_under = 100

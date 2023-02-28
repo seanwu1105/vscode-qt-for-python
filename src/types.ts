@@ -1,6 +1,6 @@
 // Should NOT depend on vscode
 
-export type SupportedTool = 'qmlls' | 'rcc' | 'uic' | 'designer'
+export type SupportedTool = 'qmlls' | 'rcc' | 'uic' | 'designer' | 'qml'
 
 export type SuccessResult<T, Name extends string = ''> = {
   readonly kind: `${Name}Success`
