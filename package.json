@@ -56,7 +56,8 @@
   ],
   "activationEvents": [
     "workspaceContains:**/*.qml",
-    "workspaceContains:**/*.ui"
+    "workspaceContains:**/*.ui",
+    "workspaceContains:**/*.qrc"
   ],
   "contributes": {
     "languages": [
