@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.1.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.1.0...v7.1.1) (2023-03-01)
+
+
+### Bug Fixes
+
+* activate extension if containing qrc files ([a4cb526](https://github.com/seanwu1105/vscode-qt-for-python/commit/a4cb52697ef3ed7155e311915ed74e7b28fd7618))
+
 ## [7.1.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.0.0...v7.1.0) (2023-02-28)
 
 
