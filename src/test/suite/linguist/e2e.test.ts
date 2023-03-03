@@ -11,21 +11,14 @@ import {
   waitFor,
 } from '../test-utils'
 
-suite('compile-ui/e2e', () => {
+suite('linguist/e2e', () => {
   suiteSetup(async function () {
     this.timeout(E2E_TIMEOUT)
     await setupE2EEnvironment()
   })
 
-  test('should include the command', async () =>
-    assert.ok(
-      (await commands.getCommands(true)).includes(
-        `${EXTENSION_NAMESPACE}.compileUi`,
-      ),
-    ))
-
   suite('command palette', () => {
-    suite('when an ui file is open', () => {
+    suite('when a Python file is open', () => {
       const sampleFilenameNoExt = 'sample'
 
       setup(async function () {
@@ -35,7 +28,11 @@ suite('compile-ui/e2e', () => {
 
         const document = await workspace.openTextDocument(
           URI.file(
-            path.resolve(TEST_ASSETS_PATH, 'ui', `${sampleFilenameNoExt}.ui`),
+            path.resolve(
+              TEST_ASSETS_PATH,
+              'linguist',
+              `${sampleFilenameNoExt}.py`,
+            ),
           ),
         )
         await window.showTextDocument(document)
@@ -46,16 +43,16 @@ suite('compile-ui/e2e', () => {
         await removeGeneratedFile(sampleFilenameNoExt)
       })
 
-      test('should run command', async () => {
-        await commands.executeCommand(`${EXTENSION_NAMESPACE}.compileUi`)
+      test('should run lupdate command', async () => {
+        await commands.executeCommand(`${EXTENSION_NAMESPACE}.lupdate`)
 
         return waitFor(async () => {
           const readResult = await workspace.fs.readFile(
             URI.file(
               path.resolve(
                 TEST_ASSETS_PATH,
-                'ui',
-                `ui_${sampleFilenameNoExt}.py`,
+                'linguist',
+                `${sampleFilenameNoExt}.ts`,
               ),
             ),
           )
@@ -69,6 +66,6 @@ suite('compile-ui/e2e', () => {
 
 async function removeGeneratedFile(sampleFilenameNoExt: string) {
   return forceDeleteFile(
-    path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+    path.resolve(TEST_ASSETS_PATH, 'linguist', `${sampleFilenameNoExt}.ts`),
   )
 }

@@ -106,27 +106,32 @@
     "commands": [
       {
         "command": "qtForPython.compileResource",
-        "title": "Compile Qt Resource File",
+        "title": "Compile Qt Resource File (rcc)",
         "category": "Qt for Python"
       },
       {
         "command": "qtForPython.compileUi",
-        "title": "Compile Qt UI File",
+        "title": "Compile Qt UI File (uic)",
         "category": "Qt for Python"
       },
       {
         "command": "qtForPython.createUi",
-        "title": "Create Qt UI File",
+        "title": "Create Qt UI File (designer)",
         "category": "Qt for Python"
       },
       {
         "command": "qtForPython.editUi",
-        "title": "Edit Qt UI File",
+        "title": "Edit Qt UI File (designer)",
         "category": "Qt for Python"
       },
       {
         "command": "qtForPython.previewQml",
-        "title": "Preview QML File",
+        "title": "Preview QML File (qml)",
+        "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.lupdate",
+        "title": "Update Qt Translation File (lupdate)",
         "category": "Qt for Python"
       }
     ],
@@ -156,6 +161,11 @@
           "command": "qtForPython.previewQml",
           "when": "resourceLangId == qml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.lupdate",
+          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "group": "qtForPython"
         }
       ],
       "explorer/context": [
@@ -182,6 +192,11 @@
         {
           "command": "qtForPython.previewQml",
           "when": "resourceLangId == qml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.lupdate",
+          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
           "group": "qtForPython"
         }
       ],
@@ -210,6 +225,11 @@
           "command": "qtForPython.previewQml",
           "when": "resourceLangId == qml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.lupdate",
+          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
@@ -236,6 +256,11 @@
         {
           "command": "qtForPython.previewQml",
           "when": "resourceLangId == qml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.lupdate",
+          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
           "group": "qtForPython"
         }
       ]
@@ -351,6 +376,24 @@
           },
           "default": [],
           "markdownDescription": "The options passed to `pyside6-qml` executable for QML preview. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.lupdate.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to Qt `lupdate` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.lupdate.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "-ts",
+            "${resourceDirname}${pathSeparator}${resourceBasenameNoExtension}.ts"
+          ],
+          "markdownDescription": "The options passed to Qt `lupdate` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }

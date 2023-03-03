@@ -6,6 +6,7 @@ omit =
     scripts/uic.py
     scripts/designer.py
     scripts/qml.py
+    scripts/lupdate.py
 
 [report]
 fail_under = 100

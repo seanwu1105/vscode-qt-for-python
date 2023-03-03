@@ -1,6 +1,5 @@
 # pylint: disable=import-error
 
-import re
 import sys
 
 from utils import is_installed
@@ -12,5 +11,4 @@ if __name__ == "__main__":
         from PySide2.scripts.pyside_tool import designer
     else:
         sys.exit("No rcc can be found in current Python environment.")
-    sys.argv[0] = re.sub(r"(-script\.pyw|\.exe)?$", "", sys.argv[0])
     sys.exit(designer())
