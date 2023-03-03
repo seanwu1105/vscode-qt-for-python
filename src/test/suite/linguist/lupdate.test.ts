@@ -6,7 +6,7 @@ suite('lupdate', () => {
   test('should include the command', async () =>
     assert.ok(
       (await commands.getCommands(true)).includes(
-        `${EXTENSION_NAMESPACE}.lupdate`,
+        `${EXTENSION_NAMESPACE}.extractTranslations`,
       ),
     ))
 })

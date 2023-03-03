@@ -43,8 +43,10 @@ suite('linguist/e2e', () => {
         await removeGeneratedFile(sampleFilenameNoExt)
       })
 
-      test('should run lupdate command', async () => {
-        await commands.executeCommand(`${EXTENSION_NAMESPACE}.lupdate`)
+      test('should run extractTranslations command', async () => {
+        await commands.executeCommand(
+          `${EXTENSION_NAMESPACE}.extractTranslations`,
+        )
 
         return waitFor(async () => {
           const readResult = await workspace.fs.readFile(

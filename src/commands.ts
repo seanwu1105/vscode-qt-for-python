@@ -5,7 +5,8 @@ import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from './constants'
 import { createUi } from './designer/create-ui'
 import { editUi } from './designer/edit-ui'
-import { lupdate } from './lupdate/lupdate'
+import { editTranslations } from './linguist/edit-translations'
+import { extractTranslations } from './lupdate/extract-translation'
 import { previewQml } from './qml/preview-qml'
 import { compileResource } from './rcc/compile-resource'
 import type { ErrorResult, SuccessResult } from './types'
@@ -53,8 +54,12 @@ const COMMANDS = [
     callback: previewQml,
   },
   {
-    name: 'lupdate',
-    callback: lupdate,
+    name: 'extractTranslations',
+    callback: extractTranslations,
+  },
+  {
+    name: 'editTranslations',
+    callback: editTranslations,
   },
 ] as const
 

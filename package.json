@@ -130,8 +130,13 @@
         "category": "Qt for Python"
       },
       {
-        "command": "qtForPython.lupdate",
+        "command": "qtForPython.extractTranslations",
         "title": "Extract to Qt Translation File (lupdate)",
+        "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.editTranslations",
+        "title": "Edit Qt Translation File (linguist)",
         "category": "Qt for Python"
       }
     ],
@@ -163,8 +168,13 @@
           "group": "qtForPython"
         },
         {
-          "command": "qtForPython.lupdate",
+          "command": "qtForPython.extractTranslations",
           "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
       ],
@@ -195,8 +205,13 @@
           "group": "qtForPython"
         },
         {
-          "command": "qtForPython.lupdate",
+          "command": "qtForPython.extractTranslations",
           "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
       ],
@@ -227,8 +242,13 @@
           "group": "qtForPython"
         },
         {
-          "command": "qtForPython.lupdate",
+          "command": "qtForPython.extractTranslations",
           "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
       ],
@@ -259,8 +279,13 @@
           "group": "qtForPython"
         },
         {
-          "command": "qtForPython.lupdate",
+          "command": "qtForPython.extractTranslations",
           "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
       ]
