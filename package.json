@@ -131,7 +131,7 @@
       },
       {
         "command": "qtForPython.lupdate",
-        "title": "Update Qt Translation File (lupdate)",
+        "title": "Extract to Qt Translation File (lupdate)",
         "category": "Qt for Python"
       }
     ],
@@ -164,7 +164,7 @@
         },
         {
           "command": "qtForPython.lupdate",
-          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
           "group": "qtForPython"
         }
       ],
@@ -196,7 +196,7 @@
         },
         {
           "command": "qtForPython.lupdate",
-          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
           "group": "qtForPython"
         }
       ],
@@ -228,7 +228,7 @@
         },
         {
           "command": "qtForPython.lupdate",
-          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
           "group": "qtForPython"
         }
       ],
@@ -260,7 +260,7 @@
         },
         {
           "command": "qtForPython.lupdate",
-          "when": "resourceLangId == python || resourceLangId == qml || (resourceLangId == xml && resourceExtname == .ui)",
+          "when": "resourceLangId == python || resourceLangId == qml || resourceLangId == xml && resourceExtname == .ui",
           "group": "qtForPython"
         }
       ]
