@@ -1,18 +1,14 @@
-import subprocess
+import pytest
 
-from tests import SCRIPTS_DIR
+from scripts.utils import SupportedQtDependencies
+from tests import filter_available_qt_dependencies, invoke_script
 
 
-def test_qmlls_help():
-    result = invoke_qmlls_py(["--help"])
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6"]),
+)
+def test_qmlls_help(qt_dependency: SupportedQtDependencies):
+    result = invoke_script("qmlls", ["--help"], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
-
-
-def invoke_qmlls_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "qmlls.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )

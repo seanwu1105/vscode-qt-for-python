@@ -1,29 +1,30 @@
 import os
-import subprocess
 
-from tests import ASSETS_DIR, SCRIPTS_DIR
+import pytest
+
+from scripts.utils import SupportedQtDependencies
+from tests import ASSETS_DIR, filter_available_qt_dependencies, invoke_script
 
 
-def test_uic_version():
-    result = invoke_uic_py(["--version"])
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt6", "PyQt5"]),
+)
+def test_uic_version(qt_dependency: SupportedQtDependencies):
+    result = invoke_script("uic", ["--version"], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
 
 
-def test_uic_sample_ui():
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt6", "PyQt5"]),
+)
+def test_uic_sample_ui(qt_dependency: SupportedQtDependencies):
     filename = "sample.ui"
-    result = invoke_uic_py([get_assets_path(filename)])
+    result = invoke_script("uic", [get_assets_path(filename)], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
-
-
-def invoke_uic_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "uic.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )
 
 
 def get_assets_path(filename: str) -> str:

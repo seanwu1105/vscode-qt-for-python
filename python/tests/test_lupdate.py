@@ -1,34 +1,47 @@
 import os
-import subprocess
 
-from tests import ASSETS_DIR, SCRIPTS_DIR
+import pytest
+
+from scripts.utils import SupportedQtDependencies
+from tests import ASSETS_DIR, filter_available_qt_dependencies, invoke_script
 
 
-def test_lupdate_help():
-    result = invoke_lupdate_py(["-help"])
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt6", "PyQt5"]),
+)
+def test_lupdate_help(qt_dependency: SupportedQtDependencies):
+    help_arg = "--help" if qt_dependency == "PyQt6" else "-help"
+
+    result = invoke_script("lupdate", [help_arg], qt_dependency)
     assert result.returncode == 0
-    assert len(result.stdout.decode("utf-8")) > 0
+
+    if qt_dependency in ("PySide2", "PyQt5"):
+        assert len(result.stderr.decode("utf-8")) > 0
+    else:
+        assert len(result.stdout.decode("utf-8")) > 0
 
 
-def test_lupdate_sample_py():
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt6", "PyQt5"]),
+)
+def test_lupdate_sample_py(qt_dependency: str):
+    try:
+        os.remove(get_assets_path("sample.ts"))
+    except FileNotFoundError:
+        pass
+
     filename = "sample.py"
-    result = invoke_lupdate_py(
-        [get_assets_path(filename), "-ts", get_assets_path("sample.ts")]
+    result = invoke_script(
+        "lupdate",
+        [get_assets_path(filename), "-ts", get_assets_path("sample.ts")],
+        qt_dependency,
     )
     assert result.returncode == 0
-    assert len(result.stdout.decode("utf-8")) > 0
     assert os.path.exists(get_assets_path("sample.ts"))
 
     os.remove(get_assets_path("sample.ts"))
-
-
-def invoke_lupdate_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "lupdate.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )
 
 
 def get_assets_path(filename: str) -> str:

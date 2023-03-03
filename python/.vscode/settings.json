@@ -8,6 +8,7 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
+  "python.analysis.autoImportCompletions": true,
   "python.formatting.provider": "black",
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,

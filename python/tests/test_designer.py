@@ -1,26 +1,20 @@
 import os
-import subprocess
 
 import pytest
 
-from tests import ASSETS_DIR, SCRIPTS_DIR
+from scripts.utils import SupportedQtDependencies
+from tests import ASSETS_DIR, filter_available_qt_dependencies, invoke_script
 
 
 @pytest.mark.skip(reason="a GUI app cannot be closed gracefully")
-def test_designer_sample_ui():
+@pytest.mark.parametrize(
+    "qt_dependency", filter_available_qt_dependencies(["PySide6", "PySide2"])
+)
+def test_designer_sample_ui(qt_dependency: SupportedQtDependencies):
     filename = "sample.ui"
-    result = invoke_designer_py([get_assets_path(filename)])
+    result = invoke_script("designer", [get_assets_path(filename)], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
-
-
-def invoke_designer_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "designer.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )
 
 
 def get_assets_path(filename: str) -> str:

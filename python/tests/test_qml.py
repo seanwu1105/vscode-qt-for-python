@@ -1,20 +1,15 @@
-import subprocess
-
 import pytest
-from tests import SCRIPTS_DIR
+
+from scripts.utils import SupportedQtDependencies
+from tests import filter_available_qt_dependencies, invoke_script
 
 
 @pytest.mark.skip(reason="Ubuntu on GitHub Actions does not have libGL.so.1")
-def test_qml_help():
-    result = invoke_qml_py(["--help"])
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6"]),
+)
+def test_qml_help(qt_dependency: SupportedQtDependencies):
+    result = invoke_script("qml", ["--help"], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
-
-
-def invoke_qml_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "qml.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )

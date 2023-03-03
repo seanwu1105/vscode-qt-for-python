@@ -1,29 +1,36 @@
 import os
-import subprocess
 
-from tests import ASSETS_DIR, SCRIPTS_DIR
+import pytest
 
-
-def test_rcc_version():
-    result = invoke_rcc_py(["-v"])
-    assert result.returncode == 0
-    assert len(result.stdout.decode("utf-8")) > 0
+from scripts.utils import SupportedQtDependencies
+from tests import ASSETS_DIR, filter_available_qt_dependencies, invoke_script
 
 
-def test_rcc_sample_qrc():
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt5"]),
+)
+def test_rcc_help(qt_dependency: SupportedQtDependencies):
+    help_arg = "-help" if qt_dependency == "PyQt5" else "--help"
+    result = invoke_script("rcc", [help_arg], qt_dependency)
+
+    if qt_dependency == "PyQt5":
+        assert result.returncode != 0
+        assert len(result.stderr.decode("utf-8")) > 0
+    else:
+        assert result.returncode == 0
+        assert len(result.stdout.decode("utf-8")) > 0
+
+
+@pytest.mark.parametrize(
+    "qt_dependency",
+    filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt5"]),
+)
+def test_rcc_sample_qrc(qt_dependency: SupportedQtDependencies):
     filename = "sample.qrc"
-    result = invoke_rcc_py([get_assets_path(filename)])
+    result = invoke_script("rcc", [get_assets_path(filename)], qt_dependency)
     assert result.returncode == 0
     assert len(result.stdout.decode("utf-8")) > 0
-
-
-def invoke_rcc_py(args: list[str]):
-    return subprocess.run(
-        ["poetry", "run", "python", "rcc.py", *args],
-        cwd=SCRIPTS_DIR,
-        capture_output=True,
-        check=True,
-    )
 
 
 def get_assets_path(filename: str) -> str:
