@@ -1,4 +1,5 @@
 {
+  "exclude": ["**/python/**"],
   "compilerOptions": {
     "module": "commonjs",
     "target": "ES2020",
