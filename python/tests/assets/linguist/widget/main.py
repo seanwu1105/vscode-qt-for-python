@@ -22,7 +22,11 @@ if __name__ == "__main__":
     translator = QTranslator(app)
     path = os.path.dirname(os.path.abspath(__file__))
     if translator.load(
-        QLocale(QLocale.Language.Chinese, QLocale.Country.Taiwan), "example", "_", path
+        QLocale(QLocale.Language.Chinese, QLocale.Country.Taiwan),
+        "example",
+        "_",
+        path,
+        ".qm",
     ):
         print(f"load {translator.filePath()}")
         app.installTranslator(translator)
