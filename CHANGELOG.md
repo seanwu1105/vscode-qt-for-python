@@ -6,6 +6,20 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.1.1...v7.2.0) (2023-03-04)
+
+
+### Features
+
+* add linguist support ([ba9e29f](https://github.com/seanwu1105/vscode-qt-for-python/commit/ba9e29f45c88d13c8f2cb087b9aaf12680ef8579)), closes [#282](https://github.com/seanwu1105/vscode-qt-for-python/issues/282)
+* add lrelease support ([50a9faa](https://github.com/seanwu1105/vscode-qt-for-python/commit/50a9faa3b2d54d6d0004e647b53b788f3c65ffc9)), closes [#282](https://github.com/seanwu1105/vscode-qt-for-python/issues/282)
+* add lupdate support ([8b6829e](https://github.com/seanwu1105/vscode-qt-for-python/commit/8b6829ed8011d169fa008133751a80cadf08632f)), closes [#282](https://github.com/seanwu1105/vscode-qt-for-python/issues/282)
+
+
+### Bug Fixes
+
+* show lupdate command on UI files ([b1aec1e](https://github.com/seanwu1105/vscode-qt-for-python/commit/b1aec1e34ce7463bf9952a1b09ac6d6fdce8f9b0))
+
 ## [7.1.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.1.0...v7.1.1) (2023-03-01)
 
 
