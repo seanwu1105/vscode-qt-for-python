@@ -20,7 +20,7 @@ def filter_available_qt_dependencies(
     deps: list[SupportedQtDependencies],
 ) -> list[SupportedQtDependencies]:
     if platform.system() == "Darwin" and platform.machine() == "arm64":
-        return [None] + list(filter(lambda d: d in ("PySide2", "PyQt5"), deps))
+        return [None] + list(filter(lambda d: d not in ("PySide2", "PyQt5"), deps))
     return [None] + deps
 
 
