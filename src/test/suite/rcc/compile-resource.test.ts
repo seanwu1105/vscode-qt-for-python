@@ -46,7 +46,7 @@ suite('compile-resource/e2e', () => {
         await removeGeneratedFile(sampleFilenameNoExt)
       })
 
-      test('should run command', async () => {
+      test('should be able to run compileResource command', async () => {
         await commands.executeCommand(`${EXTENSION_NAMESPACE}.compileResource`)
 
         return waitFor(async () => {

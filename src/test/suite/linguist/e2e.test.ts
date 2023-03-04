@@ -1,6 +1,6 @@
 import * as assert from 'node:assert'
 import * as path from 'node:path'
-import { commands, window, workspace } from 'vscode'
+import { commands, languages, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../../../constants'
 import {
@@ -18,56 +18,113 @@ suite('linguist/e2e', () => {
   })
 
   suite('command palette', () => {
-    suite('when a Python file is open', () => {
-      const sampleFilenameNoExt = 'sample'
+    suite(
+      'when a Python file is open and run extractTranslations command',
+      () => {
+        const sampleFilenameNoExt = 'sample'
 
-      setup(async function () {
-        this.timeout(E2E_TIMEOUT)
+        setup(async function () {
+          this.timeout(E2E_TIMEOUT)
 
-        await removeGeneratedFile(sampleFilenameNoExt)
+          await removeGeneratedTranslationFile(sampleFilenameNoExt)
 
-        const document = await workspace.openTextDocument(
-          URI.file(
-            path.resolve(
-              TEST_ASSETS_PATH,
-              'linguist',
-              `${sampleFilenameNoExt}.py`,
-            ),
-          ),
-        )
-        await window.showTextDocument(document)
-      })
-
-      teardown(async function () {
-        this.timeout(E2E_TIMEOUT)
-        await removeGeneratedFile(sampleFilenameNoExt)
-      })
-
-      test('should run extractTranslations command', async () => {
-        await commands.executeCommand(
-          `${EXTENSION_NAMESPACE}.extractTranslations`,
-        )
-
-        return waitFor(async () => {
-          const readResult = await workspace.fs.readFile(
+          const document = await workspace.openTextDocument(
             URI.file(
               path.resolve(
                 TEST_ASSETS_PATH,
                 'linguist',
-                `${sampleFilenameNoExt}.ts`,
+                `${sampleFilenameNoExt}.py`,
               ),
             ),
           )
+          await window.showTextDocument(document)
 
-          assert.ok(readResult.byteLength > 0)
+          await commands.executeCommand(
+            `${EXTENSION_NAMESPACE}.extractTranslations`,
+          )
         })
-      }).timeout(E2E_TIMEOUT)
-    }).timeout(E2E_TIMEOUT)
+
+        teardown(async function () {
+          this.timeout(E2E_TIMEOUT)
+          await removeGeneratedTranslationFile(sampleFilenameNoExt)
+        })
+
+        test('should extract translations to file', async () =>
+          waitFor(async () => {
+            const readResult = await workspace.fs.readFile(
+              URI.file(
+                path.resolve(
+                  TEST_ASSETS_PATH,
+                  'linguist',
+                  `${sampleFilenameNoExt}.ts`,
+                ),
+              ),
+            )
+
+            assert.ok(readResult.byteLength > 0)
+          })).timeout(E2E_TIMEOUT)
+
+        suite(
+          'when a translation file is open and run compileTranslations command',
+          () => {
+            setup(async function () {
+              this.timeout(E2E_TIMEOUT)
+
+              await removeGeneratedCompiledTranslationFile(sampleFilenameNoExt)
+
+              const document = await workspace.openTextDocument(
+                URI.file(
+                  path.resolve(
+                    TEST_ASSETS_PATH,
+                    'linguist',
+                    `${sampleFilenameNoExt}.ts`,
+                  ),
+                ),
+              )
+              await window.showTextDocument(document)
+              await languages.setTextDocumentLanguage(document, 'xml')
+
+              await commands.executeCommand(
+                `${EXTENSION_NAMESPACE}.compileTranslations`,
+              )
+            })
+
+            teardown(async function () {
+              this.timeout(E2E_TIMEOUT)
+              await removeGeneratedCompiledTranslationFile(sampleFilenameNoExt)
+            })
+
+            test('should compile translations to file', async () =>
+              waitFor(async () => {
+                const readResult = await workspace.fs.readFile(
+                  URI.file(
+                    path.resolve(
+                      TEST_ASSETS_PATH,
+                      'linguist',
+                      `${sampleFilenameNoExt}.qm`,
+                    ),
+                  ),
+                )
+
+                assert.ok(readResult.byteLength > 0)
+              })).timeout(E2E_TIMEOUT)
+          },
+        ).timeout(E2E_TIMEOUT)
+      },
+    ).timeout(E2E_TIMEOUT)
   }).timeout(E2E_TIMEOUT)
 }).timeout(E2E_TIMEOUT)
 
-async function removeGeneratedFile(sampleFilenameNoExt: string) {
+async function removeGeneratedTranslationFile(sampleFilenameNoExt: string) {
   return forceDeleteFile(
     path.resolve(TEST_ASSETS_PATH, 'linguist', `${sampleFilenameNoExt}.ts`),
+  )
+}
+
+async function removeGeneratedCompiledTranslationFile(
+  sampleFilenameNoExt: string,
+) {
+  return forceDeleteFile(
+    path.resolve(TEST_ASSETS_PATH, 'linguist', `${sampleFilenameNoExt}.qm`),
   )
 }

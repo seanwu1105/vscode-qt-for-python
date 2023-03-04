@@ -6,6 +6,7 @@ import { EXTENSION_NAMESPACE } from './constants'
 import { createUi } from './designer/create-ui'
 import { editUi } from './designer/edit-ui'
 import { editTranslations } from './linguist/edit-translations'
+import { compileTranslations } from './lrelease/compile-translation'
 import { extractTranslations } from './lupdate/extract-translation'
 import { previewQml } from './qml/preview-qml'
 import { compileResource } from './rcc/compile-resource'
@@ -60,6 +61,10 @@ const COMMANDS = [
   {
     name: 'editTranslations',
     callback: editTranslations,
+  },
+  {
+    name: 'compileTranslations',
+    callback: compileTranslations,
   },
 ] as const
 

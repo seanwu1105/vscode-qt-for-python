@@ -46,7 +46,7 @@ suite('compile-ui/e2e', () => {
         await removeGeneratedFile(sampleFilenameNoExt)
       })
 
-      test('should run command', async () => {
+      test('should be able to run compileUi command', async () => {
         await commands.executeCommand(`${EXTENSION_NAMESPACE}.compileUi`)
 
         return waitFor(async () => {

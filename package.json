@@ -138,6 +138,11 @@
         "command": "qtForPython.editTranslations",
         "title": "Edit Qt Translation File (linguist)",
         "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.compileTranslations",
+        "title": "Compile Qt Translation File (lrelease)",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -174,6 +179,11 @@
         },
         {
           "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
@@ -213,6 +223,11 @@
           "command": "qtForPython.editTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/title": [
@@ -250,6 +265,11 @@
           "command": "qtForPython.editTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
@@ -285,6 +305,11 @@
         },
         {
           "command": "qtForPython.editTranslations",
+          "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
         }
@@ -419,6 +444,36 @@
             "${resourceDirname}${pathSeparator}${resourceBasenameNoExtension}.ts"
           ],
           "markdownDescription": "The options passed to Qt `lupdate` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.linguist.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to Qt `linguist` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.linguist.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "The options passed to Qt `linguist` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.lrelease.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to Qt `lrelease` executable. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.lrelease.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "markdownDescription": "The options passed to Qt `lrelease` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }

@@ -38,6 +38,13 @@ All features support multi-root workspace project.
 - Syntax highlighting (`qss` files)
 - Provide color picker for HEX, RGBA, HSVA, and HSLA code
 
+### Qt Translation Files
+
+- Syntax highlighting (`ts` files)
+- Extract translation strings from Python, QML and UI files
+- Edit translations with Qt Linguist (requires PySide6)
+- Compile to binary translation files (requires PySide6)
+
 ## Supported Environment Variables
 
 The following list shows the supported variables you can use in extension

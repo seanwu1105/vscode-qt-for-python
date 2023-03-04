@@ -8,6 +8,7 @@ export type SupportedTool =
   | 'qml'
   | 'lupdate'
   | 'linguist'
+  | 'lrelease'
 
 export type SuccessResult<T, Name extends string = ''> = {
   readonly kind: `${Name}Success`

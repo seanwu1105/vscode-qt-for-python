@@ -26,22 +26,31 @@ def test_lupdate_help(qt_dependency: SupportedQtDependencies):
     "qt_dependency",
     filter_available_qt_dependencies(["PySide6", "PySide2", "PyQt6", "PyQt5"]),
 )
-def test_lupdate_sample_py(qt_dependency: str):
+def test_lupdate_sample_py(qt_dependency: SupportedQtDependencies):
+    filename_no_ext = "sample"
+
     try:
-        os.remove(get_assets_path("sample.ts"))
+        os.remove(get_assets_path(f"{filename_no_ext}.ts"))
     except FileNotFoundError:
         pass
 
-    filename = "sample.py"
-    result = invoke_script(
+    result = invoke_lupdate(filename_no_ext, qt_dependency)
+    assert result.returncode == 0
+    assert os.path.exists(get_assets_path(f"{filename_no_ext}.ts"))
+
+    os.remove(get_assets_path(f"{filename_no_ext}.ts"))
+
+
+def invoke_lupdate(filename_no_exi: str, qt_dependency: SupportedQtDependencies):
+    return invoke_script(
         "lupdate",
-        [get_assets_path(filename), "-ts", get_assets_path("sample.ts")],
+        [
+            get_assets_path(f"{filename_no_exi}.py"),
+            "-ts",
+            get_assets_path(f"{filename_no_exi}.ts"),
+        ],
         qt_dependency,
     )
-    assert result.returncode == 0
-    assert os.path.exists(get_assets_path("sample.ts"))
-
-    os.remove(get_assets_path("sample.ts"))
 
 
 def get_assets_path(filename: str) -> str:
