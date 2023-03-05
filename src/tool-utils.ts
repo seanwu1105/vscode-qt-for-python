@@ -1,5 +1,5 @@
 import type { Observable } from 'rxjs'
-import { combineLatest, concatMap, defer, iif, map, of } from 'rxjs'
+import { combineLatest, defer, iif, map, of, switchMap } from 'rxjs'
 import type { URI } from 'vscode-uri'
 import { getOptionsFromConfig$, getPathFromConfig$ } from './configurations'
 import { resolveScriptCommand$ } from './python'
@@ -17,7 +17,7 @@ export function getToolCommand$({
       getOptionsFromConfig$({ tool, resource }),
     ]),
   ).pipe(
-    concatMap(([path, options]) =>
+    switchMap(([path, options]) =>
       iif(
         () => path.length > 0,
 
@@ -51,7 +51,7 @@ export type GetToolCommandResult =
   | SuccessResult<ToolCommand>
   | ErrorResult<'NotFound'>
 
-type ToolCommand = {
+export type ToolCommand = {
   readonly command: CommandArgs
   readonly options: CommandArgs
 }
