@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.2.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.0...v7.2.1) (2023-03-05)
+
+
+### Bug Fixes
+
+* restart qmlls client if the configurations are changed ([b822c4e](https://github.com/seanwu1105/vscode-qt-for-python/commit/b822c4efb1c0caefb15cd417144f604d58285eee))
+
 ## [7.2.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.1.1...v7.2.0) (2023-03-04)
 
 
