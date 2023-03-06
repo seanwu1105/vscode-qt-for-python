@@ -40,9 +40,27 @@ export function registerRccLiveExecution$({
   const watcher$ = glob$.pipe(switchMap(glob => getWatcher$(glob)))
 
   return merge(qrcFiles$, watcher$).pipe(
-    mergeMap(qrcUri =>
-      registerResourcesLiveExecution$({ extensionUri, qrcUri }),
+    concatMap(
+      async qrcUri =>
+        [
+          await firstValueFrom(
+            getLiveExecutionEnabledFromConfig$({
+              tool: 'rcc',
+              resource: qrcUri,
+            }),
+          ),
+          qrcUri,
+        ] as const,
     ),
+    mergeMap(([enabled, qrcUri]) => {
+      if (!enabled)
+        return of({
+          kind: 'Success',
+          value: 'Live execution disabled',
+        } as const)
+
+      return registerResourcesLiveExecution$({ extensionUri, qrcUri })
+    }),
   )
 }
 
