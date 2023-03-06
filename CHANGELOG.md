@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.2.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.1...v7.2.2) (2023-03-06)
+
+
+### Bug Fixes
+
+* disable qrc file watcher when rcc.liveExecution.enabled = false ([884cef4](https://github.com/seanwu1105/vscode-qt-for-python/commit/884cef42c1769b16101cf0207000dea25bc54977)), closes [#286](https://github.com/seanwu1105/vscode-qt-for-python/issues/286)
+
 ## [7.2.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.0...v7.2.1) (2023-03-05)
 
 
