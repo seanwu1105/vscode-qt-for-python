@@ -25,11 +25,6 @@ import { compileResource } from './compile-resource'
 export function registerRccLiveExecution$({
   extensionUri,
 }: RegisterRccLiveExecutionArgs) {
-  const enabled$ = getLiveExecutionEnabledFromConfig$({
-    tool: 'rcc',
-    resource: undefined,
-  })
-
   const glob$ = getLiveExecutionGlobFromConfig$({
     tool: 'rcc',
     resource: undefined,
@@ -43,21 +38,24 @@ export function registerRccLiveExecution$({
 
   const watcher$ = glob$.pipe(switchMap(glob => getWatcher$(glob)))
 
-  const onQrcFileChange$ = merge(qrcFiles$, watcher$).pipe(
+  const onQrcFileUpdated$ = merge(qrcFiles$, watcher$).pipe(
     mergeMap(qrcUri =>
       registerResourcesLiveExecution$({ extensionUri, qrcUri }),
     ),
   )
 
-  return enabled$.pipe(
+  return getLiveExecutionEnabledFromConfig$({
+    tool: 'rcc',
+    resource: undefined,
+  }).pipe(
     switchMap(enabled => {
       if (!enabled)
         return of({
           kind: 'Success',
-          value: 'Live execution disabled',
+          value: 'rcc live execution disabled',
         } as const)
 
-      return onQrcFileChange$
+      return onQrcFileUpdated$
     }),
   )
 }
