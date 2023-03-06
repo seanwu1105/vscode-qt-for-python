@@ -4,7 +4,6 @@ import * as path from 'node:path'
 import {
   concatMap,
   defer,
-  firstValueFrom,
   from,
   merge,
   mergeMap,
@@ -26,6 +25,11 @@ import { compileResource } from './compile-resource'
 export function registerRccLiveExecution$({
   extensionUri,
 }: RegisterRccLiveExecutionArgs) {
+  const enabled$ = getLiveExecutionEnabledFromConfig$({
+    tool: 'rcc',
+    resource: undefined,
+  })
+
   const glob$ = getLiveExecutionGlobFromConfig$({
     tool: 'rcc',
     resource: undefined,
@@ -39,27 +43,21 @@ export function registerRccLiveExecution$({
 
   const watcher$ = glob$.pipe(switchMap(glob => getWatcher$(glob)))
 
-  return merge(qrcFiles$, watcher$).pipe(
-    concatMap(
-      async qrcUri =>
-        [
-          await firstValueFrom(
-            getLiveExecutionEnabledFromConfig$({
-              tool: 'rcc',
-              resource: qrcUri,
-            }),
-          ),
-          qrcUri,
-        ] as const,
+  const onQrcFileChange$ = merge(qrcFiles$, watcher$).pipe(
+    mergeMap(qrcUri =>
+      registerResourcesLiveExecution$({ extensionUri, qrcUri }),
     ),
-    mergeMap(([enabled, qrcUri]) => {
+  )
+
+  return enabled$.pipe(
+    switchMap(enabled => {
       if (!enabled)
         return of({
           kind: 'Success',
           value: 'Live execution disabled',
         } as const)
 
-      return registerResourcesLiveExecution$({ extensionUri, qrcUri })
+      return onQrcFileChange$
     }),
   )
 }
@@ -80,22 +78,7 @@ function registerResourcesLiveExecution$({
         ...result.value.map(uri => getWatcher$(new RelativePattern(uri, '*'))),
       ).pipe(
         startWith(undefined), // Trigger compilation on resource file changes
-        concatMap(() =>
-          firstValueFrom(
-            getLiveExecutionEnabledFromConfig$({
-              tool: 'rcc',
-              resource: qrcUri,
-            }),
-          ),
-        ),
-        concatMap(async enabled => {
-          if (!enabled)
-            return {
-              kind: 'Success',
-              value: 'Live execution disabled',
-            } as const
-          return compileResource({ extensionUri }, qrcUri)
-        }),
+        concatMap(async () => compileResource({ extensionUri }, qrcUri)),
       )
     }),
   )
