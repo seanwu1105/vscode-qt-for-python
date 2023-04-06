@@ -93,7 +93,8 @@ async function getResourceFiles({
   const content = (await workspace.fs.readFile(qrcUri)).toString()
 
   const parserOptions: X2jOptionsOptional = {
-    isArray: (name, _jpath, _isLeafNode, _isAttribute) => name === 'file',
+    isArray: (name, _jpath, _isLeafNode, _isAttribute) =>
+      name === 'file' || name === 'qresource',
   }
 
   const xmlParser = new XMLParser(parserOptions)
@@ -118,8 +119,10 @@ async function getResourceFiles({
       )} (${parsed})`,
     }
 
-  const resourceUris = validationResult.data.RCC.qresource.file.map(filePath =>
-    URI.file(path.join(path.dirname(qrcUri.fsPath), filePath)),
+  const resourceUris = validationResult.data.RCC.qresource.flatMap(resource =>
+    resource.file.map(filePath =>
+      URI.file(path.join(path.dirname(qrcUri.fsPath), filePath)),
+    ),
   )
   return { kind: 'Success', value: resourceUris }
 }
@@ -134,8 +137,10 @@ type GetResourceFilesResult =
 
 const RccSchema = z.object({
   RCC: z.object({
-    qresource: z.object({
-      file: z.array(z.string()),
-    }),
+    qresource: z.array(
+      z.object({
+        file: z.array(z.string()),
+      }),
+    ),
   }),
 })
