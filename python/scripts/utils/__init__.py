@@ -3,10 +3,12 @@ import importlib.util
 import sys
 import typing
 
+import typing_extensions  # Remove after dropping Python 3.7
+
 QT_DEPENDENCY_ARG = "vscode_extension_qt_dependency"
 
 SupportedQtDependencies = typing.Optional[
-    typing.Literal["PySide6", "PySide2", "PyQt6", "PyQt5"]
+    typing_extensions.Literal["PySide6", "PySide2", "PyQt6", "PyQt5"]
 ]
 
 
@@ -21,7 +23,8 @@ def parse_qt_dependency() -> SupportedQtDependencies:
         required=False,
     )
 
-    if dep := vars(parser.parse_known_args()[0])[QT_DEPENDENCY_ARG]:
+    dep = vars(parser.parse_known_args()[0])[QT_DEPENDENCY_ARG]
+    if dep is not None:
         sys.argv.remove(f"--{QT_DEPENDENCY_ARG}")
         sys.argv.remove(dep)
 

@@ -3,6 +3,8 @@ import platform
 import subprocess
 import typing
 
+import typing_extensions
+
 from scripts.utils import QT_DEPENDENCY_ARG, SupportedQtDependencies
 
 TESTS_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -11,14 +13,14 @@ SCRIPTS_DIR = os.path.join(TESTS_DIR, os.pardir, "scripts")
 
 ASSETS_DIR = os.path.join(TESTS_DIR, "assets")
 
-SupportedScripts = typing.Literal[
+SupportedScripts = typing_extensions.Literal[
     "designer", "qml", "qmlls", "rcc", "uic", "lupdate", "linguist", "lrelease"
 ]
 
 
 def filter_available_qt_dependencies(
-    deps: list[SupportedQtDependencies],
-) -> list[SupportedQtDependencies]:
+    deps: typing.List[SupportedQtDependencies],
+) -> typing.List[SupportedQtDependencies]:
     if platform.system() == "Darwin" and platform.machine() == "arm64":
         return [None] + list(filter(lambda d: d not in ("PySide2", "PyQt5"), deps))
     return [None] + deps
@@ -26,7 +28,7 @@ def filter_available_qt_dependencies(
 
 def invoke_script(
     name: SupportedScripts,
-    args: list[str],
+    args: typing.List[str],
     qt_dependency: SupportedQtDependencies,
 ):
     if qt_dependency is not None:
