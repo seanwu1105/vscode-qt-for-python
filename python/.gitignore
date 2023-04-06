@@ -1,2 +1,2 @@
-rc_*.py
-ui_*.py
+*_rc.py
+*_ui.py

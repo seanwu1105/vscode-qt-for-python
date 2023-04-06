@@ -5,9 +5,9 @@ import { URI } from 'vscode-uri'
 import { EXTENSION_NAMESPACE } from '../../../constants'
 import {
   E2E_TIMEOUT,
+  TEST_ASSETS_PATH,
   forceDeleteFile,
   setupE2EEnvironment,
-  TEST_ASSETS_PATH,
   waitFor,
 } from '../test-utils'
 
@@ -55,7 +55,7 @@ suite('compile-ui/e2e', () => {
               path.resolve(
                 TEST_ASSETS_PATH,
                 'ui',
-                `ui_${sampleFilenameNoExt}.py`,
+                `${sampleFilenameNoExt}_ui.py`,
               ),
             ),
           )
@@ -69,6 +69,6 @@ suite('compile-ui/e2e', () => {
 
 async function removeGeneratedFile(sampleFilenameNoExt: string) {
   return forceDeleteFile(
-    path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+    path.resolve(TEST_ASSETS_PATH, 'ui', `${sampleFilenameNoExt}_ui.py`),
   )
 }

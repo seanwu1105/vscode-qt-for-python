@@ -64,7 +64,7 @@ suite('rcc-live-execution/e2e', () => {
             path.resolve(
               TEST_ASSETS_PATH,
               'qrc',
-              `rc_${sampleQrcFilenameNoExt}.py`,
+              `${sampleQrcFilenameNoExt}_rc.py`,
             ),
           ),
         )
@@ -110,7 +110,7 @@ suite('rcc-live-execution/e2e', () => {
             path.resolve(
               TEST_ASSETS_PATH,
               'qrc',
-              `rc_${sampleQrcFilenameNoExt}.py`,
+              `${sampleQrcFilenameNoExt}_rc.py`,
             ),
           ),
         )
@@ -122,6 +122,6 @@ suite('rcc-live-execution/e2e', () => {
 
 async function removeGeneratedFile(sampleFilenameNoExt: string) {
   await forceDeleteFile(
-    path.resolve(TEST_ASSETS_PATH, 'qrc', `rc_${sampleFilenameNoExt}.py`),
+    path.resolve(TEST_ASSETS_PATH, 'qrc', `${sampleFilenameNoExt}_rc.py`),
   )
 }

@@ -55,7 +55,7 @@ suite('uic-live-execution/e2e', () => {
     await waitFor(async () => {
       const readResult = await workspace.fs.readFile(
         URI.file(
-          path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+          path.resolve(TEST_ASSETS_PATH, 'ui', `${sampleFilenameNoExt}_ui.py`),
         ),
       )
 
@@ -66,6 +66,6 @@ suite('uic-live-execution/e2e', () => {
 
 async function removeGeneratedFile(sampleFilenameNoExt: string) {
   return forceDeleteFile(
-    path.resolve(TEST_ASSETS_PATH, 'ui', `ui_${sampleFilenameNoExt}.py`),
+    path.resolve(TEST_ASSETS_PATH, 'ui', `${sampleFilenameNoExt}_ui.py`),
   )
 }

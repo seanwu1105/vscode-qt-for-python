@@ -364,7 +364,7 @@
           },
           "default": [
             "-o",
-            "${resourceDirname}${pathSeparator}rc_${resourceBasenameNoExtension}.py"
+            "${resourceDirname}${pathSeparator}${resourceBasenameNoExtension}_rc.py"
           ],
           "markdownDescription": "The options passed to Qt `rcc` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
@@ -393,7 +393,7 @@
           },
           "default": [
             "-o",
-            "${resourceDirname}${pathSeparator}ui_${resourceBasenameNoExtension}.py"
+            "${resourceDirname}${pathSeparator}${resourceBasenameNoExtension}_ui.py"
           ],
           "markdownDescription": "The options passed to Qt `uic` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
