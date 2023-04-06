@@ -6,6 +6,19 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.2...v7.3.0) (2023-04-06)
+
+
+### Features
+
+* support Python 3.7+ ([e8429d7](https://github.com/seanwu1105/vscode-qt-for-python/commit/e8429d760a3b9d98a55d3a591a5a067c354b67d5)), closes [#292](https://github.com/seanwu1105/vscode-qt-for-python/issues/292)
+
+
+### Bug Fixes
+
+* change default rcc and uic output file names to *_rc and *_ui ([1027ca5](https://github.com/seanwu1105/vscode-qt-for-python/commit/1027ca5e30702590188e8405a983b202bfe9ca51)), closes [#289](https://github.com/seanwu1105/vscode-qt-for-python/issues/289)
+* parse qrc files with multiple qresource elements ([289e02b](https://github.com/seanwu1105/vscode-qt-for-python/commit/289e02bfd65b36e4610812a4fe72da130f669533))
+
 ## [7.2.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.1...v7.2.2) (2023-03-06)
 
 
