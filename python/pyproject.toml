@@ -10,7 +10,6 @@ pyside6 = "^6.4.2"
 pyqt6 = "^6.4.0"
 pyside2 = { version = "^5.15.2.1", markers = "sys_platform != 'darwin' or platform_machine != 'arm64'" }
 pyqt5 = { version = "^5.15.7", markers = "sys_platform != 'darwin' or platform_machine != 'arm64'" }
-typing-extensions = "^4.5.0"
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.14.5"

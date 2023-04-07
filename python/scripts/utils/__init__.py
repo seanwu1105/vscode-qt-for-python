@@ -3,13 +3,9 @@ import importlib.util
 import sys
 import typing
 
-import typing_extensions  # Remove after dropping Python 3.7
-
 QT_DEPENDENCY_ARG = "vscode_extension_qt_dependency"
 
-SupportedQtDependencies = typing.Optional[
-    typing_extensions.Literal["PySide6", "PySide2", "PyQt6", "PyQt5"]
-]
+SupportedQtDependencies = typing.Optional[str]
 
 
 def is_installed(name: str) -> bool:

@@ -3,8 +3,6 @@ import platform
 import subprocess
 import typing
 
-import typing_extensions
-
 from scripts.utils import QT_DEPENDENCY_ARG, SupportedQtDependencies
 
 TESTS_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -13,9 +11,7 @@ SCRIPTS_DIR = os.path.join(TESTS_DIR, os.pardir, "scripts")
 
 ASSETS_DIR = os.path.join(TESTS_DIR, "assets")
 
-SupportedScripts = typing_extensions.Literal[
-    "designer", "qml", "qmlls", "rcc", "uic", "lupdate", "linguist", "lrelease"
-]
+SupportedScripts = typing.Type[str]
 
 
 def filter_available_qt_dependencies(
