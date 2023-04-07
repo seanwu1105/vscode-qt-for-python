@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.3.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.0...v7.3.1) (2023-04-07)
+
+
+### Bug Fixes
+
+* remove typing_extensions dependencies ([e694a55](https://github.com/seanwu1105/vscode-qt-for-python/commit/e694a55e6ad0a7dfa65a53de6f7455f73217f0d4)), closes [#299](https://github.com/seanwu1105/vscode-qt-for-python/issues/299)
+
 ## [7.3.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.2.2...v7.3.0) (2023-04-06)
 
 
