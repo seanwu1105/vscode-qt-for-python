@@ -24,5 +24,5 @@ if __name__ == "__main__":
     elif is_installed("PyQt5"):
         from PyQt5.uic.pyuic import main as uic
     else:
-        sys.exit("No rcc can be found in current Python environment.")
+        sys.exit("No uic can be found in current Python environment.")
     sys.exit(uic())
