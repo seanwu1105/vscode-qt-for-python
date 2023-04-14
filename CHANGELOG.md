@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.3.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.1...v7.3.2) (2023-04-14)
+
+
+### Bug Fixes
+
+* typo ([#302](https://github.com/seanwu1105/vscode-qt-for-python/issues/302)) ([31f9316](https://github.com/seanwu1105/vscode-qt-for-python/commit/31f9316db410d50558e345fc56b0dbb9baeb4ccb))
+
 ## [7.3.1](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.0...v7.3.1) (2023-04-07)
 
 
