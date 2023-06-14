@@ -24,5 +24,9 @@ if __name__ == "__main__":
     elif is_installed("PyQt5"):
         from PyQt5.uic.pyuic import main as uic
     else:
-        sys.exit("No uic can be found in current Python environment.")
+        ERR_MSG = (
+            "No uic can be found in the current Python environment. "
+            "Make sure the latest PySide6, PySide2, PyQt6 or PyQt5 is installed."
+        )
+        sys.exit(ERR_MSG)
     sys.exit(uic())

@@ -20,5 +20,9 @@ if __name__ == "__main__":
     elif is_installed("PyQt5"):
         from PyQt5.pyrcc_main import main as rcc
     else:
-        sys.exit("No rcc can be found in current Python environment.")
+        ERR_MSG = (
+            "No rcc can be found in the current Python environment. "
+            "Make sure the latest PySide6, PySide2 or PyQt5 is installed."
+        )
+        sys.exit(ERR_MSG)
     sys.exit(rcc())

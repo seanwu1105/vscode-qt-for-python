@@ -12,5 +12,10 @@ if __name__ == "__main__":
     elif is_installed("PySide6"):
         from PySide6.scripts.pyside_tool import qmlls
     else:
-        sys.exit("No qmlls can be found in current Python environment.")
+        ERR_MSG = (
+            "No qmlls can be found in the current Python environment. "
+            "Make sure the latest PySide6 is installed. "
+            "Update configuration to disable qmlls integration if you don't need it."
+        )
+        sys.exit(ERR_MSG)
     sys.exit(qmlls())

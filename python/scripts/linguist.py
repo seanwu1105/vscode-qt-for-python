@@ -12,6 +12,10 @@ if __name__ == "__main__":
     elif is_installed("PySide6"):
         from PySide6.scripts.pyside_tool import linguist
     else:
-        sys.exit("No Qt Linguist can be found in current Python environment.")
+        ERR_MSG = (
+            "No Qt Linguist can be found in the current Python environment. "
+            "Make sure the latest PySide6 is installed."
+        )
+        sys.exit(ERR_MSG)
 
     sys.exit(linguist())

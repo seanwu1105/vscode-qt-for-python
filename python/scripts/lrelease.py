@@ -12,5 +12,9 @@ if __name__ == "__main__":
     elif is_installed("PySide6"):
         from PySide6.scripts.pyside_tool import lrelease
     else:
-        sys.exit("No lrelease can be found in current Python environment.")
+        ERR_MSG = (
+            "No lrelease can be found in the current Python environment. "
+            "Make sure the latest PySide6 is installed."
+        )
+        sys.exit(ERR_MSG)
     sys.exit(lrelease())

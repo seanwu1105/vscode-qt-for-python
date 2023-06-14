@@ -16,5 +16,9 @@ if __name__ == "__main__":
     elif is_installed("PySide2"):
         from PySide2.scripts.pyside_tool import designer
     else:
-        sys.exit("No rcc can be found in current Python environment.")
+        ERR_MSG = (
+            "No rcc can be found in the current Python environment. "
+            "Make sure the latest PySide6 or PySide2 is installed."
+        )
+        sys.exit(ERR_MSG)
     sys.exit(designer())
