@@ -6,8 +6,8 @@ authors = ["Shuang Wu <seanwu1105@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.7.2"
-pyside6 = "^6.4.2"
-pyqt6 = "^6.4.0"
+pyside6 = "^6.5.1.1"
+pyqt6 = "^6.5.1"
 pyside2 = { version = "^5.15.2.1", markers = "sys_platform != 'darwin' or platform_machine != 'arm64'" }
 pyqt5 = { version = "^5.15.7", markers = "sys_platform != 'darwin' or platform_machine != 'arm64'" }
 
