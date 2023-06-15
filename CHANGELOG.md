@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.4.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.2...v7.4.0) (2023-06-15)
+
+
+### Features
+
+* add more hint when tool cannot be found ([3c14fa7](https://github.com/seanwu1105/vscode-qt-for-python/commit/3c14fa7a9849d223a5c4dfb13c4d172a392c3f89))
+
 ## [7.3.2](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.1...v7.3.2) (2023-04-14)
 
 
