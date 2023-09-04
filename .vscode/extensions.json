@@ -4,6 +4,9 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "ms-python.python"
+    "ms-python.python",
+    "ms-python.pylint",
+    "ms-python.black-formatter",
+    "ms-python.isort"
   ]
 }

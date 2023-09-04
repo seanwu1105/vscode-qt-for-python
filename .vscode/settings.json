@@ -12,5 +12,11 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
-  "typescript.preferences.importModuleSpecifier": "relative"
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.analysis.autoImportCompletions": true,
+  "pylint.args": ["--rcfile=${workspaceFolder}/python/.pylintrc"],
+  "isort.args": ["--settings-file=${workspaceFolder}/python/.isort.cfg"]
 }

@@ -11,7 +11,9 @@ SCRIPTS_DIR = os.path.join(TESTS_DIR, os.pardir, "scripts")
 
 ASSETS_DIR = os.path.join(TESTS_DIR, "assets")
 
-SupportedScripts = typing.Type[str]
+SupportedScripts = typing.Literal[
+    "designer", "qml", "qmlls", "rcc", "uic", "lupdate", "linguist", "lrelease"
+]
 
 
 def filter_available_qt_dependencies(

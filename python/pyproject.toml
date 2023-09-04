@@ -13,7 +13,6 @@ pyqt5 = { version = "^5.15.7", markers = "sys_platform != 'darwin' or platform_m
 
 [tool.poetry.group.dev.dependencies]
 pylint = "^2.14.5"
-mypy = "^0.971"
 black = "^22.6.0"
 pytest = "^7.1.2"
 pytest-cov = "^4.0.0"

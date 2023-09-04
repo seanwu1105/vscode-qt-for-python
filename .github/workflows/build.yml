@@ -140,9 +140,7 @@ jobs:
         run: poetry install --no-interaction --no-root
 
       - name: Lint
-        run: |
-          poetry run pylint scripts
-          poetry run mypy scripts
+        run: poetry run pylint scripts
 
   py-test:
     strategy:
