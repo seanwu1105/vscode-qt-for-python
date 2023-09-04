@@ -5,7 +5,7 @@ description = "Scripts to communicate between the extension and Qt for Python li
 authors = ["Shuang Wu <seanwu1105@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "~3.8.18"
+python = "~3.8.17"
 pyside6 = "^6.5.2"
 pyqt6 = "^6.5.1"
 pyside2 = { version = "^5.15.2.1", markers = "sys_platform != 'darwin' or platform_machine != 'arm64'" }
