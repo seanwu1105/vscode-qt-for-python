@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
@@ -43,7 +43,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
@@ -70,7 +70,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
@@ -101,7 +101,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
@@ -129,7 +129,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
@@ -158,7 +158,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.8.17'
 
       - name: Install Poetry
         uses: snok/install-poetry@v1.3.1
