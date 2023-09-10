@@ -143,11 +143,6 @@
         "command": "qtForPython.compileTranslations",
         "title": "Compile Qt Translation File (lrelease)",
         "category": "Qt for Python"
-      },
-      {
-        "command": "qtForPython.formatQml",
-        "title": "Format QML File (qmlformat)",
-        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -191,11 +186,6 @@
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
-        },
-        {
-          "command": "qtForPython.formatQml",
-          "when": "resourceLangId == qml",
-          "group": "qtForPython"
         }
       ],
       "explorer/context": [
@@ -237,11 +227,6 @@
         {
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
-          "group": "qtForPython"
-        },
-        {
-          "command": "qtForPython.formatQml",
-          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ],
@@ -285,11 +270,6 @@
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
-        },
-        {
-          "command": "qtForPython.formatQml",
-          "when": "resourceLangId == qml",
-          "group": "qtForPython"
         }
       ],
       "editor/context": [
@@ -331,11 +311,6 @@
         {
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
-          "group": "qtForPython"
-        },
-        {
-          "command": "qtForPython.formatQml",
-          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ]
@@ -512,9 +487,7 @@
           "items": {
             "type": "string"
           },
-          "default": [
-            "--inplace"
-          ],
+          "default": [],
           "markdownDescription": "The options passed to `qmlformat` executable for QML formatting. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }

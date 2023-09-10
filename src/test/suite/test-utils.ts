@@ -2,7 +2,7 @@ import * as assert from 'node:assert'
 import * as path from 'node:path'
 import { extensions, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
-import { notNil } from '../../utils'
+import { isNil, notNil } from '../../utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { name, publisher } = require('../../../package.json')
@@ -55,16 +55,20 @@ export async function waitFor<T>(
   }
 
   const start = Date.now()
+  let error: unknown | undefined
   while (Date.now() - start < (options?.timeout ?? defaultOptions.timeout)) {
     try {
       return await callback()
     } catch (e) {
+      error = e
       await sleep(options?.interval ?? defaultOptions.interval)
     }
   }
-  throw new Error(
-    `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
-  )
+  if (isNil(error))
+    throw new Error(
+      `Timeout during waitFor: ${options?.timeout ?? defaultOptions.timeout}ms`,
+    )
+  throw error
 }
 
 export async function forceDeleteFile(filename: string) {

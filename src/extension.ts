@@ -3,6 +3,7 @@ import { catchError, of } from 'rxjs'
 import type { ExtensionContext, OutputChannel } from 'vscode'
 import { window } from 'vscode'
 import { registerCommands$ } from './commands'
+import { registerQmlFormatter$ } from './qmlformat/format-qml'
 import { registerQmlLanguageServer$ } from './qmlls/client'
 import { registerQssColorProvider } from './qss/color-provider'
 import { registerRccLiveExecution$ } from './rcc/rcc-live-execution'
@@ -27,6 +28,7 @@ export async function activate({
     registerUicLiveExecution$({ extensionUri }),
     registerRccLiveExecution$({ extensionUri }),
     registerQmlLanguageServer$({ extensionUri, outputChannel }),
+    registerQmlFormatter$({ extensionUri }),
   ]
 
   const observer: Partial<Observer<Result>> = {
