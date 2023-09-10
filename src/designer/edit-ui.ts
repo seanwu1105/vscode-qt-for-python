@@ -1,31 +1,21 @@
-import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
-import { getTargetDocumentUri } from '../commands'
 import { run } from '../run'
-import { getToolCommand$ } from '../tool-utils'
+import { getToolCommandWithTargetDocumentUri } from '../tool-utils'
 
-export async function editUi({ extensionUri }: CommandDeps, ...args: any[]) {
-  const targetDocumentUriResult = getTargetDocumentUri(...args)
+export async function editUi(
+  { extensionUri }: CommandDeps,
+  ...args: readonly unknown[]
+) {
+  const result = await getToolCommandWithTargetDocumentUri({
+    extensionUri,
+    argsToGetTargetDocumentUri: args,
+    tool: 'designer',
+  })
+  if (result.kind !== 'Success') return result
 
-  if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
-
-  const uiFile = targetDocumentUriResult.value
-
-  const getToolCommandResult = await firstValueFrom(
-    getToolCommand$({
-      tool: 'designer',
-      extensionUri,
-      resource: uiFile,
-    }),
-  )
-
-  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
+  const { command, options, uri } = result.value
 
   return run({
-    command: [
-      ...getToolCommandResult.value.command,
-      ...getToolCommandResult.value.options,
-      uiFile.fsPath,
-    ],
+    command: [...command, ...options, uri.fsPath],
   })
 }

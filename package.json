@@ -143,6 +143,11 @@
         "command": "qtForPython.compileTranslations",
         "title": "Compile Qt Translation File (lrelease)",
         "category": "Qt for Python"
+      },
+      {
+        "command": "qtForPython.formatQml",
+        "title": "Format QML File (qmlformat)",
+        "category": "Qt for Python"
       }
     ],
     "menus": {
@@ -186,6 +191,11 @@
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.formatQml",
+          "when": "resourceLangId == qml",
+          "group": "qtForPython"
         }
       ],
       "explorer/context": [
@@ -227,6 +237,11 @@
         {
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.formatQml",
+          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ],
@@ -270,6 +285,11 @@
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
           "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.formatQml",
+          "when": "resourceLangId == qml",
+          "group": "qtForPython"
         }
       ],
       "editor/context": [
@@ -311,6 +331,11 @@
         {
           "command": "qtForPython.compileTranslations",
           "when": "resourceExtname == .ts && resourceLangId == xml",
+          "group": "qtForPython"
+        },
+        {
+          "command": "qtForPython.formatQml",
+          "when": "resourceLangId == qml",
           "group": "qtForPython"
         }
       ]
@@ -474,6 +499,23 @@
           },
           "default": [],
           "markdownDescription": "The options passed to Qt `lrelease` executable. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.qmlformat.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "The path to `qmlformat` executable for QML formatting. Set to empty string to automatically resolve from the installed Python package. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
+          "scope": "resource"
+        },
+        "qtForPython.qmlformat.options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "--inplace"
+          ],
+          "markdownDescription": "The options passed to `qmlformat` executable for QML formatting. See [here](https://github.com/seanwu1105/vscode-qt-for-python#predefined-variables) for a detailed list of predefined variables.",
           "scope": "resource"
         }
       }

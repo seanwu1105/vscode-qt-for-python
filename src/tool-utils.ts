@@ -1,10 +1,20 @@
 import type { Observable } from 'rxjs'
-import { combineLatest, defer, iif, map, of, switchMap } from 'rxjs'
-import type { URI } from 'vscode-uri'
+import {
+  combineLatest,
+  defer,
+  firstValueFrom,
+  iif,
+  map,
+  of,
+  switchMap,
+} from 'rxjs'
+import { window } from 'vscode'
+import { URI } from 'vscode-uri'
 import { getOptionsFromConfig$, getPathFromConfig$ } from './configurations'
 import { resolveScriptCommand$ } from './python'
 import type { CommandArgs } from './run'
 import type { ErrorResult, SuccessResult, SupportedTool } from './types'
+import { isNil } from './utils'
 
 export function getToolCommand$({
   tool,
@@ -55,3 +65,61 @@ export type ToolCommand = {
   readonly command: CommandArgs
   readonly options: CommandArgs
 }
+
+export async function getToolCommandWithTargetDocumentUri({
+  extensionUri,
+  argsToGetTargetDocumentUri,
+  tool,
+}: GetToolCommandWithTargetDocumentUriArgs): Promise<GetToolCommandWithTargetDocumentUriResult> {
+  const targetDocumentUriResult = getTargetDocumentUri(
+    argsToGetTargetDocumentUri,
+  )
+  if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
+  const uri = targetDocumentUriResult.value
+  const getToolCommandResult = await firstValueFrom(
+    getToolCommand$({ tool, extensionUri, resource: uri }),
+  )
+  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
+  return {
+    kind: 'Success',
+    value: { ...getToolCommandResult.value, uri },
+  } as const
+}
+
+export type GetToolCommandWithTargetDocumentUriArgs = {
+  readonly extensionUri: URI
+  readonly argsToGetTargetDocumentUri: readonly unknown[]
+  readonly tool: SupportedTool
+}
+
+export type GetToolCommandWithTargetDocumentUriResult =
+  | SuccessResult<{
+      readonly command: CommandArgs
+      readonly options: CommandArgs
+      readonly uri: URI
+    }>
+  | ErrorResult<'Type'>
+  | ErrorResult<'NotFound'>
+
+function getTargetDocumentUri(
+  args: readonly unknown[],
+): GetTargetDocumentUriResult {
+  if (isNil(args[0])) {
+    const activeDocument = window.activeTextEditor?.document.uri
+
+    if (isNil(activeDocument))
+      return { kind: 'TypeError', message: 'No active document.' }
+
+    return { kind: 'Success', value: activeDocument }
+  }
+
+  if (!URI.isUri(args[0]))
+    return {
+      kind: 'TypeError',
+      message: `Invalid argument: ${JSON.stringify(args[0])}`,
+    }
+
+  return { kind: 'Success', value: args[0] }
+}
+
+type GetTargetDocumentUriResult = SuccessResult<URI> | ErrorResult<'Type'>

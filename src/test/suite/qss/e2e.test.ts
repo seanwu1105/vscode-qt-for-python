@@ -5,8 +5,8 @@ import { commands, window, workspace } from 'vscode'
 import { URI } from 'vscode-uri'
 import {
   E2E_TIMEOUT,
-  setupE2EEnvironment,
   TEST_ASSETS_PATH,
+  setupE2EEnvironment,
 } from '../test-utils'
 
 suite('qss/e2e', () => {
@@ -26,7 +26,7 @@ suite('qss/e2e', () => {
       })
 
       test('should contain color info', async () => {
-        const colorInformationList: ColorInformation[] =
+        const colorInformationList: readonly ColorInformation[] =
           await commands.executeCommand(
             'vscode.executeDocumentColorProvider',
             document.uri,

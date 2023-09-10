@@ -30,7 +30,7 @@ suite('configurations', () => {
 
     setup(() => {
       const originalFunc = workspace.onDidChangeConfiguration
-      const fakeFunc = (listener: (e: ConfigurationChangeEvent) => any) => {
+      const fakeFunc = (listener: (e: ConfigurationChangeEvent) => unknown) => {
         const disposable = originalFunc(listener)
         disposeSpy = sinon.spy(disposable, 'dispose')
         return disposable
@@ -95,7 +95,7 @@ suite('configurations', () => {
 
     setup(() => {
       const originalFunc = workspace.onDidChangeConfiguration
-      const fakeFunc = (listener: (e: ConfigurationChangeEvent) => any) => {
+      const fakeFunc = (listener: (e: ConfigurationChangeEvent) => unknown) => {
         const disposable = originalFunc(listener)
         disposeSpy = sinon.spy(disposable, 'dispose')
         return disposable

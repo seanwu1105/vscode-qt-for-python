@@ -10,8 +10,8 @@ import {
   Color,
   ColorInformation,
   ColorPresentation,
-  languages,
   Range,
+  languages,
 } from 'vscode'
 import { isNil, notNil } from '../utils'
 

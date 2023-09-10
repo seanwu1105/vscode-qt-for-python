@@ -99,7 +99,7 @@ function onResultReceived(result: Result, outputChannel: OutputChannel) {
 }
 
 type Result =
-  | SuccessResult<any>
+  | SuccessResult<unknown>
   | ExecError
   | StdErrError
   | ErrorResult<'Unexpected'>

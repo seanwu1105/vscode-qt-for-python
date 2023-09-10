@@ -1,40 +1,31 @@
 import * as path from 'node:path'
-import { firstValueFrom } from 'rxjs'
 import type { FileStat } from 'vscode'
 import { FileType, workspace } from 'vscode'
 import type { URI } from 'vscode-uri'
 import type { CommandDeps } from '../commands'
-import { getTargetDocumentUri } from '../commands'
 import { run } from '../run'
-import { getToolCommand$ } from '../tool-utils'
+import { getToolCommandWithTargetDocumentUri } from '../tool-utils'
 import type { ErrorResult, SuccessResult } from '../types'
 
-export async function createUi({ extensionUri }: CommandDeps, ...args: any[]) {
-  const targetDocumentUriResult = getTargetDocumentUri(...args)
+export async function createUi(
+  { extensionUri }: CommandDeps,
+  ...args: readonly unknown[]
+) {
+  const result = await getToolCommandWithTargetDocumentUri({
+    extensionUri,
+    argsToGetTargetDocumentUri: args,
+    tool: 'designer',
+  })
+  if (result.kind !== 'Success') return result
 
-  if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
-
-  const uri = targetDocumentUriResult.value
-
-  const getToolCommandResult = await firstValueFrom(
-    getToolCommand$({
-      tool: 'designer',
-      extensionUri,
-      resource: uri,
-    }),
-  )
-
-  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
+  const { command, options, uri } = result.value
 
   const getDirectoryPathResult = await getDirectoryPath(uri)
 
   if (getDirectoryPathResult.kind !== 'Success') return getDirectoryPathResult
 
   return run({
-    command: [
-      ...getToolCommandResult.value.command,
-      ...getToolCommandResult.value.options,
-    ],
+    command: [...command, ...options],
     cwd: getDirectoryPathResult.value,
   })
 }

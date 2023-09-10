@@ -1,34 +1,19 @@
-import { firstValueFrom } from 'rxjs'
 import type { CommandDeps } from '../commands'
-import { getTargetDocumentUri } from '../commands'
 import { run } from '../run'
-import { getToolCommand$ } from '../tool-utils'
+import { getToolCommandWithTargetDocumentUri } from '../tool-utils'
 
 export async function previewQml(
   { extensionUri }: CommandDeps,
-  ...args: any[]
+  ...args: readonly unknown[]
 ) {
-  const targetDocumentUriResult = getTargetDocumentUri(...args)
-
-  if (targetDocumentUriResult.kind !== 'Success') return targetDocumentUriResult
-
-  const qmlFile = targetDocumentUriResult.value
-
-  const getToolCommandResult = await firstValueFrom(
-    getToolCommand$({
-      tool: 'qml',
-      extensionUri,
-      resource: qmlFile,
-    }),
-  )
-
-  if (getToolCommandResult.kind !== 'Success') return getToolCommandResult
-
-  return run({
-    command: [
-      ...getToolCommandResult.value.command,
-      ...getToolCommandResult.value.options,
-      qmlFile.fsPath,
-    ],
+  const result = await getToolCommandWithTargetDocumentUri({
+    extensionUri,
+    argsToGetTargetDocumentUri: args,
+    tool: 'qml',
   })
+  if (result.kind !== 'Success') return result
+
+  const { command, options, uri } = result.value
+
+  return run({ command: [...command, ...options, uri.fsPath] })
 }
