@@ -6,6 +6,14 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.5.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.4.0...v7.5.0) (2023-09-10)
+
+
+### Features
+
+* add qmlformat script ([148e269](https://github.com/seanwu1105/vscode-qt-for-python/commit/148e269e1d8a3919d8cbc828871ba9b750b8416b))
+* add qmlformat support ([00a8955](https://github.com/seanwu1105/vscode-qt-for-python/commit/00a895500ea9d16710cedb863a035ce48654ca70)), closes [#263](https://github.com/seanwu1105/vscode-qt-for-python/issues/263)
+
 ## [7.4.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.3.2...v7.4.0) (2023-06-15)
 
 
