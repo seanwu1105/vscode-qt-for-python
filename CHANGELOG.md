@@ -6,6 +6,13 @@ in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how
 to structure this file.
 
+## [7.6.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.5.0...v7.6.0) (2023-09-20)
+
+
+### Features
+
+* add back Python 3.7 support ([e44eba4](https://github.com/seanwu1105/vscode-qt-for-python/commit/e44eba453cdad8afb5efb46c42bd192fb9a04763)), closes [#292](https://github.com/seanwu1105/vscode-qt-for-python/issues/292)
+
 ## [7.5.0](https://github.com/seanwu1105/vscode-qt-for-python/compare/v7.4.0...v7.5.0) (2023-09-10)
 
 
