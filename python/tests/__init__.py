@@ -1,6 +1,7 @@
 import os
 import platform
 import subprocess
+import sys
 import typing
 
 from scripts.utils import QT_DEPENDENCY_ARG, SupportedQtDependencies
@@ -11,9 +12,12 @@ SCRIPTS_DIR = os.path.join(TESTS_DIR, os.pardir, "scripts")
 
 ASSETS_DIR = os.path.join(TESTS_DIR, "assets")
 
-SupportedScripts = typing.Literal[
-    "designer", "qml", "qmlls", "rcc", "uic", "lupdate", "linguist", "lrelease"
-]
+if sys.version_info < (3, 8):
+    SupportedScripts = str
+else:
+    SupportedScripts = typing.Literal[
+        "designer", "qml", "qmlls", "rcc", "uic", "lupdate", "linguist", "lrelease"
+    ]
 
 
 def filter_available_qt_dependencies(

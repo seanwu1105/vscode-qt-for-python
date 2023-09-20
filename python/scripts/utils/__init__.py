@@ -5,9 +5,12 @@ import typing
 
 QT_DEPENDENCY_ARG = "vscode_extension_qt_dependency"
 
-SupportedQtDependencies = typing.Optional[
-    typing.Literal["PySide6", "PySide2", "PyQt6", "PyQt5"]
-]
+if sys.version_info < (3, 8):
+    SupportedQtDependencies = typing.Optional[str]  # pragma: no cover
+else:
+    SupportedQtDependencies = typing.Optional[
+        typing.Literal["PySide6", "PySide2", "PyQt6", "PyQt5"]
+    ]
 
 
 def is_installed(name: str) -> bool:
@@ -21,7 +24,8 @@ def parse_qt_dependency() -> SupportedQtDependencies:
         required=False,
     )
 
-    if dep := vars(parser.parse_known_args()[0])[QT_DEPENDENCY_ARG]:
+    dep = vars(parser.parse_known_args()[0])[QT_DEPENDENCY_ARG]
+    if dep is not None:
         sys.argv.remove(f"--{QT_DEPENDENCY_ARG}")
         sys.argv.remove(dep)
 
